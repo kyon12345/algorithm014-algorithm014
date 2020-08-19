@@ -45,7 +45,7 @@ func detectCycle(head *ListNode) *ListNode {
 		}
 	}
 
-		result := head
+	result := head
 
 	//Floyd 算法,第二次相遇的节点必定是环的人口
 	for result != slow {

@@ -61,22 +61,54 @@ func trap(height []int) int {
 
 	//基于暴力法,优化时间复杂度
 	//使用单调栈
-	var stack []int
-	ans := 0
+	// sum := 0
+	// stack := make([]int, 0)
+
+	// current := 0
+
+	// for current < len(height) {
+	// 	for len(stack) != 0 && height[current] > height[stack[len(stack)-1]] {
+	// 		h := height[stack[len(stack)-1]]
+	// 		stack = stack[:len(stack)-1] //pop
+	// 		if len(stack) == 0 {
+	// 			break
+	// 		}
+	// 		distance := current - stack[len(stack)-1] - 1
+	// 		min := min(height[stack[len(stack)-1]], height[current])
+	// 		sum += distance * (min - h)
+	// 	}
+
+	// 	stack = append(stack, current)
+	// 	current++
+	// }
+
+	// return sum
+
+	//双指针(推荐) O(n) O(1)
+	l := 0
+	r := len(height) - 1
+
+	left_max := 0
+	right_max := 0
 	
-	for i := 0; i < len(height); i++ {
-		if len(stack) == 0 {
-			stack = append(stack,i)
-			continue
-		}
+	ans := 0
 
-		for len(stack) > 0 && height[i] > stack[len(stack) - 1] {
-			top := stack[len(stack) - 1]
-			stack = stack[:len(stack) - 1]
-			ans += height[top] * (i - top - 1)
+	for l < r {
+		if height[l] < height[r] {
+			if height[l] > left_max	{
+				left_max = height[l]
+			} else {
+				ans += left_max - height[l]
+			}
+			l ++
+		} else {
+			if height[r] > right_max {
+				right_max = height[r]
+			} else {
+				ans += right_max - height[r]
+			}
+			r --
 		}
-
-		stack = append(stack,i)
 	}
 
 	return ans

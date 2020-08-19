@@ -29,44 +29,61 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 
 
 	//循环 O(n) O(n)
+	// if l1 == nil {
+	// 	return l2
+	// } else if l2 == nil {
+	// 	return l1
+	// }
+
+	// var l3First *ListNode = nil
+	// var l3Last *ListNode = nil
+	// var newNode *ListNode = nil
+
+	// for true {
+	// 	if l1.Val > l2.Val {
+	// 		newNode =l2
+	// 		l2 = l2.Next
+	// 	} else {
+	// 		newNode = l1
+	// 		l1 = l1.Next
+	// 	}
+
+	// 	if l3Last == nil {
+	// 		l3First = newNode
+	// 		l3Last = newNode
+	// 	} else {
+	// 		l3Last.Next = newNode
+	// 		l3Last = newNode
+	// 	}
+
+	// 	if l1 == nil {
+	// 		l3Last.Next = l2
+	// 		break
+	// 	} else if l2 == nil {
+	// 		l3Last.Next = l1
+	// 		break
+	// 	}
+	// }
+
+	// return l3First
+	
+
+	//递归 O(m + n) O(m + n)
 	if l1 == nil {
 		return l2
-	} else if l2 == nil {
+	}
+
+	if l2 == nil {
 		return l1
 	}
 
-	var l3First *ListNode = nil
-	var l3Last *ListNode = nil
-	var newNode *ListNode = nil
-
-	for true {
-		if l1.Val > l2.Val {
-			newNode =l2
-			l2 = l2.Next
-		} else {
-			newNode = l1
-			l1 = l1.Next
-		}
-
-		if l3Last == nil {
-			l3First = newNode
-			l3Last = newNode
-		} else {
-			l3Last.Next = newNode
-			l3Last = newNode
-		}
-
-		if l1 == nil {
-			l3Last.Next = l2
-			break
-		} else if l2 == nil {
-			l3Last.Next = l1
-			break
-		}
+	if l1.Val < l2.Val {
+		l1.Next = mergeTwoLists(l1.Next,l2)
+		return l1
+	} else {
+		l2.Next = mergeTwoLists(l2.Next,l1)
+		return l2
 	}
-
-	return l3First
-	
 }
 // @lc code=end
 
