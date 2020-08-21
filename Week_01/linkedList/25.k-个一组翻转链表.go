@@ -22,17 +22,17 @@
 
 func reverseKGroup(head *ListNode, k int) *ListNode {
 	//递归
+	curr := head
 	count := 0
 
-	curr := head
-
-	for curr != nil && count != k {
+	for count != k && curr != nil {
 		curr = curr.Next
-		count ++
+		count++
 	}
 
 	if count == k {
-		curr = reverseKGroup(curr, k)
+		curr = reverseKGroup(curr,k)
+
 		for ;count > 0;count -- {
 			tmp := head.Next
 			head.Next = curr

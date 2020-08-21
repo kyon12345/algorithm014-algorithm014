@@ -3,6 +3,7 @@
  *
  * [84] 柱状图中最大的矩形
  */
+package main
 
 // @lc code=start
 func largestRectangleArea(heights []int) int {
