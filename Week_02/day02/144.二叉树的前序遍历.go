@@ -45,8 +45,8 @@ func preorderTraversal(root *TreeNode) []int {
 
 	for len(stack) != 0 || root != nil {
 		if root != nil {
-			ret = append(ret,root.Val)
 			stack = append(stack,root)
+			ret = append(ret,root.Val)
 			root = root.Left
 		} else {
 			root = stack[len(stack) - 1]
@@ -54,6 +54,7 @@ func preorderTraversal(root *TreeNode) []int {
 			root = root.Right
 		}
 	}
+
 
 	return ret
 }

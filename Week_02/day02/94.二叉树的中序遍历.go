@@ -54,8 +54,8 @@ func inorderTraversal(root *TreeNode) []int {
 		} else {
 			node := stack[len(stack) - 1]
 			stack = stack[:len(stack) - 1]
-
-			result = append(result,node.Val)
+			
+			result = append(result,node.Val)	
 			root = node.Right
 		}
 	}

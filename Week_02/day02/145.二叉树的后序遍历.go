@@ -57,10 +57,11 @@ func postorderTraversal(root *TreeNode) []int {
 	stack = append(stack, &trackTreeNode{root: root})
 
 	for len(stack) != 0 {
-		node := stack[len(stack)-1]
+		node := stack[len(stack) - 1]
+
 		if node.visited {
-			stack = stack[:len(stack)-1]
-			res = append(res, node.root.Val)
+			stack = stack[:len(stack) - 1]
+			res = append(res,node.root.Val)
 			continue
 		}
 

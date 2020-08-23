@@ -85,17 +85,17 @@ func trap(height []int) int {
 	// return sum
 
 	//双指针(推荐) O(n) O(1)
-	l := 0
+	l := 0 
 	r := len(height) - 1
 
 	left_max := 0
 	right_max := 0
-	
+
 	ans := 0
 
 	for l < r {
 		if height[l] < height[r] {
-			if height[l] > left_max	{
+			if height[l] > left_max {
 				left_max = height[l]
 			} else {
 				ans += left_max - height[l]
@@ -112,7 +112,6 @@ func trap(height []int) int {
 	}
 
 	return ans
-
 }
 
 func max(a, b int) int {

@@ -12,11 +12,11 @@ func isAnagram(s string, t string) bool {
 	b := [26]int{}
 
 	for _, char := range s {
-		a[char - 'a'] += 1
+		a[char - 'a'] ++
 	}
 
 	for _, char := range t {
-		b[char - 'a'] += 1
+		b[char - 'a'] ++
 	}
 
 	return a == b
