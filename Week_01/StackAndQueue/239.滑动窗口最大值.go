@@ -28,15 +28,15 @@ func maxSlidingWindow(nums []int, k int) []int {
 
 	//双端队列 O(n) O(n)
 	window := []int{}
+
 	result := []int{}
-
+	
 	for i := 0; i < len(nums); i++ {
-		if len(window) > 0 && window[0]	<= i - k {
+		if len(window) > 0 && window[0] <= i - k {
 			window = window[1:]
-		}
+		} 
 
-		//挤压,只保留最大值
-		for len(window) > 0 && nums[i] > nums[window[len(window) - 1]] {
+		for len(window) > 0 && nums[window[len(window) - 1]] < nums[i] {
 			window = window[:len(window) - 1]
 		}
 

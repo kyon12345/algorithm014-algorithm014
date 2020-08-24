@@ -12,7 +12,12 @@
  *     Children []*Node
  * }
  */
+// package main
 
+// type Node struct {
+// 	Val int
+// 	Children []*Node
+// }
  //递归 O(n) o(logN)/O(n)
 
 // var res [][]int
@@ -44,36 +49,36 @@
 // 	}
 // }
 
-//bfs
-func levelOrder(root *Node) [][]int {
-	if root == nil {
-		return nil
-	}
+//bfs 
+// func levelOrder(root *Node) [][]int {
+// 	if root == nil {
+// 		return nil
+// 	}
 
-	curr := []*Node{root}
-	var res [][]int	
+// 	curr := []*Node{root}
+// 	var res [][]int	
 
-	i := 0 
-	for len(curr) != 0 {
-		res = append(res,[]int{})
+// 	i := 0 
+// 	for len(curr) != 0 {
+// 		res = append(res,[]int{})
 
-		next := []*Node{}
+// 		next := []*Node{}
 
-		for _, c := range curr {
-			res[i] = append(res[i],c.Val)
+// 		for _, c := range curr {
+// 			res[i] = append(res[i],c.Val)
 			
-			for _, node := range c.Children {
-				if node != nil {
-					next = append(next,node)
-				}
-			}
-		}
+// 			for _, node := range c.Children {
+// 				if node != nil {
+// 					next = append(next,node)
+// 				}
+// 			}
+// 		}
 
-		curr = next
-		i ++
-	}
-	return res
-}
+// 		curr = next
+// 		i ++
+// 	}
+// 	return res
+// }
 
 // @lc code=end
 

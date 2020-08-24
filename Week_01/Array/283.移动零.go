@@ -7,11 +7,11 @@
 // @lc code=start
 func moveZeroes(nums []int) {
 	//快慢指针 O(n) O(1)
-	noneZeroIndex := 0
+	noneZero := 0
 	for i := 0; i < len(nums); i++ {
 		if nums[i] != 0 {
-			nums[i], nums[noneZeroIndex] = nums[noneZeroIndex], nums[i]
-			noneZeroIndex++
+			nums[i],nums[noneZero] = nums[noneZero],nums[i]
+			noneZero ++
 		}
 	}
 }

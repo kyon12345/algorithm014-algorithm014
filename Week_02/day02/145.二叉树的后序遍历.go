@@ -43,7 +43,7 @@ func postorderTraversal(root *TreeNode) []int {
 		return nil
 	}
 
-	//这个方法挺类似于上颜色的
+	// //这个方法挺类似于上颜色的
 	type trackTreeNode struct {
 		root    *TreeNode
 		visited bool
@@ -77,6 +77,7 @@ func postorderTraversal(root *TreeNode) []int {
 	}
 
 	return res
+	
 }
 
 // @lc code=end

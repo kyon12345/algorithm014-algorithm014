@@ -19,9 +19,10 @@ func swapPairs(head *ListNode) *ListNode {
 	}
 
 	n := head.Next
-	head.Next = swapPairs(head.Next.Next)
 
+	head.Next = swapPairs(head.Next.Next)
 	n.Next = head
+
 	return n
 }
 // @lc code=end

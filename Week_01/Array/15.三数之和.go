@@ -20,14 +20,15 @@ func threeSum(nums []int) [][]int {
 
 		for j < k {
 			if nums[j] + nums[k] < target {
-				j++
+				j ++
 			} else if nums[j] + nums[k] > target {
-				k--
+				k --
 			} else {
 				ret = append(ret,[]int{num,nums[j],nums[k]})
-				for ;j < k && nums[j]==nums[j + 1];j++ {}
-				for ;j < k && nums[k]==nums[k - 1];k-- {}
-				j,k = j + 1,k - 1
+				for ;j < k && nums[j] == nums[j + 1];j ++ {}
+				for ;j < k && nums[k] == nums[k - 1];k -- {}
+				j = j + 1
+				k = k - 1
 			}
 		}
 	}

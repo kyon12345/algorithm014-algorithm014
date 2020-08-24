@@ -30,30 +30,29 @@ func detectCycle(head *ListNode) *ListNode {
 
 	//快慢指针 O(n) O(1)
 	slow := head
-	fast := head
-
+	fast := head 
+	
 	for {
-		if fast == nil || fast.Next == nil {
+		if fast.Next == nil || fast == nil {
 			return nil
 		}
 
-		slow = slow.Next 
+		slow = slow.Next
 		fast = fast.Next.Next
 
-		if(slow == fast) {
+		if slow == fast {
 			break
 		}
 	}
 
-	result := head
+	slow = head
 
-	//Floyd 算法,第二次相遇的节点必定是环的人口
-	for result != slow {
-		result = result.Next
+	for slow != fast {
 		slow = slow.Next
+		fast = fast.Next
 	}
 
-	return result
+	return slow
 }
 // @lc code=end
 

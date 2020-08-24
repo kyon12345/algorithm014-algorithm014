@@ -42,15 +42,15 @@ func preorderTraversal(root *TreeNode) []int {
 	}
 
 	stack := make([]*TreeNode,0)
-
-	for len(stack) != 0 || root != nil {
+	
+	for len(stack) > 0 || root != nil {
 		if root != nil {
-			stack = append(stack,root)
 			ret = append(ret,root.Val)
+			stack = append(stack,root)
 			root = root.Left
 		} else {
 			root = stack[len(stack) - 1]
-			stack = stack[:len(stack) - 1]
+			stack = stack[:len(stack) - 1] 
 			root = root.Right
 		}
 	}
