@@ -8,7 +8,6 @@
 
 package main
 
-
 func maxSlidingWindow(nums []int, k int) []int {
 	//暴力解法,从第一个元素开始循环,每次循环求出后 k-1 个元素中的最大值
 	//O(n*k) O(N - k + 1)
@@ -30,20 +29,20 @@ func maxSlidingWindow(nums []int, k int) []int {
 	window := []int{}
 
 	result := []int{}
-	
-	for i := 0; i < len(nums); i++ {
-		if len(window) > 0 && window[0] <= i - k {
-			window = window[1:]
-		} 
 
-		for len(window) > 0 && nums[window[len(window) - 1]] < nums[i] {
-			window = window[:len(window) - 1]
+	for i := 0; i < len(nums); i++ {
+		if len(window) > 0 && window[0] <= i-k {
+			window = window[1:]
 		}
 
-		window = append(window,i)
+		for len(window) > 0 && nums[window[len(window)-1]] < nums[i] {
+			window = window[:len(window)-1]
+		}
 
-		if i >= k -1 {
-			result = append(result,nums[window[0]])
+		window = append(window, i)
+
+		if i >= k-1 {
+			result = append(result, nums[window[0]])
 		}
 	}
 
@@ -51,5 +50,5 @@ func maxSlidingWindow(nums []int, k int) []int {
 
 	//动态规划
 }
-// @lc code=end
 
+// @lc code=end

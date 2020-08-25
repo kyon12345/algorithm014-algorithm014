@@ -3,11 +3,11 @@
  *
  * [347] 前 K 个高频元素
  */
-// package main
+package main
 
-// import (
-// 	"container/heap"
-// )
+import (
+	"container/heap"
+)
 
 // @lc code=start
 //使用优先队列
@@ -27,7 +27,7 @@ func topKFrequent(nums []int, k int) []int {
 		}
 	}
 
-	ans := make([]int, k, k)
+	ans := make([]int, k)
 	for i := 1; i <= k; i++ {
 		v := heap.Pop(q)
 		if s, ok := v.(element); ok {
@@ -53,11 +53,9 @@ func (q *priorityQueue) Push(x interface{}) {
 }
 
 func (q *priorityQueue) Pop() interface{} {
-	old := *q
-	n := len(old)
-	x := old[n-1]
-	*q = old[ : n-1]
-	return x
+	res := (*q)[len(*q) - 1]
+	*q = (*q)[:len(*q) - 1]
+	return res
 }
-// @lc code=end
 
+// @lc code=end

@@ -9,13 +9,13 @@ import "sort"
 
 // @lc code=start
 func groupAnagrams(strs []string) [][]string {
-	//使用map NKLogK O(NK)
+	//使用map + sort NKLogK O(NK)
 	groups := make(map[string][]string)
 
 	for _, str := range strs {
 		b := []byte(str)
 
-		sort.Slice(b, func(i,j int) bool {
+		sort.Slice(b,func(i,j int) bool {
 			return b[i] < b[j]
 		})
 
@@ -25,6 +25,7 @@ func groupAnagrams(strs []string) [][]string {
 	}
 
 	ret := make([][]string,0,len(groups))
+
 	for _, v := range groups {
 		ret = append(ret,v)
 	}
