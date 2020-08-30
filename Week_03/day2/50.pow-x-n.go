@@ -4,28 +4,8 @@
  * [50] Pow(x, n)
  */
 package main
+
 // @lc code=start
-//快速幂 + 递归 log(n) log(n)
-// func myPow(x float64, n int) float64 {
-// 	if n >= 0 {
-// 		return quickMul(x,n)
-// 	}
-
-// 	return 1.0/quickMul(x,-n)
-// }
-
-// func quickMul(x float64,n int) float64 {
-// 	if n == 0 {
-// 		return 1
-// 	}
-
-// 	y := quickMul(x, n/2)
-// 	if n%2 == 0 {
-// 		return y*y
-// 	}
-
-// 	return y*y*x
-// }
 
 //快速幂 + 迭代
 //O(log(n)) O(1)
@@ -33,9 +13,9 @@ package main
 // 	if n >= 0 {
 // 		return quickMul(x,n)
 // 	}
-	
+
 // 	return 1.0/quickMul(x,-n)
-// } 
+// }
 
 // func quickMul(x float64,N int) float64 {
 // 	ans := 1.0
@@ -56,24 +36,48 @@ package main
 // 	return ans
 // }
 
-//迭代 简洁写法
-func myPow(x float64,n int) float64 {
+//递归 log(n) log(n)
+// func myPow(x float64, n int) float64 {
+// 	if n < 0 {
+// 		x = 1/x
+// 		n = -n
+// 	}
+
+// 	return quickMul(x,n)
+// }
+
+// func quickMul(x float64,n int) float64 {
+// 	if n == 0 {
+// 		return 1
+// 	}
+
+// 	y := quickMul(x,n >> 1)
+
+// 	if n % 2 == 0 {
+// 		return y*y
+// 	}
+
+// 	return y*y*x
+// }
+
+//迭代
+//o(log n) o(1)
+func myPow(x float64, n int) float64 {
 	if n < 0 {
-		x,n = 1/x,-n
+		x, n = 1/x, -n
 	}
 
-	result := 1.0 
+	result := 1.0
 
 	for n > 0 {
-		//n 为奇数
-		if n&1 == 1{
+		if n&1 == 1 {
 			result *= x
 		}
-		//n = n / 2
-		x,n = x*x,n >> 1
+
+		x, n = x*x, n>>1
 	}
 
 	return result
 }
-// @lc code=end
 
+// @lc code=end

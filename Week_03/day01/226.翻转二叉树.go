@@ -3,6 +3,13 @@
  *
  * [226] 翻转二叉树
  */
+ package main
+
+ type TreeNode struct {
+	 Val int
+	 Left *TreeNode
+	 Right *TreeNode
+ }
 
 // @lc code=start
 /**
@@ -13,9 +20,8 @@
  *     Right *TreeNode
  * }
  */
- //递归
-// package main
-
+ 
+//dfs
 // func invertTree(root *TreeNode) *TreeNode {
 // 	if root == nil {
 // 		return root
@@ -29,27 +35,26 @@
 // 	return root
 // }
 
-//BFS
-// package main
-
+//bfs
 func invertTree(root *TreeNode) *TreeNode {
-	if root != nil {
-		var s []*TreeNode
-		s = append(s,root)
+	if root == nil {
+		return root
+	}
 
-		for len(s) > 0 {
-			n := s[len(s) - 1]
-			s = s[:len(s) - 1]
+	s := []*TreeNode{root}
 
-			n.Right,n.Left = n.Left,n.Right
+	for len(s) > 0 {
+		node := s[len(s) - 1]
+		node.Left,node.Right = node.Right,node.Left
 
-			if n.Left != nil {
-				s = append(s,n.Left)
-			}
+		s = s[:len(s) - 1]
 
-			if n.Right != nil {
-				s = append(s,n.Right)
-			}
+		if node.Left != nil {
+			s = append(s,node.Left)
+		}
+
+		if node.Right != nil {
+			s = append(s,node.Right)
 		}
 	}
 

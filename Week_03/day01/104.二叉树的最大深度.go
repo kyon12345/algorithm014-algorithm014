@@ -3,6 +3,7 @@
  *
  * [104] 二叉树的最大深度
  */
+ package main
 
 // @lc code=start
 /**
@@ -28,7 +29,6 @@
 // 	}
 // 	return b
 // }
-package main
 
 //广度优先搜素
 func maxDepth(root *TreeNode) int {
@@ -36,15 +36,15 @@ func maxDepth(root *TreeNode) int {
 		return 0
 	}
 
-	queue := []*TreeNode{}
-	queue = append(queue,root)
+	queue := []*TreeNode{root}
 	ans := 0
 
 	for len(queue) > 0 {
 		sz := len(queue)
 		for sz > 0 {
 			node := queue[0]
-			queue =queue[1:]
+			queue = queue[1:]
+
 			if node.Left != nil {
 				queue = append(queue,node.Left)
 			}
@@ -52,10 +52,8 @@ func maxDepth(root *TreeNode) int {
 			if node.Right != nil {
 				queue = append(queue,node.Right)
 			}
-			
 			sz --
 		}
-
 		ans ++
 	}
 

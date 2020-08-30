@@ -18,25 +18,24 @@ func permuteUnique(nums []int) [][]int {
 
 	sort.Ints(nums)
 
-	backtrack2(nums, nil, &ans)
+	backtrack2(nums,nil,&ans)
 
 	return ans
 }
 
-func backtrack2(nums,prev []int,res *[][]int) {
+func backtrack2(nums,prev []int,ans *[][]int) {
 	if len(nums) == 0 {
-		*res = append(*res,append([]int{},prev...))
+		*ans = append(*ans,append([]int{},prev...))
 		return
 	}
 
 	for i := 0; i < len(nums); i++ {
-		if i != 0 && nums[i] == nums[i-1] {
+		if i > 0 && nums[i] == nums[i - 1] {
 			continue
 		}
 
-		backtrack2(append(append([]int{},nums[0:i]...),nums[i + 1:]...),
-		append(prev,nums[i]),
-		res)
+		backtrack2(append(append([]int{},nums[:i]...),nums[i + 1:]...),
+		append(prev,nums[i]),ans)
 	}
 }
 // @lc code=end
