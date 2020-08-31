@@ -3,6 +3,12 @@
  *
  * [429] N叉树的层序遍历
  */
+package main
+
+type Node struct {
+	Val int
+	Children []*Node
+}
 
 // @lc code=start
 /**
@@ -12,73 +18,71 @@
  *     Children []*Node
  * }
  */
-// package main
 
-// type Node struct {
-// 	Val int
-// 	Children []*Node
-// }
- //递归 O(n) o(logN)/O(n)
-
-// var res [][]int
-
+//dfs 
+//O(N) O(logN)/O(n)
 // func levelOrder(root *Node) [][]int {
 // 	if root == nil {
 // 		return nil
 // 	}
 
-// 	res = [][]int{}
+// 	res := [][]int{}
 
-// 	dfs(root,0)
+// 	dfs(root,0,&res)
+
 // 	return res
-
 // }
 
-// func dfs(root *Node,level int) {
+
+// func dfs(root *Node,level int,res *[][]int) {
 // 	if root == nil {
 // 		return
 // 	}
-
-// 	if len(res) == level {
-// 		res = append(res,[]int{})
+// 	if len(*res) == level {
+// 		*res = append(*res,[]int{})
 // 	}
 
-// 	res[level] = append(res[level],root.Val)
-// 	for _, n := range root.Children {
-// 		dfs(n,level + 1)
+// 	(*res)[level] = append((*res)[level],root.Val)
+
+// 	for _, c := range root.Children {
+// 		dfs(c,level + 1,res)
 // 	}
 // }
 
-//bfs 
-// func levelOrder(root *Node) [][]int {
-// 	if root == nil {
-// 		return nil
-// 	}
 
-// 	curr := []*Node{root}
-// 	var res [][]int	
+//bfs
+//O(N) O(N)
+func levelOrder(root *Node) [][]int {
+	stack := []*Node{root}
 
-// 	i := 0 
-// 	for len(curr) != 0 {
-// 		res = append(res,[]int{})
+	if root == nil {
+		return nil
+	}
 
-// 		next := []*Node{}
+	ret := [][]int{}
+	i := 0
 
-// 		for _, c := range curr {
-// 			res[i] = append(res[i],c.Val)
-			
-// 			for _, node := range c.Children {
-// 				if node != nil {
-// 					next = append(next,node)
-// 				}
-// 			}
-// 		}
+	for len(stack) > 0 {
+		ret = append(ret,[]int{})
 
-// 		curr = next
-// 		i ++
-// 	}
-// 	return res
-// }
+		next := []*Node{}
+
+		for _, n := range stack {
+			ret[i] = append(ret[i], n.Val)
+
+			for _, c := range n.Children {
+				next = append(next,c)
+			}
+		}
+
+		i ++
+
+		stack = next
+	}
+
+	return ret
+}
+
 
 // @lc code=end
 

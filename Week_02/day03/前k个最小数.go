@@ -17,7 +17,7 @@ func getLeastNumbers(arr []int, k int) []int {
 	h := &intHeap{}
 	heap.Init(h)
 
-	//维护一个大小为k的最大堆,当arr的数比heap要小的时候弹出最大的元素,加入最小的元素
+	//维护一个大小为k的最小堆,当arr的数比heap要小的时候弹出最大的元素,加入最小的元素
 	for _, v := range arr {
 		if h.Len() < k{
 			heap.Push(h,v)

@@ -3,6 +3,13 @@
  *
  * [144] 二叉树的前序遍历
  */
+ package main
+
+ type TreeNode struct {
+	Val int
+	Left *TreeNode
+	Right *TreeNode
+}
 
 // @lc code=start
 /**
@@ -35,26 +42,25 @@
 
 
 func preorderTraversal(root *TreeNode) []int {
+	stack := make([]*TreeNode, 0)
+
 	ret := []int{}
 
 	if root == nil {
-		return ret
+		return nil
 	}
 
-	stack := make([]*TreeNode,0)
-	
 	for len(stack) > 0 || root != nil {
 		if root != nil {
 			ret = append(ret,root.Val)
 			stack = append(stack,root)
 			root = root.Left
 		} else {
-			root = stack[len(stack) - 1]
-			stack = stack[:len(stack) - 1] 
-			root = root.Right
+			node := stack[len(stack) - 1]
+			stack = stack[:len(stack) - 1]
+			root = node.Right
 		}
 	}
-
 
 	return ret
 }
