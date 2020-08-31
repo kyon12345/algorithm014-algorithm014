@@ -26,27 +26,27 @@ func maxSlidingWindow(nums []int, k int) []int {
 	// return ret
 
 	//双端队列 O(n) O(n)
-	window := []int{}
+	window := make([]int, 0)
 
-	result := []int{}
+	ans := make([]int, 0)
 
 	for i := 0; i < len(nums); i++ {
-		if len(window) > 0 && window[0] <= i-k {
-			window = window[1:]
+		for len(window) > 0 && nums[window[len(window) - 1]] < nums[i] {
+			window = window[:len(window) - 1]
 		}
 
-		for len(window) > 0 && nums[window[len(window)-1]] < nums[i] {
-			window = window[:len(window)-1]
+		if len(window) > 0 && window[0] <= i - k {
+			window = window[1:]
 		}
 
 		window = append(window, i)
 
-		if i >= k-1 {
-			result = append(result, nums[window[0]])
+		if i >= k - 1 {
+			ans = append(ans,nums[window[0]])
 		}
 	}
-
-	return result
+	
+	return ans
 
 	//动态规划
 }

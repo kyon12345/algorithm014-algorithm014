@@ -47,9 +47,7 @@ func rotate(nums []int, k int)  {
 	// reverse(nums[k%len(nums):])
 
 	//直接提取后面的到前面
-	//O(n) O(1)
-	// k = k % len(nums)
-	// copy(nums, append(nums[len(nums) - k:],nums[:len(nums) - k]...))
+	copy(nums,append(nums[len(nums) - k:],nums[:len(nums) - k]...))
 }
 
 func reverse(arr []int) {

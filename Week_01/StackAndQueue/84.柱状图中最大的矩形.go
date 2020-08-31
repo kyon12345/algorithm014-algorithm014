@@ -27,16 +27,15 @@ func largestRectangleArea(heights []int) int {
     //使用栈 O(n) O(n)
 	var stack []int
 
-	maxArea := 0 
-
 	stack = append(stack,-1)
 
+	maxArea := 0
+	
 	for i := 0; i < len(heights); i++ {
 		for len(stack) != 1 && heights[i] < heights[stack[len(stack) - 1]] {
 			top := stack[len(stack) - 1]
 			stack = stack[:len(stack) - 1]
-
-			maxArea = maxVal(maxArea, heights[top]*(i - stack[len(stack) - 1] - 1))
+			maxArea = maxVal(maxArea, heights[top] * (i - stack[len(stack) - 1] - 1))
 		}
 		stack = append(stack,i)
 	}
@@ -44,7 +43,7 @@ func largestRectangleArea(heights []int) int {
 	for len(stack) != 1 {
 		top := stack[len(stack) - 1]
 		stack = stack[:len(stack) - 1]
-		maxArea = maxVal(maxArea,heights[top] * (len(heights) - stack[len(stack) - 1] - 1))
+		maxArea = maxVal(maxArea, heights[top] * (len(heights) - stack[len(stack) - 1] - 1))
 	}
 
 	return maxArea

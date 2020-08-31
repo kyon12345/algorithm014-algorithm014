@@ -3,7 +3,7 @@
  *
  * [142] 环形链表 II
  */
-
+package main
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -30,10 +30,14 @@ func detectCycle(head *ListNode) *ListNode {
 
 	//快慢指针 O(n) O(1)
 	slow := head
-	fast := head 
-	
+	fast := head
+
+	if head == nil || head.Next == nil {
+		return nil
+	}
+
 	for {
-		if fast.Next == nil || fast == nil {
+		if fast == nil || fast.Next == nil {
 			return nil
 		}
 
@@ -44,6 +48,7 @@ func detectCycle(head *ListNode) *ListNode {
 			break
 		}
 	}
+
 
 	slow = head
 

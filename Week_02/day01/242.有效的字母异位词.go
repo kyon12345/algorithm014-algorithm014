@@ -4,22 +4,22 @@
  * [242] 有效的字母异位词
  */
 package main
+
 // @lc code=start
 func isAnagram(s string, t string) bool {
 
 	//哈希表 O(n) O(1)
-	a := [26]int{}
-	b := [26]int{}
+	a, b := [26]int{}, [26]int{}
 
-	for _, char := range s {
-		a[char - 'a']++
+	for _, v := range s {
+		a[v-'a']++
 	}
 
-	for _, char := range t {
-		b[char - 'a']++
+	for _, v := range t {
+		b[v-'a']++
 	}
 
 	return a == b
 }
-// @lc code=end
 
+// @lc code=end

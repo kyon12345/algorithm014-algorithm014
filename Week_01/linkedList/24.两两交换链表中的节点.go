@@ -3,6 +3,7 @@
  *
  * [24] 两两交换链表中的节点
  */
+ package main
 
 // @lc code=start
 /**
@@ -21,6 +22,7 @@ func swapPairs(head *ListNode) *ListNode {
 	n := head.Next
 
 	head.Next = swapPairs(head.Next.Next)
+
 	n.Next = head
 
 	return n

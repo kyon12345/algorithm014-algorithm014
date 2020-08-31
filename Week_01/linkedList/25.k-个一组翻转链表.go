@@ -3,7 +3,12 @@
  *
  * [25] K 个一组翻转链表
  */
+package main
 
+type ListNode struct {
+	Val int
+	Next *ListNode
+}
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -13,16 +18,11 @@
  * }
  */
 
-// package main
 
-// type ListNode struct {
-// 	Val int
-// 	Next *ListNode
-// }
 
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	//递归
 	count := 0
+
 	curr := head
 
 	for count != k && curr != nil {
@@ -31,15 +31,17 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	}
 
 	if count == k {
-		//排序后的链表头
-		curr = reverseKGroup(curr,k)
-
+		curr = reverseKGroup(curr, k)
+		
 		for ;count > 0;count -- {
 			tmp := head.Next
+
 			head.Next = curr
 			curr = head
+
 			head = tmp
 		}
+
 		head = curr
 	}
 

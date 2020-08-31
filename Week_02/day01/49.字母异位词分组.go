@@ -15,19 +15,19 @@ func groupAnagrams(strs []string) [][]string {
 	for _, str := range strs {
 		b := []byte(str)
 
-		sort.Slice(b,func(i,j int) bool {
+		sort.Slice(b, func(i,j int) bool {
 			return b[i] < b[j]
 		})
+		
+		s := string(b)
 
-		key := string(b)
-
-		groups[key] = append(groups[key],str)
+		groups[s] = append(groups[s], str)
 	}
 
-	ret := make([][]string,0,len(groups))
+	ret := make([][]string,0)
 
-	for _, v := range groups {
-		ret = append(ret,v)
+	for _, gro := range groups {
+		ret = append(ret,gro)
 	}
 
 	return ret

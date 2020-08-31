@@ -3,18 +3,19 @@
  *
  * [20] 有效的括号
  */
+package main
 
 // @lc code=start
 func isValid(s string) bool {
 	//栈,O(n) O(n)
-	parentheses := map[rune]rune{')': '(', ']': '[', '}': '{'}
+	pairs := map[rune]rune{')': '(', ']': '[', '}': '{'}
 
-	var stack []rune
-	
-	for _, char := range s {
-		if char == '(' || char == '[' || char == '{' {
-			stack = append(stack,char)
-		} else if len(stack) > 0 && parentheses[char] == stack[len(stack) - 1] {
+	stack := make([]rune, 0)
+
+	for _, r := range s {
+		if r == '(' || r == '[' || r == '{' {
+			stack = append(stack, r)
+		} else if len(stack) > 0 && pairs[r] == stack[len(stack) - 1] {
 			stack = stack[:len(stack) - 1]
 		} else {
 			return false
@@ -23,5 +24,5 @@ func isValid(s string) bool {
 
 	return len(stack) == 0
 }
-// @lc code=end
 
+// @lc code=end
