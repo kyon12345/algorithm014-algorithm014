@@ -3,7 +3,7 @@
  *
  * [236] 二叉树的最近公共祖先
  */
-
+package main
 // @lc code=start
 /**
  * Definition for TreeNode.
@@ -19,12 +19,14 @@
 	if root == nil {
 		return nil
 	}
+
 	if root.Val == p.Val || root.Val == q.Val {
 		return root
 	}
 
-	left := lowestCommonAncestor(root.Left,p,q)
-	right := lowestCommonAncestor(root.Right,p,q)
+	left := lowestCommonAncestor(root.Left, p, q)
+
+	right := lowestCommonAncestor(root.Right, p, q)
 
 	if left != nil && right != nil {
 		return root

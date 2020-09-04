@@ -3,6 +3,8 @@
  *
  * [105] 从前序与中序遍历序列构造二叉树
  */
+package main
+
 
 // @lc code=start
 /**
@@ -13,28 +15,28 @@
  *     Right *TreeNode
  * }
  */
-package main
 
- //递归
+//递归
+//O(N) O(N)
 func buildTree(preorder []int, inorder []int) *TreeNode {
 	if len(preorder) == 0 {
 		return nil
 	}
 
-	root := &TreeNode{preorder[0],nil,nil}
+	root := &TreeNode{Val: preorder[0]}
 
 	i := 0
-	for ;i < len(inorder);i ++ {
-		if inorder[i] == preorder[0] {
+
+	for ; i < len(inorder); i++ {
+		if preorder[0] == inorder[i] {
 			break
 		}
 	}
 
-	//递归遍历root的左和右子树
-	root.Left = buildTree(preorder[1:i + 1],inorder[:i])
-	root.Right = buildTree(preorder[i + 1:],inorder[i + 1:])
+	root.Left = buildTree(preorder[1:i+1], inorder[:i])
+	root.Right = buildTree(preorder[i+1:], inorder[i+1:])
 
 	return root
 }
-// @lc code=end
 
+// @lc code=end

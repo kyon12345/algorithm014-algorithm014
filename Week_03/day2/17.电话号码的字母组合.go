@@ -4,7 +4,10 @@
  * [17] 电话号码的字母组合
  */
 package main
+
 // @lc code=start
+//回溯
+//O(3^M * 4^N) O(M + N)
 var phoneMap map[string]string = map[string]string{
     "2": "abc",
     "3": "def",
@@ -20,25 +23,29 @@ var combinations []string
 
 func letterCombinations(digits string) []string {
 	if len(digits) == 0 {
-		return []string{}
+		return nil
 	}
-
+	
+	//必须要初始化
 	combinations = []string{}
-	backtrack(digits,0,"")
+	backtrackPhoneNumber(digits, 0, "")
+
 	return combinations
 }
 
-func backtrack(digits string,index int,combination string) {
+
+func backtrackPhoneNumber(digits string,index int,combination string) {
 	if index == len(digits) {
 		combinations = append(combinations,combination)
 	} else {
 		digit := string(digits[index])
 		letters := phoneMap[digit]
-		lettersCount := len(letters)
-		for i := 0; i < lettersCount; i++ {
-			backtrack(digits,index + 1,combination + string(letters[i]))
+
+		for i := 0; i < len(letters); i++ {
+			backtrackPhoneNumber(digits, index + 1, combination + string(letters[i]))
 		}
 	}
 }
+
 // @lc code=end
 

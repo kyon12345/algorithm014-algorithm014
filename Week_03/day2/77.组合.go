@@ -3,6 +3,7 @@
  *
  * [77] 组合
  */
+package main
 
 // @lc code=start
 
@@ -11,23 +12,26 @@
 // package cursion
 
 func combine(n int, k int) [][]int {
-	result := make([][]int,0)
-	helper(1,n,k,[]int{},&result)
-	return result
+	if n == 0 {
+		return nil
+	}
+
+	res := make([][]int,0)
+
+	backtrackCombine(1, n, k, []int{}, &res)
+
+	return res
 }
 
-
-func helper(pointer,n,k int,current []int,result *[][]int) {
-	if len(current) == k {
-		*result = append(*result,append([]int{},current...))
+func backtrackCombine(pointer, n, k int, curr []int, res *[][]int) {
+	if len(curr) == k {
+		*res = append(*res, curr)
 		return
 	}
-	//pointer 0 - n
-	for i := pointer;i <= n - (k - len(current)) + 1; i++ {
-		helper(i + 1,n,k,append(current,i),result)
+
+	for i := pointer; i <= n - (k - len(curr)) + 1 ; i++ {
+		backtrackCombine(i + 1, n, k, append(curr, i), res)
 	}
 }
 
-
 // @lc code=end
-

@@ -3,23 +3,27 @@
  *
  * [169] 多数元素
  */
+package main
 
 // @lc code=start
+//投票算法 O(N) O(1)
 func majorityElement(nums []int) int {
+	count := 0 
 	var candidate int
-	count := 0
-	for i:=0;i<len(nums);i++{
-		if count == 0{
+
+	for i := 0; i < len(nums); i++ {
+		if count == 0 {
 			candidate = nums[i]
-			count++
-		}else{
-			if nums[i] == candidate{
-				count++
-			}else{
-				count--
+			count ++
+		} else {
+			if candidate == nums[i] {
+				count ++
+			} else {
+				count --
 			}
 		}
 	}
+
 	return candidate
 }
 // @lc code=end

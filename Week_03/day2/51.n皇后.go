@@ -3,17 +3,16 @@
  *
  * [51] N皇后
  */
- package queen
 
 // @lc code=start
 func solveNQueens(n int) [][]string {
 	solution := make([][]string, 0)
 	cUsed, dUsed := make([]bool, n), make([]bool, (n*2-1)*2)
-	backtrack(&solution, buildNxNBoard(n), cUsed, dUsed, n, 0)
+	backtrackQueen(&solution, buildNxNBoard(n), cUsed, dUsed, n, 0)
 	return solution
 }
 
-func backtrack(solution *[][]string, board [][]byte, cUsed, dUsed []bool, n, y int) {
+func backtrackQueen(solution *[][]string, board [][]byte, cUsed, dUsed []bool, n, y int) {
 	if y == n {
 		boardCopy := make([]string, n)
 		for i := range boardCopy {
@@ -25,7 +24,7 @@ func backtrack(solution *[][]string, board [][]byte, cUsed, dUsed []bool, n, y i
 			if !cUsed[x] && !dUsed[y-x+n-1] && !dUsed[y+x+n*2-1] {
 				cUsed[x], dUsed[y-x+n-1], dUsed[y+x+n*2-1] = true, true, true
 				board[y][x] = 'Q'
-				backtrack(solution, board, cUsed, dUsed, n, y+1)
+				backtrackQueen(solution, board, cUsed, dUsed, n, y+1)
 				board[y][x] = '.'
 				cUsed[x], dUsed[y-x+n-1], dUsed[y+x+n*2-1] = false, false, false
 			}
