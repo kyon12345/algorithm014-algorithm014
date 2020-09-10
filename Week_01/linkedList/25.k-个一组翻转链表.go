@@ -5,10 +5,6 @@
  */
 package main
 
-type ListNode struct {
-	Val int
-	Next *ListNode
-}
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -21,10 +17,10 @@ type ListNode struct {
 
 
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	count := 0
+	count := 0 
 
 	curr := head
-
+	
 	for count != k && curr != nil {
 		curr = curr.Next
 		count ++
@@ -33,10 +29,11 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	if count == k {
 		curr = reverseKGroup(curr, k)
 		
-		for ;count > 0;count -- {
+		for ;count > 0; count -- {
 			tmp := head.Next
-
+			
 			head.Next = curr
+
 			curr = head
 
 			head = tmp

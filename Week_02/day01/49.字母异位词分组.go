@@ -18,16 +18,14 @@ func groupAnagrams(strs []string) [][]string {
 		sort.Slice(b, func(i,j int) bool {
 			return b[i] < b[j]
 		})
-		
-		s := string(b)
 
-		groups[s] = append(groups[s], str)
+		groups[string(b[:])] = append(groups[string(b[:])],str)
 	}
 
 	ret := make([][]string,0)
 
-	for _, gro := range groups {
-		ret = append(ret,gro)
+	for _, v := range groups {
+		ret = append(ret,v)	
 	}
 
 	return ret

@@ -24,28 +24,26 @@ var combinations []string
 func letterCombinations(digits string) []string {
 	if len(digits) == 0 {
 		return nil
-	}
+	}	
 	
-	//必须要初始化
+
 	combinations = []string{}
-	backtrackPhoneNumber(digits, 0, "")
 
-	return combinations
+    backtrackLetters(digits, "", 0)
+
+    return combinations
 }
 
+func backtrackLetters(digits,comb string,index int) {
+    if index == len(digits) {
+        combinations = append(combinations,comb)
+    } else {
+        letters := phoneMap[string(digits[index])]
 
-func backtrackPhoneNumber(digits string,index int,combination string) {
-	if index == len(digits) {
-		combinations = append(combinations,combination)
-	} else {
-		digit := string(digits[index])
-		letters := phoneMap[digit]
-
-		for i := 0; i < len(letters); i++ {
-			backtrackPhoneNumber(digits, index + 1, combination + string(letters[i]))
-		}
-	}
+        for _, l := range letters {
+            backtrackLetters(digits, comb + string(l), index + 1)
+        }
+    }
 }
-
 // @lc code=end
 

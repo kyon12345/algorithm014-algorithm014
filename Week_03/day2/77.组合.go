@@ -25,12 +25,12 @@ func combine(n int, k int) [][]int {
 
 func backtrackCombine(pointer, n, k int, curr []int, res *[][]int) {
 	if len(curr) == k {
-		*res = append(*res, curr)
+		*res = append(*res,curr)
 		return
-	}
+	}	
 
-	for i := pointer; i <= n - (k - len(curr)) + 1 ; i++ {
-		backtrackCombine(i + 1, n, k, append(curr, i), res)
+	for i := pointer;i < n - (k - len(curr)) + 1 ; i++ {
+		backtrackCombine(i + 1, n, k, append(curr,i), res)
 	}
 }
 

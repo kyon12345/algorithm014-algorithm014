@@ -5,12 +5,6 @@
  */
 package main
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -50,38 +44,35 @@ func postorderTraversal(root *TreeNode) []int {
 		return nil
 	}
 
-	type TrackedNode struct {
+	type trackedNode struct {
 		node *TreeNode
 		visited bool
 	}
 
-	ret := []int{}
-
-	stack := []*TrackedNode{}
-
-	stack = append(stack,&TrackedNode{node:root})
+	stack := []*trackedNode{{node:root}}
+	res := []int{}
 
 	for len(stack) > 0 {
-		top := stack[len(stack) - 1]
+		n := stack[len(stack) - 1]
 
-		if top.visited {
-			ret = append(ret,top.node.Val)
+		if n.visited {
+			res = append(res,n.node.Val)
 			stack = stack[:len(stack) - 1]
 			continue
 		}
 
-		if top.node.Right != nil {
-			stack = append(stack,&TrackedNode{node:top.node.Right})
+		if n.node.Right != nil {
+			stack = append(stack,&trackedNode{node:n.node.Right})
 		}
 
-		if top.node.Left != nil {
-			stack = append(stack,&TrackedNode{node:top.node.Left})
+		if n.node.Left != nil {
+			stack = append(stack,&trackedNode{node:n.node.Left})
 		}
 
-		top.visited = true
+		n.visited = true
 	}
 
-	return ret
+	return res
 }
 
 // @lc code=end

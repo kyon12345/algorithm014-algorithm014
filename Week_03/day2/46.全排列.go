@@ -11,24 +11,21 @@ func permute(nums []int) [][]int {
 		return nil
 	}
 
-	ret := make([][]int,0)
+	res := make([][]int,0)
 
-	backtrack(nums,[]int{},&ret)
-	return ret
+	permuteHelper(nums, []int{}, &res)
+
+	return res
 }
 
-
-func backtrack(nums []int,prev []int, ans *[][]int) {
+func permuteHelper(nums,prev []int,res *[][]int) {
 	if len(nums) == 0 {
-		// *ans = append(*ans,append([]int{},prev...))
-		*ans = append(*ans,prev)
+		*res = append(*res,prev)
 		return
 	}
 
 	for i := 0; i < len(nums); i++ {
-		backtrack(append(append([]int{},nums[:i]...),nums[i + 1:]...),
-		append(prev,nums[i]),ans)
+		permuteHelper(append(append([]int{},nums[:i]...),nums[i + 1:]...), append(prev, nums[i]),res)
 	}
 }
-
 // @lc code=end

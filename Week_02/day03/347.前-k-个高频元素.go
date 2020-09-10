@@ -10,30 +10,31 @@ import "container/heap"
 // @lc code=start
 //使用优先队列
 func topKFrequent(nums []int, k int) []int {
-	seen := map[int]int{}
+	seen := make(map[int]int,0)
 
 	for _, n := range nums {
 		seen[n] ++
 	}
 
 	q := &priorityQueue{}
+
 	heap.Init(q)
 
 	for val,cnt := range seen {
-		heap.Push(q,element{val,cnt})
+		heap.Push(q, element{val:val,cnt:cnt})
+
 		if q.Len() > k {
 			heap.Pop(q)
 		}
 	}
 
-	ans := make([]int,0)
-
+	res := []int{}
 	for i := 0; i < k; i++ {
-		ans = append(ans,heap.Pop(q).(element).val)
+		res = append(res,heap.Pop(q).(element).val)
 	}
 
-	return ans
 
+	return res
 }
 
 type element struct {
@@ -41,22 +42,22 @@ type element struct {
 	cnt int
 }
 
-type priorityQueue []element
+type priorityQueue  []element
 
+func (pq priorityQueue) Len() int {return len(pq)}
 
-func (q priorityQueue) Len() int {return len(q)}
+func (pq priorityQueue) Less(i,j int) bool {return pq[i].cnt < pq[j].cnt}
 
-func (q priorityQueue) Less(i,j int) bool {return q[i].cnt < q[j].cnt}
-
-func (q priorityQueue) Swap(i,j int) {q[i],q[j] = q[j],q[i]}
+func (pq priorityQueue) Swap(i,j int) {pq[i],pq[j] = pq[j],pq[i]}
 
 func (q *priorityQueue) Push(x interface{}) {*q = append(*q,x.(element))}
 
 func (q *priorityQueue) Pop() interface{} {
-	ret := (*q)[q.Len() - 1]
-
-	*q = (*q)[:q.Len() - 1]
+	ret := (*q)[len(*q) - 1]
+	
+	*q = (*q)[:len(*q) - 1]
 
 	return ret
 }
+
 // @lc code=end

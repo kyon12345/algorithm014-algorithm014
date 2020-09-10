@@ -32,13 +32,43 @@ package main
 // }
 
 //bfs
+type pairStr struct {
+	left int
+	right int
+	s string
+}
+
 func generateParenthesis(n int) []string {
+	if n == 0 {
+		return nil
+	}
+
+	stack := []*pairStr{{0,0,""}}
+
 	ret := []string{}
 
-	l := 0
-	r := 0
+	for len(stack) > 0 {
+		next := []*pairStr{}
 
-	
+		for _, node := range stack {
+			if node.left < n {
+				next = append(next,&pairStr{node.left + 1,node.right,node.s + "("})
+			}
 
+			if node.right < node.left {
+				next = append(next,&pairStr{node.left,node.right + 1,node.s + ")"})
+			}
+		}
+
+		for _, pair := range next {
+			if pair.left == n && pair.right == n {
+				ret = append(ret,pair.s)
+			}
+		}
+
+		stack = next
+	}
+
+	return ret
 }
 // @lc code=end
