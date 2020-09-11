@@ -17,7 +17,7 @@ package main
  func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	//f(lson) && f(rson) || (x == p || x == q) && f(lson) || f(rson)
 	if root == nil {
-		return nil
+		return root
 	}
 
 	if root.Val == p.Val || root.Val == q.Val {
@@ -25,7 +25,6 @@ package main
 	}
 
 	left := lowestCommonAncestor(root.Left, p, q)
-
 	right := lowestCommonAncestor(root.Right, p, q)
 
 	if left != nil && right != nil {

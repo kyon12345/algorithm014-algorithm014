@@ -21,42 +21,45 @@ func solveNQueens(n int) [][]string {
 		return ans
 	}
 
-	ans = [][]string{} 
+	ans = [][]string{}
 
 	cols = make(map[int]bool,n)
 	pie = make(map[int]bool,n)
 	na = make(map[int]bool,n)
 
 	dfs(n,0, []int{})
+
 	return ans
 }
 
-func dfs(n int, row int, path []int) {
+func dfs(n,row int,path []int) {
 	if row >= n {
-		ans = append(ans, generateBoard(path, n))
+		ans = append(ans,getBoard(n,path))	
 	}
 
 	for col := 0; col < n; col++ {
-		if cols[col] || pie[row + col] || na[row - col] {
+		if cols[col] || pie[col + row] || na[row - col] {
 			continue
 		}
+
 		cols[col] = true
 		pie[row + col] = true
 		na[row - col] = true
-		dfs(n,row + 1,append(path, col))
+		
+		dfs(n,row + 1,append(path,col))
+
 		cols[col] = false
-		pie[row + col] = false
+		pie[col + row] = false
 		na[row - col] = false
 	}
-
-	return
 }
 
-func generateBoard(path []int, n int) []string {
-	var res []string
+func getBoard(n int,path []int) []string{
+	
+	res := make([]string,0)
 
-	for _, col := range path {
-		res = append(res, strings.Repeat(".", col) + "Q" + strings.Repeat(".", n - col - 1))
+	for _,col := range path {
+		res = append(res,strings.Repeat(".",col) + "Q" + strings.Repeat(".",n - col - 1))
 	}
 
 	return res

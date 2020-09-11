@@ -5,7 +5,6 @@
  */
 package main
 
-
 // @lc code=start
 /**
  * Definition for a binary tree node.
@@ -26,9 +25,8 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 	root := &TreeNode{Val: preorder[0]}
 
 	i := 0
-
 	for ; i < len(inorder); i++ {
-		if preorder[0] == inorder[i] {
+		if inorder[i] == preorder[0] {
 			break
 		}
 	}
