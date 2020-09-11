@@ -5,41 +5,50 @@
  */
 package main
 // @lc code=start
-//bfs
+//bfs,标准模板
+//求无向图最短路径问题
 func ladderLength(beginWord string, endWord string, wordList []string) int {
-	words := make(map[string]struct{})
-	for _, word := range wordList {
-		words[word] = struct{}{}
+	//这种解法如果wordlist很大就会超时
+	wdict := map[string][]int{}
+
+	for id,w := range wordList {
+		for i := range w {
+			k := w[0:i] + "*" + w[i + 1:]
+			if _,ok := wdict[k];!ok {
+				wdict[k] = []int{}
+			}
+			wdict[k] = append(wdict[k],id)
+		}
 	}
-	if _, ok := words[endWord]; !ok {
-		return 0
-	}
-	queue := []string{beginWord}
-	visited := make(map[string]struct{})
-	visited[beginWord] = struct{}{}
-	length := 1
-	for len(queue) > 0 {
-		queueSize := len(queue)
-		for i := 0; i < queueSize; i++ {
-			lastWord := queue[0]
-			queue = queue[1:]
-			for j := 0; j < len(lastWord); j++ {
-				for k := 'a'; k <= 'z'; k++ {
-					newWord := lastWord[:j] + string(k) + lastWord[j+1:]
-					if _, ok := words[newWord]; !ok || newWord == lastWord {
-						continue
+
+	used,l := make([]bool,len(wordList)),1
+
+	wordList = append(wordList,beginWord)
+
+	q := []int{len(wordList) - 1}
+
+	for len(q) > 0 {
+		nextQ := []int{}
+
+		l ++
+
+		for _, qid := range q {
+			w := wordList[qid]
+
+			for i := range w {
+				k := w[0:i] + "*" + w[i + 1:]
+				for _, wid := range wdict[k] {
+					if wordList[wid] == endWord {
+						return l
 					}
-					if newWord == endWord {
-						return length + 1
-					}
-					if _, ok := visited[newWord]; !ok {
-						queue = append(queue, newWord)
-						visited[newWord] = struct{}{}
+					if !used[wid] {
+						used[wid] = true
+						nextQ = append(nextQ,wid)
 					}
 				}
 			}
 		}
-		length++
+		q = nextQ
 	}
 
 	return 0
