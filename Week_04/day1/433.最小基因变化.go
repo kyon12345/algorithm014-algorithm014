@@ -11,44 +11,53 @@ package main
 
 //bfs
 func minMutation(start string, end string, bank []string) int {
-	set := make(map[string]struct{})
+	bankSet := make(map[string]struct{})
 
-	for _, v := range bank {
-		set[v] =struct{}{}
+	for i := 0; i < len(bank); i++ {
+		bankSet[bank[i]] = struct{}{}
+	}
+
+	if _,ok :=  bankSet[end];!ok {
+		return -1
 	}
 
 	queue := []string{start}
 
-	i := 0 
+	step := 0
 	for len(queue) > 0 {
-		i ++
-		l := len(queue)
+		step ++ 
 
+		l := len(queue)
 		for _, v := range queue {
-			for v2, _ := range set {
-				if isNear(v,v2) {
+			for v2 := range bankSet {
+				if isNear(v, v2) {
 					if v2 == end {
-						return i
+						return step
 					}
 					queue = append(queue,v2)
-					delete(set,v2)
+					delete(bankSet,v2)
 				}
 			}
 		}
+
 		queue = queue[l:]
 	}
+
+	
+
 	return -1
 }
 
-func isNear (start,end string) bool {
-	mut := 0 
-	for i := 0; i < 8; i++ {
+func isNear(start,end string) bool {
+	cnt := 0 
+
+	for i := 0; i < len(start); i++ {
 		if start[i] != end[i] {
-			mut ++
+			cnt ++
 		}
 	}
 
-	return mut == 1
+	return cnt == 1
 }
 	
 // @lc code=end

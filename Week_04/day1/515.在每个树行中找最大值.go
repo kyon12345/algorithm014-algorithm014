@@ -29,32 +29,33 @@ type TreeNode struct {
 // 		return nil
 // 	}
 
-// 	stack := []*TreeNode{root}
+// 	queue := []*TreeNode{root}
 // 	res := []int{}
 
-// 	for len(stack) > 0 {
-// 		node := []*TreeNode{}
-// 		max := math.MinInt64
 
-// 		for _, n := range stack {
+// 	for len(queue) > 0 {
+// 		l := len(queue)
+
+// 		max := math.MinInt64
+// 		for _, n := range queue {
 // 			if n.Val > max {
 // 				max = n.Val
 // 			}
 
-// 			if n.Left != nil {
-// 				node = append(node,n.Left)
+// 			if n.Right != nil {
+// 				queue = append(queue,n.Right)
 // 			}
 
-// 			if n.Right != nil {
-// 				node = append(node,n.Right)
+// 			if n.Left != nil {
+// 				queue = append(queue,n.Left)
 // 			}
 // 		}
 
 // 		res = append(res,max)
 
-// 		stack = node
+// 		queue = queue[l:]
 // 	}
-
+	
 // 	return res
 // }
 
@@ -84,5 +85,4 @@ func dfsLargestValues(root *TreeNode, res *[]int, level int) {
 		dfsLargestValues(root.Right, res, level+1)
 	}
 }
-
 // @lc code=end
