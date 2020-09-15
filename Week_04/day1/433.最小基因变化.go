@@ -13,46 +13,44 @@ package main
 func minMutation(start string, end string, bank []string) int {
 	bankSet := make(map[string]struct{})
 
-	for i := 0; i < len(bank); i++ {
-		bankSet[bank[i]] = struct{}{}
-	}
-
-	if _,ok :=  bankSet[end];!ok {
-		return -1
+	for _, v := range bank {
+		bankSet[v] = struct{}{}
 	}
 
 	queue := []string{start}
 
+	if _,ok := bankSet[end];!ok {
+		return -1
+	}
+
 	step := 0
 	for len(queue) > 0 {
-		step ++ 
-
+		step ++
 		l := len(queue)
-		for _, v := range queue {
-			for v2 := range bankSet {
-				if isNear(v, v2) {
-					if v2 == end {
-						return step
-					}
-					queue = append(queue,v2)
-					delete(bankSet,v2)
+		for i := 0; i < l; i++ {
+			for v := range bankSet {
+				if !isNear(v, queue[i]) {
+					continue
+				}
+
+				if v == end {
+					return step
+				} else {
+					queue = append(queue,v)
+					delete(bankSet, v)
 				}
 			}
 		}
-
 		queue = queue[l:]
 	}
-
-	
 
 	return -1
 }
 
-func isNear(start,end string) bool {
-	cnt := 0 
-
-	for i := 0; i < len(start); i++ {
-		if start[i] != end[i] {
+func isNear(a,b string) bool {
+	cnt := 0
+	for i := 0; i < len(a); i++ {
+		if a[i] != b[i] {
 			cnt ++
 		}
 	}

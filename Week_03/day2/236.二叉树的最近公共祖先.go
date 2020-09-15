@@ -17,14 +17,15 @@ package main
  func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	//f(lson) && f(rson) || (x == p || x == q) && f(lson) || f(rson)
 	if root == nil {
-		return root
+		return nil
 	}
 
-	if root.Val == p.Val || root.Val == q.Val {
+	if root.Val == q.Val || root.Val == p.Val {
 		return root
 	}
 
 	left := lowestCommonAncestor(root.Left, p, q)
+
 	right := lowestCommonAncestor(root.Right, p, q)
 
 	if left != nil && right != nil {

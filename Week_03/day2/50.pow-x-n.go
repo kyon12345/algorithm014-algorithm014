@@ -37,29 +37,29 @@ package main
 // }
 
 //递归 log(n) log(n)
-func myPow(x float64, n int) float64 {
-	if n < 0 {
-		x = 1/x
-		n = -n
-	}
+// func myPow(x float64, n int) float64 {
+// 	if n < 0 {
+// 		x = 1/x
+// 		n = -n
+// 	}
 
-	return quickMul(x,n)
-}
+// 	return quickMul(x,n)
+// }
 
-func quickMul(x float64,n int) float64 {
-	if n == 0 {
-		return 1
-	}
+// func quickMul(x float64,n int) float64 {
+// 	if n == 0 {
+// 		return 1
+// 	}
 
-	//如果我要知道x^n次方我只需要知道x^n/2就行了
-	y := quickMul(x, n >> 1)
+// 	//如果我要知道x^n次方我只需要知道x^n/2就行了
+// 	y := quickMul(x, n >> 1)
 
-	if n & 1 == 1 {
-		return y * y * x
-	} else {
-		return y * y
-	}
-}
+// 	if n & 1 == 1 {
+// 		return y * y * x
+// 	} else {
+// 		return y * y
+// 	}
+// }
 //迭代
 //o(log n) o(1)
 // func myPow(x float64, n int) float64 {
@@ -73,11 +73,29 @@ func quickMul(x float64,n int) float64 {
 // 		if n & 1 == 1 {
 // 			res *= x
 // 		}
-	
+
 // 		x,n = x*x,n >> 1
 // 	}
 
 // 	return res
 // }
+
+func myPow(x float64, n int) float64 {
+	if n < 0 {
+		x = 1 / x
+		n = -n
+	}
+
+	res := 1.0
+
+	for n > 0 {
+		if n&1 == 1 {
+			res *= x
+		}
+		x, n = x*x, n>>1
+	}
+
+	return res
+}
 
 // @lc code=end

@@ -12,7 +12,6 @@ func numIslands(grid [][]byte) int {
 		return 0
 	}
 
-
 	count := 0
 	for i := 0; i < len(grid); i++ {
 		for j := 0; j < len(grid[0]); j++ {
@@ -21,7 +20,7 @@ func numIslands(grid [][]byte) int {
 			}
 
 			count ++
-			
+
 			helperIslands(grid, i, j)
 		}
 	}
@@ -30,17 +29,16 @@ func numIslands(grid [][]byte) int {
 }
 
 func helperIslands(grid [][]byte,i,j int) {
-	if i >= len(grid) || i < 0 || j < 0 || j >= len(grid[0]) || grid[i][j] != '1' {
+	if i < 0 || i >= len(grid) || j < 0 || j >= len(grid[0]) || grid[i][j] != '1' {
 		return
-	} 
+	}
 
 	grid[i][j] ++
 
 	helperIslands(grid, i + 1, j)
 	helperIslands(grid, i, j + 1)
-	helperIslands(grid, i - 1, j)
+	helperIslands(grid, i - 1,j)
 	helperIslands(grid, i, j - 1)
-
 }
 // @lc code=end
 

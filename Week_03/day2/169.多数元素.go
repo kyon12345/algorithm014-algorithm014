@@ -8,10 +8,9 @@ package main
 // @lc code=start
 //投票算法 O(N) O(1)
 func majorityElement(nums []int) int {
-	count := 0
-	
-	var candidate int
+	count := 0 
 
+	var candidate int
 	for i := 0; i < len(nums); i++ {
 		if count == 0 {
 			candidate = nums[i]

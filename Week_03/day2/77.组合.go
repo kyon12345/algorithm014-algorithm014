@@ -16,21 +16,21 @@ func combine(n int, k int) [][]int {
 		return nil
 	}
 
-	res := make([][]int,0)
+	res := make([][]int, 0)
 
-	backtrackCombine(1, n, k, []int{}, &res)
+	backtrackCombine(n, 1, k, []int{}, &res)
 
 	return res
 }
 
-func backtrackCombine(pointer, n, k int, curr []int, res *[][]int) {
-	if len(curr) == k {
-		*res = append(*res,append([]int{},curr...))
+func backtrackCombine(n,pointer,k int,prev []int,res *[][]int) {
+	if len(prev) == k {
+		*res = append(*res,append([]int{},prev...))
 		return
 	}
 
-	for i := pointer; i <= n - (k - len(curr)) + 1; i++ {
-		backtrackCombine(i + 1, n, k, append(curr,i), res)
+	for i := pointer; i <= n - (k - len(prev)) + 1; i++ {
+		backtrackCombine(n, i + 1, k, append(prev,i), res)
 	}
 }
 

@@ -22,27 +22,27 @@ var phoneMap map[string]string = map[string]string{
 var combinations []string
 
 func letterCombinations(digits string) []string {
-	if len(digits) == 0 {
-		return nil
-	}	
-	
+    if len(digits) == 0 {
+        return nil
+    }
 
-	combinations = []string{}
+    combinations = []string{}
 
-    backtrackLetters(digits, "", 0)
+    backtrackLetter(digits, "", 0)
 
     return combinations
 }
 
-func backtrackLetters(digits,comb string,index int) {
+func backtrackLetter(digits string,combine string,index int) {
     if index == len(digits) {
-        combinations = append(combinations,comb)
-    } else {
-        letters := phoneMap[string(digits[index])]
+        combinations = append(combinations,combine)
+        return
+    }
 
-        for _, l := range letters {
-            backtrackLetters(digits, comb + string(l), index + 1)
-        }
+    letters := phoneMap[string(digits[index])]
+
+    for i := 0; i < len(letters); i++ {
+        backtrackLetter(digits, combine + string(letters[i]), index + 1) 
     }
 }
 // @lc code=end

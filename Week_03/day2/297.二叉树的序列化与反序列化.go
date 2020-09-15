@@ -67,7 +67,8 @@ func (this *Codec) rdeserialize() *TreeNode {
 		return nil
 	}
 
-	root :=&TreeNode{Val: myAtoi(this.l[0])}
+	root := &TreeNode{Val: myAtoi(this.l[0])}
+
 	this.l = this.l[1:]
 
 	root.Left = this.rdeserialize()

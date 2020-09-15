@@ -13,19 +13,19 @@ func permute(nums []int) [][]int {
 
 	res := make([][]int,0)
 
-	permuteHelper(nums, []int{}, &res)
+	backtrackPermute(nums, []int{}, &res)
 
 	return res
 }
 
-func permuteHelper(nums,prev []int,res *[][]int) {
+func backtrackPermute(nums,prev []int,res *[][]int) {
 	if len(nums) == 0 {
-		*res = append(*res,prev)
+		*res = append(*res,append([]int{},prev...))
 		return
 	}
 
 	for i := 0; i < len(nums); i++ {
-		permuteHelper(append(append([]int{},nums[:i]...),nums[i + 1:]...), append(prev, nums[i]),res)
+		backtrackPermute(append(append([]int{},nums[:i]...),nums[i + 1:]...), append(prev,nums[i]), res)
 	}
 }
 // @lc code=end

@@ -80,28 +80,33 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 	for len(startQueue) > 0 {
 		step ++
 		l := len(startQueue)
+
 		for i := 0; i < l; i++ {
 			chars := []byte(startQueue[i])
+
 			for j := 0; j < len(chars); j++ {
 				o := chars[j]
-				for c := 'a';c <= 'z';c ++ {
+				for c := 'a'; c <= 'z'; c++ {
 					chars[j] = byte(c)
 					idx,ok := wordMap[string(chars)]
-					//如果替换后的词没有在字典中,或者已经使用过,则跳过
+
 					if !ok || startUsed[idx] {
 						continue
+					}
+
+					if endUsed[idx] {
+						return step + 1
 					} else {
-						if endUsed[idx] {
-							return step + 1
-						}
 						startQueue = append(startQueue,wordList[idx])
-						startUsed[idx]	= true
+						startUsed[idx] = true
 					}
 				}
 				chars[j] = o
 			}
 		}
+
 		startQueue = startQueue[l:]
+
 		if len(startQueue) > len(endQueue) {
 			startQueue,endQueue = endQueue,startQueue
 			startUsed,endUsed = endUsed,startUsed
