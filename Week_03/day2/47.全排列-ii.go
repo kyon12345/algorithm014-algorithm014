@@ -9,36 +9,33 @@ import "sort"
 
 // @lc code=start
 //O(N * N!) O(N * N!)
-	func permuteUnique(nums []int) [][]int {
-		if len(nums) == 0 {
-			return nil
-		}
-
-		res := make([][]int,0)
-
-		sort.Ints(nums)
-
-		backtrackPermuteUnique(nums, []int{}, &res)
-
-		return res
+func permuteUnique(nums []int) [][]int {
+	if len(nums) == 0 {
+		return nil
 	}
 
-	func backtrackPermuteUnique(nums,prev []int,res *[][]int) {
-		if len(nums) == 0 {
-			// *res = append(*res,append([]int{},prev...))
-			//这样就无法通过
-			*res = append(*res,prev)
-			return
-		}
+	sort.Ints(nums)
 
-		for i := 0; i < len(nums); i++ {
-			if i >0 && nums[i] == nums[i - 1] {
-				continue
-			}
+	res := make([][]int, 0)
 
-			backtrackPermuteUnique(append(append([]int{},nums[:i]...),nums[i + 1:]...),
-			append(prev, nums[i]), res)
-		}
+	backtrackPermute2(nums, []int{}, &res)
+
+	return res
+}
+
+func backtrackPermute2(nums, prev []int, res *[][]int) {
+	if len(nums) == 0 {
+		*res = append(*res, append([]int{}, prev...))
+		return
 	}
+
+	for i := 0; i < len(nums); i++ {
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+
+		backtrackPermute2(append(append([]int{}, nums[:i]...), nums[i+1:]...), append(prev, nums[i]), res)
+	}
+}
+
 // @lc code=end
-

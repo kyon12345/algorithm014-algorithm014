@@ -28,12 +28,12 @@ func letterCombinations(digits string) []string {
 
     combinations = []string{}
 
-    backtrackLetter(digits, "", 0)
+    backtrackLetter(digits, 0, "")
 
     return combinations
 }
 
-func backtrackLetter(digits string,combine string,index int) {
+func backtrackLetter(digits string,index int,combine string) {
     if index == len(digits) {
         combinations = append(combinations,combine)
         return
@@ -42,7 +42,7 @@ func backtrackLetter(digits string,combine string,index int) {
     letters := phoneMap[string(digits[index])]
 
     for i := 0; i < len(letters); i++ {
-        backtrackLetter(digits, combine + string(letters[i]), index + 1) 
+        backtrackLetter(digits, index + 1, combine + string(letters[i]))
     }
 }
 // @lc code=end

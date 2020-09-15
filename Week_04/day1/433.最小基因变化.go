@@ -17,19 +17,20 @@ func minMutation(start string, end string, bank []string) int {
 		bankSet[v] = struct{}{}
 	}
 
-	queue := []string{start}
-
 	if _,ok := bankSet[end];!ok {
 		return -1
 	}
+
+	queue := []string{start}
 
 	step := 0
 	for len(queue) > 0 {
 		step ++
 		l := len(queue)
+
 		for i := 0; i < l; i++ {
-			for v := range bankSet {
-				if !isNear(v, queue[i]) {
+			for _, v := range bank {
+				if !isNear(queue[i], v) {
 					continue
 				}
 
@@ -41,14 +42,17 @@ func minMutation(start string, end string, bank []string) int {
 				}
 			}
 		}
+
 		queue = queue[l:]
 	}
 
 	return -1
+
 }
 
-func isNear(a,b string) bool {
-	cnt := 0
+func isNear (a,b string) bool {
+	cnt := 0 
+
 	for i := 0; i < len(a); i++ {
 		if a[i] != b[i] {
 			cnt ++

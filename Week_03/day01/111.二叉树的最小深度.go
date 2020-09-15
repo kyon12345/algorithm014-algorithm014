@@ -63,12 +63,12 @@
 // 	return 1 + minVal(left,right)
 // }
 
-// func minVal (a,b int) int {
-// 	if a > b {
-// 		return b
-// 	}
-// 	return a
-// }
+func minVal (a,b int) int {
+	if a > b {
+		return b
+	}
+	return a
+}
 
 //BFS O(N) O(N)
 func minDepth(root *TreeNode) int {
@@ -76,28 +76,31 @@ func minDepth(root *TreeNode) int {
 		return 0
 	}
 
-	nodes := []*TreeNode{root}
-	depth := 1
+	queue := []*TreeNode{root}
 
-	for {
-		newNodes := []*TreeNode{}  
-
-		for _, n := range nodes {
-			if n.Left == nil && n.Right == nil {
-				return depth
+	dep := 0
+	for len(queue) > 0 {
+		dep ++
+		l := len(queue)
+		for i := 0; i < l; i++ {
+			root = queue[i]
+			if root.Left == nil && root.Right == nil {
+				return dep
 			}
-			if n.Left != nil {
-				newNodes = append(newNodes,n.Left)
+			if root.Left != nil {
+				queue = append(queue,root.Left)
 			}
-			if n.Right != nil {
-				newNodes = append(newNodes,n.Right)
+			if root.Right != nil {
+				queue = append(queue,root.Right)
 			}
 		}
-		depth ++
-		nodes = newNodes
+		queue = queue[l:]
 	}
-	return depth
+
+	return dep
 }
+
+
 
 // @lc code=end
 

@@ -12,25 +12,25 @@ package main
 // package cursion
 
 func combine(n int, k int) [][]int {
-	if n == 0 {
+	if n < k {
 		return nil
 	}
 
-	res := make([][]int, 0)
+	res := make([][]int,0)
 
-	backtrackCombine(n, 1, k, []int{}, &res)
+	dfsCombine(1, n, k, []int{}, &res)
 
 	return res
 }
 
-func backtrackCombine(n,pointer,k int,prev []int,res *[][]int) {
+func dfsCombine(pointer,n,k int,prev []int, res *[][]int) {
 	if len(prev) == k {
 		*res = append(*res,append([]int{},prev...))
 		return
 	}
 
 	for i := pointer; i <= n - (k - len(prev)) + 1; i++ {
-		backtrackCombine(n, i + 1, k, append(prev,i), res)
+		dfsCombine(i + 1, n, k, append(prev,i),res)
 	}
 }
 

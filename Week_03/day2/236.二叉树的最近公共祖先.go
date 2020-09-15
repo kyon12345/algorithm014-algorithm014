@@ -20,23 +20,22 @@ package main
 		return nil
 	}
 
-	if root.Val == q.Val || root.Val == p.Val {
+	if root.Val == p.Val || root.Val == q.Val {
 		return root
 	}
 
-	left := lowestCommonAncestor(root.Left, p, q)
+	l := lowestCommonAncestor(root.Left, p, q)
+	r := lowestCommonAncestor(root.Right, p, q)
 
-	right := lowestCommonAncestor(root.Right, p, q)
-
-	if left != nil && right != nil {
+	if l != nil && r != nil {
 		return root
 	}
 
-	if left == nil {
-		return right
+	if l != nil {
+		return l
 	}
 
-	return left
+	return r
 }
 // @lc code=end
 

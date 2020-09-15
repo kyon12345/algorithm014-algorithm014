@@ -4,55 +4,57 @@
  * [529] 扫雷游戏
  */
 package main
+
+
 // @lc code=start
 
-var dirX = []int{1,-1,1,-1,-1,1,0,0}
-var dirY = []int{0,0,1,-1,1,-1,1,-1}
+var dirX = []int{1, -1, 1, -1, -1, 1, 0, 0}
+var dirY = []int{0, 0, 1, -1, 1, -1, 1, -1}
 
+//O(MN) O(MN)
 func updateBoard(board [][]byte, click []int) [][]byte {
-	x := click[0]
-	y := click[1]
+	x, y := click[0], click[1]
 
 	if board[x][y] == 'M' {
 		board[x][y] = 'X'
-	} else {
-		dfsBoard(board,x,y)
+		return board
 	}
+
+	dfsBoard(board, x, y)
 
 	return board
 }
 
-func dfsBoard(board [][]byte,x,y int) {
-	cnt := 0 
+func dfsBoard(board [][]byte, x, y int) {
+
+	cnt := 0
 
 	for i := 0; i < 8; i++ {
-		tx,ty := x + dirX[i],y + dirY[i]
-
-		if tx < 0 || ty < 0 || tx >= len(board) || ty >= len(board[0]) {
+		dx, dy := x+dirX[i], y+dirY[i]
+		if dx < 0 || dx >= len(board) || dy < 0 || dy >= len(board[0]) {
 			continue
 		}
 
-		if board[tx][ty] == 'M' {
-			cnt ++
+		if board[dx][dy] == 'M' {
+			cnt++
 		}
 	}
 
 	if cnt > 0 {
-		board[x][y] = byte('0' + cnt)
+		board[x][y] = byte(cnt + '0')
 	} else {
 		board[x][y] = 'B'
 
 		for i := 0; i < 8; i++ {
-			tx,ty := x + dirX[i],y + dirY[i]
+			dx, dy := x+dirX[i], y+dirY[i]
 
-			if tx < 0 || tx >= len(board) || ty <0 || ty >= len(board[0]) || board[tx][ty] != 'E' {
+			if dx < 0 || dx >= len(board) || dy < 0 || dy >= len(board[0]) || board[dx][dy] != 'E' {
 				continue
 			}
 
-			dfsBoard(board, tx, ty)
+			dfsBoard(board, dx, dy)
 		}
 	}
 }
 
 // @lc code=end
-

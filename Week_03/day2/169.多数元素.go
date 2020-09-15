@@ -11,16 +11,15 @@ func majorityElement(nums []int) int {
 	count := 0 
 
 	var candidate int
-	for i := 0; i < len(nums); i++ {
+
+	for _, n := range nums {
 		if count == 0 {
-			candidate = nums[i]
+			candidate = n
+			count ++
+		} else if candidate == n {
 			count ++
 		} else {
-			if nums[i] == candidate {
-				count ++
-			} else {
-				count --
-			}
+			count --
 		}
 	}
 

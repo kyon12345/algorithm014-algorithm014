@@ -20,46 +20,45 @@ func solveNQueens(n int) [][]string {
 		return nil
 	}
 
-	cols = make(map[int]bool)
-	pie = make(map[int]bool)
-	na = make(map[int]bool)
+	cols = make(map[int]bool,n)
+	pie = make(map[int]bool,n)
+	na = make(map[int]bool,n)
 
-	ans = make([][]string, 0)
+	ans = [][]string{}
 
-	dfs(n,0,[]int{})
-	
+	dfs(0, n, []int{})
+
 	return ans
 }
 
-func dfs(n, row int, path []int) {
+func dfs(row,n int,path []int) {
 	if row >= n {
-		ans = append(ans, getBoard(n, path))
+		ans = append(ans,getBoard(path, n))	
 		return
 	}
 
 	for col := 0; col < n; col++ {
-		if cols[col] || pie[col+row] || na[row-col] {
+		if cols[col] || pie[row + col] || na[row - col] {
 			continue
 		}
 
 		cols[col] = true
-		pie[col+row] = true
-		na[row-col] = true
+		pie[row + col] = true
+		na[row - col] =true
 
-		dfs(n,row + 1,append(path,col))
+		dfs(row + 1,n,append(path,col))
 
 		cols[col] = false
-		pie[col + row] = false
+		pie[row + col] = false
 		na[row - col] = false
 	}
 }
 
-func getBoard(n int, path []int) []string {
+func getBoard(path []int,n int) []string {
+	res := make([]string,0)
 
-	res := make([]string, 0)
-
-	for _, col := range path {
-		res = append(res, strings.Repeat(".", col)+"Q"+strings.Repeat(".", n-col-1))
+	for _, v := range path {
+		res = append(res,strings.Repeat(".", v) + "Q" + strings.Repeat(".", n - v - 1))
 	}
 
 	return res

@@ -75,6 +75,7 @@ func (this *Codec) rdeserialize() *TreeNode {
 	root.Right = this.rdeserialize()
 
 	return root
+
 }
 
 func myAtoi (s string) int {

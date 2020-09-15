@@ -18,7 +18,7 @@ func permute(nums []int) [][]int {
 	return res
 }
 
-func backtrackPermute(nums,prev []int,res *[][]int) {
+func backtrackPermute(nums []int,prev []int,res *[][]int) {
 	if len(nums) == 0 {
 		*res = append(*res,append([]int{},prev...))
 		return
