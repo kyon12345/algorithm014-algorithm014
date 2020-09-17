@@ -5,32 +5,49 @@
  */
 package main
 // @lc code=start
+// //O(N^2) O(1)
+// func jump(nums []int) int {
+// 	end := len(nums) - 1
+// 	step := 0
+
+// 	for end != 0 {
+// 		for i := 0; i < end; i++ {
+// 			if nums[i] >= end - i {
+// 				end = i
+// 				step ++
+// 				break
+// 			}
+// 		}
+// 	}
+
+// 	return step
+// }
+
+//O(N) O(1)
 func jump(nums []int) int {
-	if len(nums) <= 1 {
-		return 0
-	}
+	end := 0
+	maxPosition := 0 
+	step := 0
 
-	jumps := 1
+	for i := 0; i < len(nums) - 1; i++ {
+		maxPosition = maxVal(maxPosition, nums[i] + i)
 
-	currentJump,nextJump := nums[0],nums[0]	
-
-	for i := 1; i < len(nums); i++ {
-		if i == len(nums) - 1 {
-			return jumps
-		}
-
-		if i + nums[i] > nextJump {
-			nextJump = i + nums[i]
-		}
-
-		if i == currentJump {
-			jumps ++
-			currentJump = nextJump
+		if i == end {
+			step ++
+			end = maxPosition
 		}
 	}
 
-	return jumps
-
+	return step
 }
+
+func maxVal (a,b int) int {
+	if a > b {
+		return a
+	}
+
+	return b
+}
+
 // @lc code=end
 
