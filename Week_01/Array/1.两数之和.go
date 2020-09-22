@@ -3,7 +3,7 @@
  *
  * [1] 两数之和
  */
-
+package main
 // @lc code=start
 func twoSum(nums []int, target int) []int {
 	//1.暴力法 O(n^2) O(1) 
@@ -21,14 +21,14 @@ func twoSum(nums []int, target int) []int {
 	m := make(map[int]int)
 
 	for i := 0;i < len(nums);i ++ {
-		if value,exist := m[target - nums[i]];exist {
+		if value,ok := m[target - nums[i]];ok {
 			return []int{value,i}
 		}
-		m[nums[i]] = i 
+
+		m[nums[i]] = i
 	}
 
-	return []int{}
-
+	return nil
 }
 // @lc code=end
 

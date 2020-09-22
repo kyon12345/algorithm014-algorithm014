@@ -21,24 +21,24 @@ func numIslands(grid [][]byte) int {
 
 			cnt ++
 
-			helperIslands(grid,i,j)
+			dfsIslands(i,j,grid)
 		}
 	}
 
 	return cnt
 }
 
-func helperIslands(grid [][]byte,i,j int) {
-	if i < 0 || i >= len(grid) || j < 0 || j >= len(grid[0]) || grid[i][j] != '1' {
+func dfsIslands(i,j int,grid [][]byte) {
+	if i < 0 || j < 0 || i >= len(grid) || j >= len(grid[0]) || grid[i][j] != '1' {
 		return
 	}
 
 	grid[i][j] ++
 
-	helperIslands(grid, i + 1,j)
-	helperIslands(grid, i - 1, j)
-	helperIslands(grid, i, j + 1)
-	helperIslands(grid, i, j - 1)
+	dfsIslands(i+1, j, grid)
+	dfsIslands(i, j + 1, grid)
+	dfsIslands(i - 1, j, grid)
+	dfsIslands(i, j - 1, grid)
 }
 // @lc code=end
 

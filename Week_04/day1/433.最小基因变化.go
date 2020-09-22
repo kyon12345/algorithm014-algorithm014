@@ -22,37 +22,33 @@ func minMutation(start string, end string, bank []string) int {
 	}
 
 	queue := []string{start}
-
+	
 	step := 0
 	for len(queue) > 0 {
-		step ++
 		l := len(queue)
-
+		step ++
 		for i := 0; i < l; i++ {
-			for _, v := range bank {
-				if !isNear(queue[i], v) {
+			for c := range bankSet {
+				if !isNear(queue[i], c) {
 					continue
 				}
 
-				if v == end {
+				if c == end {
 					return step
-				} else {
-					queue = append(queue,v)
-					delete(bankSet, v)
 				}
+
+				queue = append(queue,c)
+				delete(bankSet, c)
 			}
 		}
-
 		queue = queue[l:]
 	}
 
 	return -1
-
 }
 
-func isNear (a,b string) bool {
-	cnt := 0 
-
+func isNear(a,b string) bool {
+	cnt := 0
 	for i := 0; i < len(a); i++ {
 		if a[i] != b[i] {
 			cnt ++
@@ -61,6 +57,7 @@ func isNear (a,b string) bool {
 
 	return cnt == 1
 }
+
 	
 // @lc code=end
 

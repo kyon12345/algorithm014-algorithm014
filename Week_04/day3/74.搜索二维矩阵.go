@@ -40,7 +40,7 @@ func searchMatrix(matrix [][]int, target int) bool {
 
 	if left >= m*n || matrix[left/n][left%n] != target {
 		return false
-	}
+	}k
 
 	return true
 }

@@ -25,19 +25,23 @@ package main
 
 //O(N) O(1)
 func jump(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
 	end := 0
-	maxPosition := 0 
+	maxP := 0
 	step := 0
 
 	for i := 0; i < len(nums) - 1; i++ {
-		maxPosition = maxVal(maxPosition, nums[i] + i)
+		maxP = maxVal(maxP, nums[i] + i)
 
 		if i == end {
 			step ++
-			end = maxPosition
+			end = maxP
 		}
 	}
-
+	
 	return step
 }
 

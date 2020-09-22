@@ -13,7 +13,7 @@ var dirY = []int{0, 0, 1, -1, 1, -1, 1, -1}
 
 //O(MN) O(MN)
 func updateBoard(board [][]byte, click []int) [][]byte {
-	x, y := click[0], click[1]
+	x,y := click[0],click[1]
 
 	if board[x][y] == 'M' {
 		board[x][y] = 'X'
@@ -25,34 +25,34 @@ func updateBoard(board [][]byte, click []int) [][]byte {
 	return board
 }
 
-func dfsBoard(board [][]byte, x, y int) {
-
-	cnt := 0
+func dfsBoard(board [][]byte,x,y int) {
+	cnt := 0 
 
 	for i := 0; i < 8; i++ {
-		dx, dy := x+dirX[i], y+dirY[i]
+		dx,dy := x + dirX[i],y + dirY[i]
+
 		if dx < 0 || dx >= len(board) || dy < 0 || dy >= len(board[0]) {
 			continue
 		}
 
 		if board[dx][dy] == 'M' {
-			cnt++
+			cnt ++
 		}
 	}
 
 	if cnt > 0 {
-		board[x][y] = byte(cnt + '0')
+		board[x][y] = byte('0' + cnt)
 	} else {
 		board[x][y] = 'B'
 
 		for i := 0; i < 8; i++ {
-			dx, dy := x+dirX[i], y+dirY[i]
+			dx,dy := x + dirX[i],y + dirY[i]
 
 			if dx < 0 || dx >= len(board) || dy < 0 || dy >= len(board[0]) || board[dx][dy] != 'E' {
 				continue
 			}
 
-			dfsBoard(board, dx, dy)
+			dfsBoard(board, dx, dy)	
 		}
 	}
 }

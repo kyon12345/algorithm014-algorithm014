@@ -5,7 +5,10 @@
  */
 package main
 
-import "math"
+import (
+	"math"
+)
+
 
 type TreeNode struct {
 	Val   int
@@ -29,25 +32,24 @@ type TreeNode struct {
 // 		return nil
 // 	}
 
-// 	queue := []*TreeNode{root}
-// 	res := []int{}
+// 	res := make([]int,0)
 
+// 	queue := []*TreeNode{root}
+	
 
 // 	for len(queue) > 0 {
 // 		l := len(queue)
-
 // 		max := math.MinInt64
-// 		for _, n := range queue {
-// 			if n.Val > max {
-// 				max = n.Val
+
+// 		for i := 0; i < l; i++ {
+// 			max = maxVal(max, queue[i].Val)
+
+// 			if queue[i].Left != nil {
+// 				queue = append(queue,queue[i].Left)
 // 			}
 
-// 			if n.Right != nil {
-// 				queue = append(queue,n.Right)
-// 			}
-
-// 			if n.Left != nil {
-// 				queue = append(queue,n.Left)
+// 			if queue[i].Right != nil {
+// 				queue = append(queue,queue[i].Right)
 // 			}
 // 		}
 
@@ -55,34 +57,47 @@ type TreeNode struct {
 
 // 		queue = queue[l:]
 // 	}
-	
+
 // 	return res
+// }
+
+// func maxVal(a,b int) int {
+// 	if a < b {
+// 		return b
+// 	}
+// 	return a
 // }
 
 //dfs
 func largestValues(root *TreeNode) []int {
-	res := make([]int, 0)
 	if root == nil {
-		return res
+		return nil
 	}
 
-	dfsLargestValues(root, &res, 0)
+	res := make([]int,0)
+
+	dfsLargestValuees(root, 0, &res)
+
 	return res
 }
 
-func dfsLargestValues(root *TreeNode, res *[]int, level int) {
+func dfsLargestValuees(root *TreeNode,level int,res *[]int) {
 	if root == nil {
 		return
 	}
+
 	if len(*res) == level {
-		*res = append(*res, math.MinInt32)
+		*res = append(*res,math.MinInt64)
 	}
+
 	(*res)[level] = int(math.Max(float64((*res)[level]), float64(root.Val)))
+
 	if root.Left != nil {
-		dfsLargestValues(root.Left, res, level+1)
+		dfsLargestValuees(root.Left, level + 1, res)
 	}
+
 	if root.Right != nil {
-		dfsLargestValues(root.Right, res, level+1)
+		dfsLargestValuees(root.Right, level + 1, res)	
 	}
 }
 // @lc code=end
