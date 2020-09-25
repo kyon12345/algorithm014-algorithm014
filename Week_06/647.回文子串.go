@@ -3,7 +3,7 @@
  *
  * [647] 回文子串
  */
-
+package main
 // @lc code=start
 func countSubstrings(s string) (ans int) {
     ans = 0

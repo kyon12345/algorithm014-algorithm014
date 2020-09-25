@@ -21,13 +21,6 @@ package main
 // 	return min(dfsTriangle(triangle,i + 1,j),dfsTriangle(triangle,i + 1,j + 1)) + triangle[i][j]
 // }
 
-func min(a,b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 //递归 + 记忆搜索
 // var memo [][]int
 
@@ -82,14 +75,21 @@ func minimumTotal(triangle [][]int) int {
 		return 0
 	}
 
-	res := triangle[len(triangle) - 1]
+	dp := triangle[len(triangle) - 1]
 	for i := len(triangle) - 2; i >= 0; i-- {
 		for j := 0; j < len(triangle[i]); j++ {
-			res[j] = min(res[j],res[j + 1]) + triangle[i][j]
+			dp[j] = min(dp[j],dp[j + 1]) + triangle[i][j]
 		}
 	}
 
-	return res[0]
+	return dp[0]
+}
+
+func min(a,b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
 // @lc code=end
 

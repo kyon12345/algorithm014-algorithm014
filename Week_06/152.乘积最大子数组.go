@@ -35,10 +35,11 @@ package main
 //     return y
 // }
 
+//dp O(N) O(1)
 func maxProduct(nums []int) int {
-	tmp := nums[0]
-	max := nums[0]
-	min := nums[0]
+	//需要记录每次相乘最大的正数和最小的负数
+	//如果出现负数最大的变最小,最小的变最大
+	tmp,max,min := nums[0],nums[0],nums[0]
 
 	for i := 1; i < len(nums); i++ {
 		if nums[i] < 0 {

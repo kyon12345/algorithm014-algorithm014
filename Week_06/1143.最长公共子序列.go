@@ -29,6 +29,8 @@ package main
 
 //降维
 func longestCommonSubsequence(text1 string, text2 string) int {
+	//if sub1[-1] == sub2[-1] last +1
+	//else dp[i] = max(sub1,sub2)
 	dp := make([]int,len(text2) + 1)
 
 	for i := 1; i <= len(text1); i++ {
@@ -38,15 +40,14 @@ func longestCommonSubsequence(text1 string, text2 string) int {
 			if text1[i - 1] == text2[j - 1] {
 				dp[j] = last + 1
 			} else {
-				dp[j] = max(tmp, dp[j - 1])
+				dp[j] = max(dp[j - 1],tmp)
 			}
-
 			last = tmp
 		}
 	}
-	
+
 	return dp[len(text2)]
-}
+} 
 func max(x, y int) int {
 	if x < y {
 		return y

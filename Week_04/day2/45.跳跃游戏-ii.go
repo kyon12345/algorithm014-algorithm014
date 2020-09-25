@@ -25,13 +25,16 @@ package main
 
 //O(N) O(1)
 func jump(nums []int) int {
+	//从前往后跳,记录每一次跳能跳到的最远点,寻找所有遍历中能跳到最远的位置
+	//接着往下遍历,如果到达了上一次跳跃的最远点,那么说明一定会经过这个点,step ++
+
 	if len(nums) == 0 {
 		return 0
 	}
 
-	end := 0
-	maxP := 0
+	end := 0 
 	step := 0
+	maxP := 0
 
 	for i := 0; i < len(nums) - 1; i++ {
 		maxP = maxVal(maxP, nums[i] + i)
@@ -41,7 +44,7 @@ func jump(nums []int) int {
 			end = maxP
 		}
 	}
-	
+
 	return step
 }
 

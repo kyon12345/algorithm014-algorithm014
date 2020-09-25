@@ -6,43 +6,37 @@
 package main
 // @lc code=start
 func searchMatrix(matrix [][]int, target int) bool {
-	m := len(matrix)
-	if m == 0 {
+	//二维矩阵 row = index/width col = index%width
+	//使用二分法,mid = matrix[num/2][width/2]
+	//每次向中间逼近
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return false
 	}
 
-	n := len(matrix[0])
-	if n == 0 {
+	length,width := len(matrix),len(matrix[0])
+
+	if target < matrix[0][0] || target > matrix[length - 1][width - 1] {
 		return false
 	}
 
-	if target > matrix[m - 1][n - 1] || target < matrix[0][0] {
-		return false
-	}
+	l,r := 0,length * width
 
-	left,right := 0,m*n - 1
+	for l <= r {
+		mid := (l + r) /2
 
-	mid,r,c := 0,0,0
+		row := mid/width
+		col := mid % width
 
-	for left <= right {
-		mid = left + (right - left) >> 1
-		r = mid/n
-		c = mid%n
-
-		if matrix[r][c] == target {
+		if matrix[row][col] == target {
 			return true
-		} else if matrix[r][c] > target {
-			right = mid - 1
+		} else if matrix[row][col] > target {
+			r = mid - 1
 		} else {
-			left = mid + 1
+			l = mid + 1
 		}
 	}
 
-	if left >= m*n || matrix[left/n][left%n] != target {
-		return false
-	}k
-
-	return true
+	return false
 }
 // @lc code=end
 

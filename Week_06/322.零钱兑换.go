@@ -8,6 +8,7 @@ package main
 import "math"
 
 // @lc code=start
+//dp[amount] = min(dp[amount - nums[i]] for each num) + 1
 func coinChange(coins []int, amount int) int {
 	// state: amount
 	// dp(amount): fewest number of coins to make amount
@@ -16,19 +17,21 @@ func coinChange(coins []int, amount int) int {
 
 	// dp(amount) = min(dp(amount-coin), for each coin)+1
 
-	dp := make([]int, amount+1, amount+1)
+    dp := make([]int,amount + 1,amount + 1)
+    
     for i := 1; i <= amount; i++ {
         dp[i] = math.MaxInt32
         for _, c := range coins {
             if i - c >= 0 {
-                dp[i] = min(dp[i-c]+1, dp[i])
+                dp[i] = min(dp[i - c] + 1,dp[i])
             }
         }
     }
+
     if dp[amount] == math.MaxInt32 {
         return -1
     }
-    
+
     return dp[amount]
 }
 

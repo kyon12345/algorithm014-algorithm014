@@ -24,6 +24,7 @@ package main
 //     return dp[len(nums)-1]
 // }
 func rob(nums []int) int {
+	//滚动数组,dp[i] = max(dp[i - 2] + num, dp[i = 1])
 	if len(nums) == 0 {
 		return 0
 	}
@@ -32,7 +33,7 @@ func rob(nums []int) int {
 
 	for _, num := range nums {
 		tmp := p
-		p = max(q + num, p)
+		p = max(q + num,p)
 		q = tmp
 	}
 

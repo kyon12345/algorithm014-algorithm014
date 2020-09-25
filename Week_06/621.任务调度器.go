@@ -3,18 +3,24 @@
  *
  * [621] 任务调度器
  */
-
+package main
 // @lc code=start
 func leastInterval(tasks []byte, n int) int {
-    tmp, lastCycle, maxFreq := make([]int, 26), 0, 0
-    for _, v := range tasks {
-        tmp[v - 'A']++
-        if tmp[v - 'A'] > maxFreq { maxFreq = tmp[v - 'A'] }
+    //填桶思路,优先考虑数量最多的任务
+    tmp,lastCycle,maxFreq := make([]int,26),0,0
+
+    for i := 0; i < len(tasks); i++ {
+        tmp[tasks[i] - 'A'] ++
+        if tmp[tasks[i] - 'A'] > maxFreq {
+            maxFreq = tmp[tasks[i] - 'A']
+        }
     }
+
     for i := 0; i < 26; i++ {
-        if maxFreq == tmp[i] { lastCycle++ }
+        if maxFreq == tmp[i] {lastCycle ++}
     }
-    return max((n + 1) * (maxFreq - 1) + lastCycle, len(tasks))
+
+    return max(len(tasks),(n + 1) * (maxFreq - 1) + lastCycle)
 }
 
 func max(a, b int) int {

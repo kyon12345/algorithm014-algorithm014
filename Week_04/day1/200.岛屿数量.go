@@ -8,7 +8,7 @@ package main
 //dfs
 //O(MN) O(MN)
 func numIslands(grid [][]byte) int {
-	if len(grid) == 0 || len(grid[0]) == 0 {
+	if len(grid) == 0 || len(grid[0]) == 0  {
 		return 0
 	}
 
@@ -21,24 +21,24 @@ func numIslands(grid [][]byte) int {
 
 			cnt ++
 
-			dfsIslands(i,j,grid)
+			dfsIsland(grid,i,j)
 		}
 	}
 
 	return cnt
 }
 
-func dfsIslands(i,j int,grid [][]byte) {
-	if i < 0 || j < 0 || i >= len(grid) || j >= len(grid[0]) || grid[i][j] != '1' {
+func dfsIsland(grid [][]byte,x,y int) {
+	if x <0 || x >= len(grid) || y <0 || y >= len(grid[0]) || grid[x][y] != '1' {
 		return
 	}
 
-	grid[i][j] ++
+	grid[x][y] ++
 
-	dfsIslands(i+1, j, grid)
-	dfsIslands(i, j + 1, grid)
-	dfsIslands(i - 1, j, grid)
-	dfsIslands(i, j - 1, grid)
+	dfsIsland(grid, x + 1, y)
+	dfsIsland(grid, x - 1, y)
+	dfsIsland(grid, x, y - 1)
+	dfsIsland(grid, x, y + 1)
 }
 // @lc code=end
 

@@ -58,52 +58,49 @@ package main
 
 //双向BFS
 func ladderLength(beginWord string, endWord string, wordList []string) int {
-	startUsed := make([]bool,len(wordList))
-	endUsed := make([]bool,len(wordList))
-
-	startQueue := []string{beginWord}
-	endQueue := []string{endWord}
-
 	wordMap := make(map[string]int)
 
 	for i,v := range wordList {
 		wordMap[v] = i
 	}
 
-	if i,ok := wordMap[endWord];!ok {
+	startQueue := []string{beginWord}
+	endQueue := []string{endWord}
+
+	startUsed := make([]bool,len(wordList))
+	endUsed := make([]bool,len(wordList))
+
+	if idw,ok := wordMap[endWord];!ok {
 		return 0
 	} else {
-		endUsed[i] = true
+		endUsed[idw] = true
 	}
 
 	step := 0
 	for len(startQueue) > 0 {
-		step ++
 		l := len(startQueue)
+		step ++
 
 		for i := 0; i < l; i++ {
 			chars := []byte(startQueue[i])
-
 			for j := 0; j < len(chars); j++ {
 				o := chars[j]
-
 				for c := 'a'; c <= 'z'; c++ {
 					chars[j] = byte(c)
 					
-					idx, ok := wordMap[string(chars)]
+					idx,ok := wordMap[string(chars)]
 
 					if !ok || startUsed[idx] {
-						continue	
+						continue
 					}
 
 					if endUsed[idx] {
 						return step + 1
 					}
 
-					startQueue = append(startQueue,string(chars))
+					startQueue = append(startQueue,wordList[idx])
 					startUsed[idx] = true
 				}
-
 				chars[j] = o
 			}
 		}
@@ -117,7 +114,6 @@ func ladderLength(beginWord string, endWord string, wordList []string) int {
 	}
 
 	return 0
-
 }
 // @lc code=end
 
