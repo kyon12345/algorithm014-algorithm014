@@ -10,32 +10,42 @@ type TireNode struct {
 	children [26]*TireNode
 }
 
-
-func findWords(board [][]byte, words []string) []string {
-	root := &TireNode{}
-	
-	for _, w := range words {
-		node := root
-		for _, c := range w {
-			if node.children[c - 'a'] == nil {
-				node.children[c - 'a'] = &TireNode{}
-			}
-			node = node.children[c - 'a']
+func (this *TireNode) Insert(word string) {
+	node := this
+	for _, v := range word {
+		v -= 'a'
+		if node.children[v] == nil {
+			node.children[v] = &TireNode{}
 		}
-		node.word = w
+		node = node.children[v]
 	}
-
-	result := make([]string,0)
-	for i := 0; i < len(board); i++ {
-		for j := 0; j < len(board[0]); j++ {
-			dfs(i,j,board,root,&result)
-		}
-	}
-
-	return result
+	node.word = word
 }
 
-func dfs(i,j int, board [][]byte, node *TireNode,result *[]string) {
+
+func findWords(board [][]byte, words []string) []string {
+	res := make([]string,0)
+
+	if len(board) == 0 {
+		return res
+	}
+
+	//构造树
+	tree := &TireNode{}
+	for _, v := range words {
+		tree.Insert(v)
+	}
+
+	for i := 0; i < len(board); i++ {
+		for j := 0; j < len(board[0]); j++ {
+			dfs(board,i,j,tree,&res)
+		}
+	}
+
+	return res
+}
+
+func dfs(board [][]byte,i,j int,node *TireNode,res *[]string) {
 	if i < 0 || j < 0 || i == len(board) || j == len(board[0]) {
 		return
 	}
@@ -46,19 +56,22 @@ func dfs(i,j int, board [][]byte, node *TireNode,result *[]string) {
 		return
 	}
 
-	node = node.children[c -  'a']
+	node = node.children[c - 'a']
 
 	if node.word != "" {
-		*result = append(*result, node.word)
+		*res = append(*res, node.word)
 		node.word = ""
 	}
 
 	board[i][j] = '#'
-	dfs(i + 1,j,board,node,result)
-	dfs(i - 1,j,board,node,result)
-	dfs(i,j + 1,board,node,result)
-	dfs(i,j - 1,board,node,result)
+	
+	dfs(board,i + 1,j,node,res)
+	dfs(board,i - 1,j,node,res)
+	dfs(board,i,j - 1,node,res)
+	dfs(board,i,j + 1,node,res)
+
 	board[i][j] = c
+
 }
 // @lc code=end
 

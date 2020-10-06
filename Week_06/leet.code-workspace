@@ -1,0 +1,18 @@
+{
+    "folders": [
+		{
+			"path": ".."
+		},
+		{
+			"name": ".leetcode",
+			"path": "C:\\Users\\Administrator\\.leetcode"
+		},
+		{
+			"path": "..\\..\\..\\..\\go_code"
+		}
+	],
+    "settings": {
+        "go.useLanguageServer": true,
+        "go.formatTool": "gofmt"
+    }
+}

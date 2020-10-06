@@ -29,11 +29,12 @@ func rob(nums []int) int {
 		return 0
 	}
 
-	p,q := 0,0
+
+	p,q,tmp := 0,0,0
 
 	for _, num := range nums {
-		tmp := p
-		p = max(q + num,p)
+		tmp = p
+		p = max(p, q + num)
 		q = tmp
 	}
 

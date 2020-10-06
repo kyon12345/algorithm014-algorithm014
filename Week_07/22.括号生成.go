@@ -9,23 +9,24 @@
 package main
 
 func generateParenthesis(n int) []string {
-	res := []string{}
-	generator(0,0,n,"",&res)
+	res := make([]string,0)
+
+	dfs(0,0,n,"",&res)
+
 	return res
 }
 
-func generator (l,r,max int,s string,res *[]string) {
-	if l == max && r == max {
-		*res = append(*res,s)
-		return
+func dfs(l,r,n int,s string, res *[]string) {
+	if l == n && r == n {
+		*res = append(*res, s)	
 	}
 
-	if l < max {
-		generator(l + 1, r, max, s + "(", res)
+	if l < n {
+		dfs(l + 1,r,n,s + "(",res)
 	}
 
 	if r < l {
-		generator(l, r + 1, max, s + ")", res)
+		dfs(l,r + 1,n,s + ")",res)
 	}
 }
 // @lc code=end

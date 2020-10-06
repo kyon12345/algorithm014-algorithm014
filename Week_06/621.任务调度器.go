@@ -9,10 +9,11 @@ func leastInterval(tasks []byte, n int) int {
     //填桶思路,优先考虑数量最多的任务
     tmp,lastCycle,maxFreq := make([]int,26),0,0
 
-    for i := 0; i < len(tasks); i++ {
-        tmp[tasks[i] - 'A'] ++
-        if tmp[tasks[i] - 'A'] > maxFreq {
-            maxFreq = tmp[tasks[i] - 'A']
+    for _, t := range tasks {
+        tmp[t - 'A'] ++
+
+        if tmp[t - 'A'] > maxFreq {
+            maxFreq = tmp[t - 'A']
         }
     }
 
@@ -20,7 +21,7 @@ func leastInterval(tasks []byte, n int) int {
         if maxFreq == tmp[i] {lastCycle ++}
     }
 
-    return max(len(tasks),(n + 1) * (maxFreq - 1) + lastCycle)
+    return max(len(tasks),(maxFreq - 1) * (n + 1) + lastCycle)
 }
 
 func max(a, b int) int {

@@ -12,19 +12,20 @@ func maximalSquare(matrix [][]byte) int {
 		return 0
 	}
 
+	rows,cols := len(matrix),len(matrix[0])
+
 	pre,size := 0,0
 
-	row,col := len(matrix),len(matrix[0])
-	dp := make([]int,col)
 
-	for i := 0; i < row; i++ {
-		for j := 0; j < col; j++ {
+	dp := make([]int,cols)
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
 			tmp := dp[j]
 
 			if i == 0 || j == 0 || matrix[i][j] == '0' {
 				dp[j] = int(matrix[i][j] - '0')
 			} else {
-				dp[j] = min(dp[j - 1],min(tmp,pre)) + 1
+				dp[j] = min(pre,min(tmp,dp[j - 1])) + 1
 			}
 
 			pre = tmp
@@ -35,7 +36,9 @@ func maximalSquare(matrix [][]byte) int {
 		}
 	}
 
+
 	return size * size
+
 
 }
 

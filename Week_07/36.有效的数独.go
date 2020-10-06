@@ -12,54 +12,45 @@ type HashSet struct {
 	list []string
 }
 
-// New HashSet
 func New() HashSet {
-	set := HashSet{list: make([]string, 0)}
+	set := HashSet{list: []string{}}
 	return set
 }
 
-
-// Return true if val not in the set
-func (set *HashSet) add(val string) bool {
-	var flag bool = true
-	if set.Contains(val) {
-		flag = false
+func (set *HashSet) Add (s string) bool {
+	if set.Contain(s) {
+		return false
+	} else {
+		set.list = append(set.list, s)
 	}
-	set.list = append(set.list, val)
-	return flag
+
+	return true
 }
 
-func (set *HashSet) String() string {
-	return string(len(set.list))
-}
-
-
-
-// Contains check if val is in list
-func (set *HashSet) Contains(val string) bool {
-	for _, value := range set.list {
-		if value == val {
+func (set *HashSet) Contain(s string) bool {
+	for _, v := range set.list {
+		if v == s {
 			return true
 		}
 	}
 	return false
 }
 
-
 func isValidSudoku(board [][]byte) bool {
 	set := New()
 
-	for i:=0; i<9; i++ {
-		for j:=0; j<9; j++ {
+	for i := 0; i < 9; i++ {
+		for j := 0; j < 9; j++ {
 			val := string(board[i][j])
-			if val != "." {
-				if !set.add(val + "row" + string(i)) || !set.add(val + "col" + string(j)) || !set.add(val + "box" + string(i/3) + string(j/3)) {
-					return false
-				}
 
+			if val != "." {
+			  if !set.Add(val + "row" + string(i)) || !set.Add(val + "col" + string(j)) || !set.Add(val + "box" + string(i/3) + string(j / 3)) {
+					return false
+				} 
 			}
 		}
 	}
+	
 	
 	return true
 }

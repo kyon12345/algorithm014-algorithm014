@@ -20,6 +20,7 @@ func Constructor() Trie {
 /** Inserts a word into the trie. */
 func (this *Trie) Insert(word string)  {
 	node := this
+
 	for _, v := range word {
 		v -= 'a'
 		if node.next[v] == nil {
@@ -27,6 +28,7 @@ func (this *Trie) Insert(word string)  {
 		}
 		node = node.next[v]
 	}
+
 	node.isEnd = true
 }
 
@@ -34,6 +36,7 @@ func (this *Trie) Insert(word string)  {
 /** Returns if the word is in the trie. */
 func (this *Trie) Search(word string) bool {
 	node := this
+
 	for _, v := range word {
 		if node = node.next[v - 'a'];node == nil {
 			return false
@@ -47,11 +50,13 @@ func (this *Trie) Search(word string) bool {
 /** Returns if there is any word in the trie that starts with the given prefix. */
 func (this *Trie) StartsWith(prefix string) bool {
 	node := this
+
 	for _, v := range prefix {
 		if node = node.next[v - 'a'];node == nil {
 			return false
 		}
 	}
+
 	return true
 }
 

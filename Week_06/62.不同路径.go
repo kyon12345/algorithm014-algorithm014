@@ -11,7 +11,6 @@ func uniquePaths(m int, n int) int {
 	//使用滚动数组优化space为O(N)
 	dp := make([]int,n)
 
-	//base case
 	dp[0] = 1
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ {

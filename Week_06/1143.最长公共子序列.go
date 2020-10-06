@@ -42,10 +42,11 @@ func longestCommonSubsequence(text1 string, text2 string) int {
 			} else {
 				dp[j] = max(dp[j - 1],tmp)
 			}
+
 			last = tmp
 		}
 	}
-
+	
 	return dp[len(text2)]
 } 
 func max(x, y int) int {

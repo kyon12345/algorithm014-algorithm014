@@ -39,20 +39,20 @@ package main
 func maxProduct(nums []int) int {
 	//需要记录每次相乘最大的正数和最小的负数
 	//如果出现负数最大的变最小,最小的变最大
-	tmp,max,min := nums[0],nums[0],nums[0]
+	tmp,min,max := nums[0],nums[0],nums[0]
 
 	for i := 1; i < len(nums); i++ {
 		if nums[i] < 0 {
-			max,min = min,max
+			min,max = max,min
 		}
 
 		max *= nums[i]
-		if max < nums[i] {
+		if nums[i] > max {
 			max = nums[i]
 		}
 
 		min *= nums[i]
-		if min > nums[i] {
+		if nums[i] < min {
 			min = nums[i]
 		}
 

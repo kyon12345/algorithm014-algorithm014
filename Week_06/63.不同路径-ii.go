@@ -11,14 +11,14 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	width := len(obstacleGrid[0])
 
 	dp := make([]int,width)
-	
+
 	dp[0] = 1
 	for i := 0; i < len(obstacleGrid); i++ {
-		for j := 0; j < len(obstacleGrid[0]); j++ {
+		for j := 0; j < width; j++ {
 			if obstacleGrid[i][j] == 1 {
 				dp[j] = 0
 			} else if j > 0 {
-				dp[j] += dp[j - 1]
+				dp[j] += dp[j - 1]				
 			}
 		}
 	}

@@ -12,7 +12,7 @@ func maxSubArray(nums []int) int {
     //当前位置要么取要么不取,使用滚动数组来优化时间复杂度
     max := nums[0]
 
-    for i := 1; i < len(nums); i++ {
+    for i := 1;i < len(nums); i ++ {
         if nums[i] + nums[i - 1] > nums[i] {
             nums[i] = nums[i] + nums[i - 1]
         }
