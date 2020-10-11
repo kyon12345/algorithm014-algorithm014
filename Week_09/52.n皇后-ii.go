@@ -24,7 +24,6 @@ func dfs(n, row, col, pie, na int){
         dfs(n, row+1, col|bit, (pie|bit)<<1, (na|bit)>>1)  //递归遍历下一行
         bits = bits & (bits-1) //打掉最后位置上的1， 因为该位置已被占用
     }
-    
 }
 // @lc code=end
 

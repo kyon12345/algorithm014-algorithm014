@@ -48,3 +48,46 @@ x ^ 1s = ~x
 x & x - 1
 
 0011 & 0100 = 0000
+
+
+## 排序
+
+
+```
+//选择排序
+func sort(arr []int) {
+	for i := 0; i < len(arr); i++ {
+		min := i
+		for j := i; j < len(arr); j++ {
+			if arr[j] < arr[min] {
+				min = j
+			}
+		}
+		arr[min],arr[i] = arr[i],arr[min]
+	}
+}
+//插入排序
+func sort(arr []int) {
+	l := len(arr)
+	for i := 0; i < l; i++ {
+		for j := i; j >= 0; j-- {
+			if j > 0 && arr[j] < arr[j - 1] {
+				arr[j],arr[j - 1] = arr[j - 1],arr[j]
+			}
+		}
+	}
+}
+
+//冒泡排序
+func sort(arr []int) {
+	l := len(arr)
+	for i := 0; i < l; i++ {
+		for j := 0; j < l - 1 - i; j++ {
+			if arr[j] > arr[j + 1] {
+				arr[j],arr[j + 1] = arr[j + 1],arr[j]
+			}
+		}
+	}
+}
+
+```
