@@ -5,30 +5,32 @@
  */
 package main
 // @lc code=start
-type LinkNode struct {
-	key,val int
-	pre,next *LinkNode
+type LRUCache struct {
+	m map[int]*LinkNode
+	head,tail *LinkNode
+	cap int
 }
 
-type LRUCache struct {
-	m	 map[int]*LinkNode
-	cap	 int
-	head, tail *LinkNode
+type LinkNode struct {
+	pre,next *LinkNode
+	key,val int
 }
 
 
 func Constructor(capacity int) LRUCache {
-	head := &LinkNode{0,0,nil,nil}
-	tail := &LinkNode{0,0,nil,nil}
+	head := &LinkNode{nil,nil,0,0}
+	tail := &LinkNode{nil,nil,0,0}
+
 	head.next = tail
 	tail.pre = head
-	return LRUCache{make(map[int]*LinkNode), capacity,head,tail}
+
+	return LRUCache{make(map[int]*LinkNode),head,tail,capacity}
 }
 
 
 func (this *LRUCache) Get(key int) int {
 	cache := this.m
-	if v,exist := cache[key];exist {
+	if v,exists := cache[key];exists {
 		this.MoveToHead(v)
 		return v.val
 	} else {
@@ -38,38 +40,37 @@ func (this *LRUCache) Get(key int) int {
 
 
 func (this *LRUCache) Put(key int, value int)  {
-	tail := this.tail
 	cache := this.m
-	if v,exist := cache[key];exist {
-		v.val = value
+	tail := this.tail
+	if v,exists := cache[key];exists {
 		this.MoveToHead(v)
+		v.val = value
 	} else {
-		v := &LinkNode{key,value,nil,nil}
-		if len(cache) == this.cap {
-			delete(cache,tail.pre.key)
+		node := &LinkNode{nil,nil,key,value}
+		if this.cap == len(cache) {
+			delete(cache, tail.pre.key)
 			this.RemoveNode(tail.pre)
 		}
-		this.AddNode(v)
-		cache[key] = v
+		cache[key] = node
+		this.AddNode(node)
 	}
+}
+
+func (this *LRUCache) AddNode(node *LinkNode) {
+	node.next = this.head.next
+	node.pre = this.head
+	this.head.next.pre = node
+	this.head.next = node
+}
+
+func (this *LRUCache) RemoveNode(node *LinkNode) {
+	node.next.pre = node.pre
+	node.pre.next = node.next
 }
 
 func (this *LRUCache) MoveToHead(node *LinkNode) {
 	this.RemoveNode(node)
 	this.AddNode(node)
-}
-
-func (this *LRUCache) RemoveNode(node *LinkNode) {
-	node.pre.next = node.next
-	node.next.pre = node.pre
-}
-
-func (this *LRUCache) AddNode(node *LinkNode) {
-	head := this.head
-	node.next = head.next
-	head.next.pre = node
-	node.pre = head
-	head.next = node
 }
 
 /**
