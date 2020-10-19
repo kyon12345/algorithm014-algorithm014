@@ -84,6 +84,10 @@ func sort(arr []int) {
 		}
 	}
 }
+```
+
+### 高级排序
+=======
 
 //冒泡排序
 func sort(arr []int) {
@@ -98,5 +102,3 @@ func sort(arr []int) {
 }
 
 ```
-
-### 高级排序
