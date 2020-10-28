@@ -37,57 +37,59 @@ package main
 func findCircleNum(M [][]int) int {
 	if len(M) == 0 {
 		return 0
-	}
+	}	
 
-	length := len(M)
-	ufind := NewUnionFind(length)
+	u := New(len(M))
 
-	for i := 0; i < length; i++ {
-		for j := i + 1; j < length; j++ {
+	for i := 0; i < len(M); i++ {
+		for j := 0; j < len(M); j++ {
 			if M[i][j] == 1 {
-				ufind.Union(i, j)
+				u.Union(i, j)
 			}
 		}
 	}
 
-	return ufind.count
+	return u.count
 }
 
 type UnionFind struct {
-	count  int
+	count int
 	parent []int
 }
 
-func NewUnionFind(n int) *UnionFind {
-	parent := make([]int, n)
+func New(n int) *UnionFind {
+	par := make([]int,n)
+
 	for i := 0; i < n; i++ {
-		parent[i] = i
+		par[i] = i
 	}
-	return &UnionFind{
-		count:  n,
-		parent: parent,
-	}
+
+	return &UnionFind{count: n,parent: par}
 }
 
-func (u *UnionFind) Union(i, j int) {
-	pi := u.Find(i)
-	pj := u.Find(j)
-	if pi != pj {
-		u.parent[pi] = pj
-		u.count--
-	}
-}
-
-// 路径压缩后 查询为O(1)
-func (u *UnionFind) Find(i int) int {
+func (this *UnionFind) Find(i int) int {
 	root := i
-	for u.parent[root] != root {
-		root = u.parent[root]
+
+	for this.parent[root] != root {
+		root = this.parent[root]
 	}
-	for u.parent[i] != i { // 路径压缩
-		i, u.parent[i] = u.parent[i], root
+
+	//compression
+	for this.parent[i] != i {
+		i,this.parent[i] = this.parent[i],root
 	}
+
 	return root
+}
+
+func (this *UnionFind) Union(i,j int) {
+	pi := this.Find(i)
+	pj := this.Find(j)
+
+	if pi != pj	{
+		this.parent[pi] = pj
+		this.count --
+	}
 }
 // @lc code=end
 

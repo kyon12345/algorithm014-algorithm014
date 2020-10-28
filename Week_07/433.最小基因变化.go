@@ -47,35 +47,34 @@ package main
 // }
 //双向BFS
 func minMutation(start string, end string, bank []string) int {
-	if start == end {
-		return 0
-	}
+	//init map
+	wordMap := make(map[string]int, len(bank))
 
-	bankMap := make(map[string]int)
-
-	for i,v := range bank {
-		bankMap[v] = i
+	for i, word := range bank {
+		wordMap[word] = i
 	}
 
 	startQueue := []string{start}
 	endQueue := []string{end}
 
-	startUsed := make([]bool,len(bank))
-	endUsed := make([]bool,len(bank))
+	startUsed := make([]bool, len(bank))
+	endUsed := make([]bool, len(bank))
 
-	if i,ok := bankMap[end]; !ok {
+	if i, ok := wordMap[end]; !ok {
 		return -1
 	} else {
 		endUsed[i] = true
 	}
 
+	//begin bfs
 	step := 0
 	for len(startQueue) > 0 {
-		l := len(startQueue) 
+		l := len(startQueue)
 		step ++
+
 		for i := 0; i < l; i++ {
-			for c,idw := range bankMap {
-				if !isNear(startQueue[i], c) || startUsed[idw] {
+			for word, idw := range wordMap {
+				if !isNear(word, startQueue[i]) || startUsed[idw] {
 					continue
 				}
 
@@ -83,31 +82,32 @@ func minMutation(start string, end string, bank []string) int {
 					return step
 				}
 
-				startQueue = append(startQueue, c)
+				startQueue = append(startQueue, word)
 				startUsed[idw] = true
-			} 
+			}
 		}
 
 		startQueue = startQueue[l:]
 
 		if len(startQueue) > len(endQueue) {
-			startQueue,endQueue = endQueue,startQueue
-			startUsed,endUsed = endUsed,startUsed
+			startQueue, endQueue = endQueue, startQueue
+			startUsed, endUsed = endUsed, startUsed
 		}
 	}
 
 	return -1
 }
 
-func isNear(a,b string) bool {
+func isNear(a, b string) bool {
 	cnt := 0
+
 	for i := 0; i < len(a); i++ {
 		if a[i] != b[i] {
-			cnt ++
+			cnt++
 		}
 	}
 
 	return cnt == 1
 }
-// @lc code=end
 
+// @lc code=end

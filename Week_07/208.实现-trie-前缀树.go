@@ -6,8 +6,8 @@
 package main
 // @lc code=start
 type Trie struct {
-	next [26]*Trie
 	isEnd bool
+	next [26]*Trie
 }
 
 
@@ -23,9 +23,11 @@ func (this *Trie) Insert(word string)  {
 
 	for _, v := range word {
 		v -= 'a'
+
 		if node.next[v] == nil {
 			node.next[v] = &Trie{}
 		}
+
 		node = node.next[v]
 	}
 
@@ -50,7 +52,7 @@ func (this *Trie) Search(word string) bool {
 /** Returns if there is any word in the trie that starts with the given prefix. */
 func (this *Trie) StartsWith(prefix string) bool {
 	node := this
-
+	
 	for _, v := range prefix {
 		if node = node.next[v - 'a'];node == nil {
 			return false

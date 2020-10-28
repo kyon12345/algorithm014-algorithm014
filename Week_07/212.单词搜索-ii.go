@@ -5,73 +5,77 @@
  */
 package main
 // @lc code=start
-type TireNode struct {
+type TrieNode struct {
 	word string
-	children [26]*TireNode
+	children [26]*TrieNode
 }
 
-func (this *TireNode) Insert(word string) {
+func (this *TrieNode) Insert(s string) {
 	node := this
-	for _, v := range word {
+
+	for _, v := range s {
 		v -= 'a'
+
 		if node.children[v] == nil {
-			node.children[v] = &TireNode{}
+			node.children[v] = &TrieNode{}
 		}
+
 		node = node.children[v]
 	}
-	node.word = word
+
+	node.word = s
 }
 
-
 func findWords(board [][]byte, words []string) []string {
-	res := make([]string,0)
+	res := []string{}
 
 	if len(board) == 0 {
 		return res
 	}
 
-	//构造树
-	tree := &TireNode{}
-	for _, v := range words {
-		tree.Insert(v)
+	//init trie
+	node := &TrieNode{}
+
+	for _, w := range words {
+		node.Insert(w)
 	}
 
+	//begin dfs
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[0]); j++ {
-			dfs(board,i,j,tree,&res)
+			dfs(i,j,&res,node,board)
 		}
 	}
 
 	return res
 }
 
-func dfs(board [][]byte,i,j int,node *TireNode,res *[]string) {
+func dfs(i,j int,res *[]string,node *TrieNode,board [][]byte) {
 	if i < 0 || j < 0 || i == len(board) || j == len(board[0]) {
 		return
 	}
 
 	c := board[i][j]
 
-	if c == '#' || node.children[c - 'a'] == nil {
+	if c == '#' || node.children[c - 'a'] == nil  {
 		return
 	}
 
 	node = node.children[c - 'a']
 
 	if node.word != "" {
-		*res = append(*res, node.word)
+		*res = append(*res,node.word)
 		node.word = ""
 	}
 
 	board[i][j] = '#'
-	
-	dfs(board,i + 1,j,node,res)
-	dfs(board,i - 1,j,node,res)
-	dfs(board,i,j - 1,node,res)
-	dfs(board,i,j + 1,node,res)
 
-	board[i][j] = c
+	dfs(i + 1,j,res,node,board)
+	dfs(i - 1,j,res,node,board)
+	dfs(i,j + 1,res,node,board)
+	dfs(i,j - 1,res,node,board)
 
+	board[i][j]	= c
 }
 // @lc code=end
 

@@ -45,83 +45,83 @@ package main
 
 //使用并查集
 func numIslands(grid [][]byte) int {
-	row := len(grid)
-	if row == 0 {
+	if len(grid) == 0 {
 		return 0
 	}
 
-	col := len(grid[0])
-	//向右,向下
-	dir := [][]int{{1,0},{0,1}}
-	dummy_node := row * col
+	var (
+		rows = len(grid)
+		cols = len(grid[0])
+		node func(row,col int) int
+		dummy = rows * cols
+	)
 
-	//多开一个虚拟的空间
-	uf := NewUnionFind(dummy_node + 1)
+	u := New(dummy + 1)
 
-	for i := 0; i < row; i++ {
-		for j := 0; j < col; j++ {
-			if grid[i][j] == '0' {
-				uf.Union(i * col + j, dummy_node)
-			}
+	node = func(row, col int) int {
+		return row * cols + col
+	}
 
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
 			if grid[i][j] == '1' {
-				for _, d := range dir {
-					new_x := i + d[0]
-					new_y := j + d[1]
-
-					if new_x < row && new_y < col && grid[new_x][new_y] == '1' {
-						uf.Union(i * col + j , new_x * col + new_y)
-					}
+				if i < rows - 1 && grid[i + 1][j] == '1' {
+					u.Union(node(i,j), node(i + 1,j))
 				}
+
+				if j < cols - 1 && grid[i][j + 1] == '1' {
+					u.Union(node(i,j), node(i,j + 1))
+				}
+			} else {
+				u.Union(node(i,j), dummy)
 			}
 		}
 	}
 
-	return uf.count - 1
+	return u.count - 1
 }
-
 
 type UnionFind struct {
 	count int
 	parent []int
 }
 
-func NewUnionFind(n int) *UnionFind	{
-	parent := make([]int,n)
+func New(n int) *UnionFind {
+	par := make([]int,n)
+
 	for i := 0; i < n; i++ {
-		parent[i] = i
+		par[i] = i
 	}
+
 	return &UnionFind{
 		count: n,
-		parent: parent,
+		parent: par,
 	}
 }
 
-func (u *UnionFind) Union(i,j int) {
-	pi := u.Find(i)
-	pj := u.Find(j)
-
-	if pi != pj {
-		u.parent[pi] = pj
-		u.count --
-	}
-}
-
-func (u *UnionFind) Is_Connected(i,j int) bool {
-	return u.Find(i) == u.Find(j)
-}
-
-func (u *UnionFind) Find(i int) int {
+func (this *UnionFind) Find(i int) int {
 	root := i
-	for u.parent[root] != root {
-		root = u.parent[root]
+
+	for this.parent[root] != root {
+		root = this.parent[root]
 	}
 
-	for u.parent[i] != i {
-		i,u.parent[i] = u.parent[i],root
+	for this.parent[i] != i {
+		i,this.parent[i] = this.parent[i],root
 	}
 
 	return root
 }
+
+func (this *UnionFind) Union(i,j int) {
+	pi := this.Find(i)
+	pj := this.Find(j)
+
+	if pi != pj {
+		this.parent[pi] = pj
+		this.count --
+	}
+}
+
 // @lc code=end
 

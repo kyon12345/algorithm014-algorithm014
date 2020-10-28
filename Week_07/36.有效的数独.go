@@ -9,49 +9,32 @@ package main
 // @lc code=start
 // HashSet custom set
 type HashSet struct {
-	list []string
+	set map[string]bool
 }
 
-func New() HashSet {
-	set := HashSet{list: []string{}}
-	return set
+func New() *HashSet {
+	return &HashSet{make(map[string]bool)}
 }
 
-func (set *HashSet) Add (s string) bool {
-	if set.Contain(s) {
-		return false
-	} else {
-		set.list = append(set.list, s)
-	}
+func (this *HashSet) Add(s string) bool {
+	_,found := this.set[s]
 
-	return true
-}
-
-func (set *HashSet) Contain(s string) bool {
-	for _, v := range set.list {
-		if v == s {
-			return true
-		}
-	}
-	return false
+	this.set[s] = true
+	return !found
 }
 
 func isValidSudoku(board [][]byte) bool {
-	set := New()
-
+	hashS := New()
 	for i := 0; i < 9; i++ {
 		for j := 0; j < 9; j++ {
-			val := string(board[i][j])
-
-			if val != "." {
-			  if !set.Add(val + "row" + string(i)) || !set.Add(val + "col" + string(j)) || !set.Add(val + "box" + string(i/3) + string(j / 3)) {
+			if board[i][j] != '.' {
+				b := string('(' + board[i][j] + ')')
+				if !hashS.Add(string(i) + b) || !hashS.Add(b + string(j)) || !hashS.Add(string(i/3) + b + string(j/3)) {
 					return false
-				} 
+				}		  				
 			}
 		}
 	}
-	
-	
 	return true
 }
 // @lc 	code=end

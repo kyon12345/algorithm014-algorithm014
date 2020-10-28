@@ -5,9 +5,6 @@
  */
 
 // @lc code=start
-
-package main
-
 func generateParenthesis(n int) []string {
 	res := make([]string,0)
 
@@ -16,9 +13,10 @@ func generateParenthesis(n int) []string {
 	return res
 }
 
-func dfs(l,r,n int,s string, res *[]string) {
+func dfs(l,r,n int,s string,res *[]string) {
 	if l == n && r == n {
-		*res = append(*res, s)	
+		*res = append(*res,s)
+		return
 	}
 
 	if l < n {
