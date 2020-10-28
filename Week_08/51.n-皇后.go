@@ -99,15 +99,12 @@ import (
 var result [][]string
 
 func solveNQueens(n int) [][]string {
-	//special
+	result = [][]string{}
+
 	if n <= 0 {
 		return result
 	}
 
-	//init
-	result = [][]string{}
-
-	//generateBoard
 	board := make([][]byte,n)
 
 	for i := 0; i < n; i++ {
@@ -117,34 +114,31 @@ func solveNQueens(n int) [][]string {
 		}
 	}
 
-	//begin dfs
 	helper(board,0,0,0,0)
 
 	return result
 }
 
 func helper(board [][]byte,row int,colBit,leftBit,rightBit int) {
-	//termination condition
 	n := len(board)
-	if row == n {
+
+	for row >= n {
 		dts := make([]string,n)
-		for i,v := range board {
-			dts[i] = string(v)
+
+		for i,w := range board {
+			dts[i] = string(w)
 		}
 
 		result = append(result, dts)
-		return
+
+		return		
 	}
 
-	//process
 	for i := 0; i < n; i++ {
-		//pick one col
 		pick := 1 << (n - i - 1)
 		if pick & colBit == 0 && pick & leftBit == 0 && pick & rightBit == 0 {
 			board[row][i] = 'Q'
-			//drill down
-			helper(board,row + 1,colBit | pick, (leftBit | pick) << 1,(rightBit | pick) >> 1)
-			//revert
+			helper(board, row + 1, colBit | pick, (leftBit | pick) << 1, (rightBit | pick) >> 1)
 			board[row][i] = '.'
 		}
 	}

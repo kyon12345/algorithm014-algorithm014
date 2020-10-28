@@ -4,68 +4,68 @@
  * [146] LRU缓存机制
  */
 package main
+
 // @lc code=start
 type LRUCache struct {
-	m map[int]*LinkNode
-	head,tail *LinkNode
-	cap int
+	m          map[int]*LinkNode
+	head, tail *LinkNode
+	cap        int
 }
 
 type LinkNode struct {
-	pre,next *LinkNode
-	key,val int
+	key, value int
+	pre, next  *LinkNode
 }
 
-
 func Constructor(capacity int) LRUCache {
-	head := &LinkNode{nil,nil,0,0}
-	tail := &LinkNode{nil,nil,0,0}
+	head, tail := &LinkNode{0, 0, nil, nil}, &LinkNode{0, 0, nil, nil}
 
 	head.next = tail
 	tail.pre = head
 
-	return LRUCache{make(map[int]*LinkNode),head,tail,capacity}
+	return LRUCache{make(map[int]*LinkNode), head, tail, capacity}
 }
-
 
 func (this *LRUCache) Get(key int) int {
 	cache := this.m
-	if v,exists := cache[key];exists {
-		this.MoveToHead(v)
-		return v.val
+
+	if n, ok := cache[key]; ok {
+		this.MoveToHead(n)
+		return n.value
 	} else {
 		return -1
 	}
 }
 
-
-func (this *LRUCache) Put(key int, value int)  {
+func (this *LRUCache) Put(key int, value int) {
 	cache := this.m
-	tail := this.tail
-	if v,exists := cache[key];exists {
-		this.MoveToHead(v)
-		v.val = value
+	tail := this.tail.pre
+
+	if n, ok := cache[key]; ok {
+		this.MoveToHead(n)
+		n.value = value
 	} else {
-		node := &LinkNode{nil,nil,key,value}
 		if this.cap == len(cache) {
-			delete(cache, tail.pre.key)
-			this.RemoveNode(tail.pre)
+			this.RemoveNode(tail)
+			delete(cache, tail.key)
 		}
+		node := &LinkNode{key, value, nil, nil}
+
 		cache[key] = node
 		this.AddNode(node)
 	}
 }
 
 func (this *LRUCache) AddNode(node *LinkNode) {
-	node.next = this.head.next
-	node.pre = this.head
 	this.head.next.pre = node
+	node.pre = this.head
+	node.next = this.head.next
 	this.head.next = node
 }
 
 func (this *LRUCache) RemoveNode(node *LinkNode) {
-	node.next.pre = node.pre
 	node.pre.next = node.next
+	node.next.pre = node.pre
 }
 
 func (this *LRUCache) MoveToHead(node *LinkNode) {
@@ -80,4 +80,3 @@ func (this *LRUCache) MoveToHead(node *LinkNode) {
  * obj.Put(key,value);
  */
 // @lc code=end
-
