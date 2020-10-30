@@ -15,15 +15,17 @@ func mergeSort(arr []int, l int, r int) int {
 		return 0
 	}
 
+	temp := make([]int,r - l + 1)
+
 	mid := (l + r) >> 1
 
-	temp, i, k := make([]int,r-l+1), l, 0
+	i,k := l,0
 
 	count := 0
 
 	count = mergeSort(arr, l, mid) + mergeSort(arr, mid + 1, r)
 
-	for j, idx := mid+1, l; j <= r; j++ {
+	for j,idx := mid + 1,l;j <= r;j ++ {
 		for ;i <= mid && arr[i] < arr[j];i ++ {
 			temp[k],k = arr[i],k + 1
 		}
@@ -33,7 +35,6 @@ func mergeSort(arr []int, l int, r int) int {
 		for idx <= mid && (arr[idx] + 1) >> 1 <= arr[j] {
 			idx ++
 		}
-
 		count += mid - idx + 1
 	}
 

@@ -3,47 +3,43 @@
  *
  * [5] 最长回文子串
  */
-package main
+// package main
 
-import "golang.org/x/net/ipv6"
 
 // @lc code=start
 func longestPalindrome(s string) string {
 	l := len(s)
-
+	
 	if l < 2 {
 		return s
 	}
 
-	dp := make([][]bool, l)
+	dp := make([][]bool,l)
 
-	//init chart
 	for i := range dp {
 		dp[i] = make([]bool, l)
 	}
 
-	maxLength,begin := 1,0
-	
-	chars := []byte(s)
+	idx,maxLength := 0,1
 
-	for j := 1;j < l;j ++ {
-		for i := 0;i < j;i ++ {
-			if chars[i] != chars[j] {
+	for j := 0; j < l; j++ {
+		for i := 0; i < j; i++ {
+			if s[i] != s[j] {
 				dp[i][j] = false
 			} else if j - i < 3 {
 				dp[i][j] = true
 			} else {
-				dp[i][j] = dp[i + 1][j - 1] 
+				dp[i][j] = dp[i + 1][j - 1]
 			}
 
 			if dp[i][j] && j - i + 1 > maxLength {
+				idx = i
 				maxLength = j - i + 1
-				begin = i
 			}
 		}
 	}
 
-	return string(chars[begin:begin + maxLength])
+	return s[idx:idx + maxLength]
 }
 
 // @lc code=end

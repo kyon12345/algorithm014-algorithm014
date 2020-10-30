@@ -10,18 +10,19 @@ import "sort"
 // @lc code=start
 
 func merge(intervals [][]int) [][]int {
-	if len(intervals) <= 0 {
-		return nil
+	if len(intervals) < 2 {
+		return intervals
 	}
 
-	sort.Slice(intervals, func (i,j int) bool {
+	//sort
+	sort.Slice(intervals, func(i, j int) bool {
 		return intervals[i][0] < intervals[j][0]
 	})
 
 	merged := [][]int{intervals[0]}
 
-	for i := 1;i < len(intervals);i ++ {
-		m := merged[len(merged) - 1]
+	for i := 1; i < len(intervals); i++ {
+		m := merged[len(merged)-1]
 		c := intervals[i]
 
 		if m[1] < c[0] {
@@ -35,7 +36,7 @@ func merge(intervals [][]int) [][]int {
 	}
 
 	return merged
-}
 
+}
 
 // @lc code=end

@@ -8,23 +8,23 @@ package main
 func findAnagrams(s string, p string) []int {
 	if len(s) < len(p) {
 		return []int{}
-	}
+	}	
 
-	result := make([]int,0)
-	need,have := [26]int{},[26]int{}
+	have,need := [26]int{},[26]int{}
 
 	for i := range p {
-		need[p[i] - 'a'] ++
 		have[s[i] - 'a'] ++
+		need[p[i] - 'a'] ++
 	}
 
-	var tail int
-	for i := len(p);i < len(s);i ++ {
+	res := []int{}
+
+	tail := 0
+	for i := len(p); i < len(s); i++ {
 		if have == need {
-			result = append(result, tail)
+			res = append(res, tail)
 		}
 
-		//remove the head and add the tail
 		have[s[tail] - 'a'] --
 		have[s[i] - 'a'] ++
 
@@ -32,10 +32,10 @@ func findAnagrams(s string, p string) []int {
 	}
 
 	if have == need {
-		result = append(result, tail)
+		res = append(res, tail)
 	}
 
-	return result
+	return res
 }
 // @lc code=end
 
