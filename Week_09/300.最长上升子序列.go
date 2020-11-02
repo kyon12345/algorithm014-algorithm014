@@ -44,51 +44,40 @@ import "fmt"
 //二分查找
 //啪的一下,很快啊 nlogn
 func lengthOfLIS(nums []int) int {
-	// q := []int{^int(^uint(0) >> 1)}
-
-	// fmt.Printf("%b", q[0])
-
-	// for _, i := range nums {
-	// 	if i > q[len(q) - 1] {
-	// 		q = append(q, i)
-	// 	} else {
-	// 		l,r := 0,len(q)
-	// 		for l < r {
-	// 			m := l + (r - l) / 2
-	// 			if q[m] < i {
-	// 				l = m + 1
-	// 			} else {
-	// 				r = m
-	// 			}
-	// 		}
-
-	// 		q[l] = i
-	// 	}
-	// }
-
-	// return len(q) - 1
+	//[10,9,2,5,3,7,101,18]
+	if len(nums) < 1 {
+		return 0
+	}
 
 	q := []int{^int(^uint(0) >> 1)}
 
-	for _, i := range nums {
-		if i > q[len(q) - 1] {
+	for _,i := range nums {
+		if q[len(q) - 1] < i {
 			q = append(q, i)
 		} else {
 			l,r := 0,len(q)
 
 			for l < r {
-				m := l + (r - l) / 2
-				if q[m] < i {
-					l = m + 1
+				mid := l + (r - l) >> 1
+
+				if q[mid] < i {
+					l = mid + 1
 				} else {
-					r = m
-				}		
+					r = mid
+				}
 			}
 
-			q[l] = i	
+			q[l] = i
 		}
 	}
 
 	return len(q) - 1
 }
+
+func max(a,b int) int {
+	if a > b {
+		return a
+	}
+	return b
+} 
 // @lc code=end

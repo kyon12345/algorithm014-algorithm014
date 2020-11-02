@@ -1,33 +1,32 @@
 package main
 
-import "fmt"
-
 func main() {
-	lengthOfLIS([]int{1,3,4,1})
+	lengthOfLIS([]int{10,9,2,5,3,7,101,18})
 }
 
 func lengthOfLIS(nums []int) int {
-	q := []int{^int(^uint(0) >> 1)}
-
-	fmt.Printf("%b", q[0])
-
-	for _, i := range nums {
-		if i > q[len(q) - 1] {
-			q = append(q, i)
-		} else {
-			l,r := 0,len(q)
-			for l < r {
-				m := l + (r - l) / 2
-				if q[m] < i {
-					l = m + 1
-				} else {
-					r = m
-				}
-			}
-
-			q[l] = i
-		}
+	//[10,9,2,5,3,7,101,18]
+	if len(nums) < 1 {
+		return 0
 	}
 
-	return len(q) - 1
+	dp := make([]int,len(nums))
+
+	res := 0
+	for i := 0; i < len(nums); i++ {
+		dp[i] = 1
+		for j := 0;j < i && nums[j] < nums[i];j ++ {
+			dp[i] = max(dp[i],dp[j] + 1)
+		}
+		res = max(res, dp[i])
+	}
+
+	return res
 }
+
+func max(a,b int) int {
+	if a > b {
+		return a
+	}
+	return b
+} 
