@@ -14,7 +14,7 @@ type LRUCache struct {
 
 type LinkNode struct {
 	key,value int
-	pre,next *LinkNode	
+	pre,next *LinkNode
 }
 
 func Constructor(capacity int) LRUCache {
@@ -28,7 +28,7 @@ func Constructor(capacity int) LRUCache {
 
 func (this *LRUCache) Get(key int) int {
 	cache := this.m
-
+	
 	if v,ok := cache[key];ok {
 		this.MoveToHead(v)
 		return v.value
@@ -45,15 +45,14 @@ func (this *LRUCache) Put(key int, value int) {
 		this.MoveToHead(v)
 		v.value = value
 	} else {
-		if len(cache) == this.cap {
+		if this.cap == len(cache) {
 			this.RemoveNode(tail)
 			delete(cache, tail.key)
 		}
 
 		node := &LinkNode{key,value,nil,nil}
-		cache[key] = node
-
 		this.AddNode(node)
+		cache[key] = node
 	}
 }
 
@@ -70,12 +69,9 @@ func (this *LRUCache) MoveToHead(node *LinkNode) {
 }
 
 func (this *LRUCache) RemoveNode(node *LinkNode) {
-	node.pre.next = node.next
 	node.next.pre = node.pre
+	node.pre.next = node.next
 }
-
-
-
 /**
  * Your LRUCache object will be instantiated and called as such:
  * obj := Constructor(capacity);
