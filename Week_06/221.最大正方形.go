@@ -8,24 +8,24 @@ package main
 func maximalSquare(matrix [][]byte) int {
 	//dp[i][j] = min(dp(i−1,j),dp(i−1,j−1),dp(i,j−1))+1
 	//当前位置取决于左上,上,左三个位置dp值的最小值,就是当前能得到的最小边长
-	if len(matrix) == 0 {
+	if len(matrix) < 1 {
 		return 0
 	}
 
 	rows,cols := len(matrix),len(matrix[0])
 
+	dp := make([]int,cols)
+
 	pre,size := 0,0
 
-
-	dp := make([]int,cols)
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
 			tmp := dp[j]
 
-			if i == 0 || j == 0 || matrix[i][j] == '0' {
+			if matrix[i][j] == '0' || i == 0 || j == 0 {
 				dp[j] = int(matrix[i][j] - '0')
 			} else {
-				dp[j] = min(pre,min(tmp,dp[j - 1])) + 1
+				dp[j] = min(tmp,min(dp[j - 1],pre)) + 1
 			}
 
 			pre = tmp
@@ -36,10 +36,7 @@ func maximalSquare(matrix [][]byte) int {
 		}
 	}
 
-
 	return size * size
-
-
 }
 
 func min(a, b int) int {

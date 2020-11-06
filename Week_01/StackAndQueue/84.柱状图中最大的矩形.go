@@ -9,44 +9,46 @@ package main
 func largestRectangleArea(heights []int) int {
 	//暴力求解 O(n^2)
 	// length:=len(heights)
-    // maxAns:=0
-    // for i:=0;i<length;i++{
-    //     curMin := heights[i]
-    //     for j:=i;j<length;j++{
-    //         if heights[j] < curMin {
-    //             curMin=heights[j]
-    //         }
-    //         curV := curMin*(j-i+1)
-    //         if maxAns < curV {
-    //             maxAns = curV
-    //         }
-    //     }
-    // }
-    // return maxAns
- 
-    //使用栈 O(n) O(n)
-	var stack []int
+	// maxAns:=0
+	// for i:=0;i<length;i++{
+	//     curMin := heights[i]
+	//     for j:=i;j<length;j++{
+	//         if heights[j] < curMin {
+	//             curMin=heights[j]
+	//         }
+	//         curV := curMin*(j-i+1)
+	//         if maxAns < curV {
+	//             maxAns = curV
+	//         }
+	//     }
+	// }
+	// return maxAns
 
-	stack = append(stack,-1)
+	//使用栈 O(n) O(n)
+	//构建单调递增栈
+	stack := []int{-1}
 
-	maxArea := 0
-	
+	if len(heights) < 1 {
+		return 0
+	}
+
+	maxA := 0
 	for i := 0; i < len(heights); i++ {
-		for len(stack) != 1 && heights[i] < heights[stack[len(stack) - 1]] {
+		for len(stack) != 1 && heights[stack[len(stack) - 1]] > heights[i] {
 			top := stack[len(stack) - 1]
 			stack = stack[:len(stack) - 1]
-			maxArea = maxVal(maxArea, heights[top] * (i - stack[len(stack) - 1] - 1))
+			maxA = maxVal(maxA, heights[top] * (i - stack[len(stack) -1] - 1))
 		}
-		stack = append(stack,i)
+		stack = append(stack, i)	
 	}
 
 	for len(stack) != 1 {
 		top := stack[len(stack) - 1]
 		stack = stack[:len(stack) - 1]
-		maxArea = maxVal(maxArea, heights[top] * (len(heights) - stack[len(stack) - 1] - 1))
+		maxA = maxVal(maxA, heights[top] * (len(heights) - stack[len(stack) - 1] - 1))
 	}
 
-	return maxArea
+	return maxA
 }
 
 func maxVal(a, b int) int {
@@ -55,5 +57,5 @@ func maxVal(a, b int) int {
 	}
 	return b
 }
-// @lc code=end
 
+// @lc code=end
