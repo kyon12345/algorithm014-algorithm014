@@ -7,20 +7,22 @@
 package main
 // @lc code=start
 func longestPalindrome(s string) string {
+	//dp[i][j] = dp[i + 1][j - 1] 
 	if len(s) < 2 {
 		return s
 	}
 
-	dp := make([][]bool,len(s))
+	n := len(s)
+	dp := make([][]bool,n)
 
-	for i := 0; i < len(s); i++ {
-		dp[i] = make([]bool, len(s))
+	for i := 0; i < n; i++ {
+		dp[i] = make([]bool, n)
 	}
 
-	idx,maxLength := 0,1
-	for i := 0; i < len(s); i++ {
+	begin,maxL := 0,1
+	for i := 0; i < n; i++ {
 		for j := 0; j < i; j++ {
-			if s[j] != s[i] {
+			if s[i] != s[j] {
 				dp[i][j] = false
 			} else if i - j < 3 {
 				dp[i][j] = true
@@ -28,14 +30,14 @@ func longestPalindrome(s string) string {
 				dp[i][j] = dp[i - 1][j + 1]
 			}
 
-			if dp[i][j]	&& i - j + 1 > maxLength {
-				idx = j
-				maxLength = i - j + 1
-			}			
+			if dp[i][j] && maxL < i - j + 1 {
+				begin = j
+				maxL = i - j + 1
+			}
 		}
 	}
 
-	return s[idx:idx + maxLength]
+	return s[begin:begin + maxL]
 }
 
 // @lc code=end

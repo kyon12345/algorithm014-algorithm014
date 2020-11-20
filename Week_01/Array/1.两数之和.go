@@ -20,15 +20,14 @@ func twoSum(nums []int, target int) []int {
 	//2.哈希表 O(n) O(n)
 	m := make(map[int]int)
 
-	for i := 0;i < len(nums);i ++ {
-		if value,ok := m[target - nums[i]];ok {
-			return []int{value,i}
+	for i := 0; i < len(nums); i++ {
+		if v,ok := m[target - nums[i]];ok {
+			return []int{i,v}
 		}
-
 		m[nums[i]] = i
 	}
 
-	return nil
+	return []int{}
 }
 // @lc code=end
 

@@ -12,6 +12,7 @@ import "internal/poll"
 //stack O(n) O(n)
 func longestValidParentheses(s string) int {
 	//[-1,idx...] max = max(idx - newTop)
+	//)(()
 	stack := []int{-1}
 
 	maxVal := 0

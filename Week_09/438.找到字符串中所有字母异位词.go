@@ -14,29 +14,28 @@ func findAnagrams(s string, p string) []int {
 
 	have,need := [26]int{},[26]int{}
 
-	for i := range p {
+	for i := 0; i < len(p); i++ {
 		have[s[i] - 'a'] ++
 		need[p[i] - 'a'] ++
 	}
 
-	tail := 0
+	head := 0
 	for i := len(p); i < len(s); i++ {
 		if have == need {
-			res = append(res, tail)
+			res = append(res, head)
 		}
 
-		have[s[tail] - 'a'] --
+		have[s[head] - 'a'] --
 		have[s[i] - 'a'] ++
-		
-		tail ++
-	}
 
+		head ++
+	}
 
 	if have == need {
-		res = append(res, tail)
+		res = append(res, head)
 	}
 
-	return res	
+	return res
 }
 // @lc code=end
 

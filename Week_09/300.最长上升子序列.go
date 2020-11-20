@@ -45,21 +45,19 @@ import "fmt"
 //啪的一下,很快啊 nlogn
 func lengthOfLIS(nums []int) int {
 	//[10,9,2,5,3,7,101,18]
-	if len(nums) == 0 {
+	if len(nums) < 1 {
 		return 0
 	}
 
 	q := []int{^int(^uint(0) >> 1)}
 
-	for i := range nums {
+	for i := 0; i < len(nums); i++ {
 		if nums[i] > q[len(q) - 1] {
 			q = append(q, nums[i])
 		} else {
 			l,r := 0,len(q)
-
 			for l < r {
 				mid := l + (r - l) >> 1
-
 				if q[mid] < nums[i] {
 					l = mid + 1
 				} else {

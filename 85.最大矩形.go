@@ -98,26 +98,25 @@ func maximalRectangle(matrix [][]byte) int {
 // 0 6 5 6 0
 
 // Note for myself: This last one in particular, i thought the result of row 4 col 2 may me "15" as the prev row will enable this row to "trust" the accumulated height, but is not like that, as right and left are getting inherited from the previous rows too. In other words, if you get a high height accumulated, you also get that column more restricted.
-	if len(matrix) == 0 {
+	if len(matrix) < 1 {
 		return 0
 	}
 
 	m,n := len(matrix),len(matrix[0])
 
-	left,right,height := make([]int,n),make([]int,n),make([]int,n)
+	right,left,height := make([]int,n),make([]int,n),make([]int,n)
 
 	for i := 0; i < n; i++ {
-		left[i] = 0
 		right[i] = n
+		left[i] = 0
 		height[i] = 0
 	}
-
 
 	maxA := 0
 	for i := 0; i < m; i++ {
 		cur_left,cur_right := 0,n
 
-		//height[j]	连续的1的数量 
+		//height
 		for j := 0; j < n; j++ {
 			if matrix[i][j] == '1' {
 				height[j] ++
@@ -126,31 +125,32 @@ func maximalRectangle(matrix [][]byte) int {
 			}
 		}
 
-		//左边界
-		for j := 0; j < n; j++ {
+		//right edge
+		for j := n - 1; j >= 0;j -- {
 			if matrix[i][j] == '1' {
-				left[j] = max(left[j],cur_left)
-			} else {
-				left[j] = 0
-				cur_left = j + 1
-			}
-		}
-
-		//右边界
-		for j := n - 1; j >= 0; j -- {
-			if matrix[i][j] == '1' {
-				right[j] = min(right[j],cur_right)
+				right[j] = min(cur_right,right[j])
 			} else {
 				right[j] = n
 				cur_right = j
 			}
 		}
 
-		//计算最大面积
+		//left edge
+		for j := 0;j < n;j ++ {
+			if matrix[i][j] == '1' {
+				left[j]	= max(cur_left, left[j])
+			} else {
+				left[j] = 0
+				cur_left = j + 1
+			}
+		}
+
+		//maxA
 		for j := 0; j < n; j++ {
-			maxA = max(maxA,(right[j] - left[j]) * height[j])
+			maxA = max(maxA, (right[j] - left[j]) * height[j])
 		}
 	}
+
 	return maxA
 }
 
