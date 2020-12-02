@@ -8,14 +8,14 @@ package main
 // @lc code=start
 func isValid(s string) bool {
 	//栈,O(n) O(n)
-	pairs := map[rune]rune{')':'(','}':'{',']':'['}
+	pairs := map[rune]rune{'}':'{',']':'[',')':'('}
 
 	stack := []rune{}
 
 	for _, c := range s {
-		if c == '(' || c == '{' || c == '[' {
+		if c == '{' || c == '(' || c == '[' {
 			stack = append(stack, c)
-		} else if len(stack) > 0 && pairs[c] == stack[len(stack) - 1] {	
+		} else if len(stack) > 0 && stack[len(stack) - 1] == pairs[c] {
 			stack = stack[:len(stack) - 1]
 		} else {
 			return false

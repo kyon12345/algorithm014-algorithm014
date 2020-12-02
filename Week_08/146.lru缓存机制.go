@@ -7,31 +7,29 @@ package main
 
 // @lc code=start
 type LRUCache struct {
+	cap        int
 	m          map[int]*LinkNode
 	head, tail *LinkNode
-	cap        int
 }
 
 type LinkNode struct {
+	pre, next  *LinkNode
 	key, value int
-	next, pre  *LinkNode
 }
 
 func Constructor(capacity int) LRUCache {
-	head, tail := &LinkNode{0, 0, nil, nil}, &LinkNode{0, 0, nil, nil}
+	tail, head := &LinkNode{nil, nil, 0, 0}, &LinkNode{nil, nil, 0, 0}
 
-	head.next = tail
 	tail.pre = head
+	head.next = tail
 
-	return LRUCache{make(map[int]*LinkNode), head, tail, capacity}
+	return LRUCache{capacity, make(map[int]*LinkNode), head, tail}
 }
 
 func (this *LRUCache) Get(key int) int {
-	cache := this.m
-
-	if v, ok := cache[key]; ok {
-		this.MoveToHead(v)
-		return v.value
+	if node, ok := this.m[key]; ok {
+		this.MoveToHead(node)
+		return node.value
 	} else {
 		return -1
 	}
@@ -41,19 +39,20 @@ func (this *LRUCache) Put(key int, value int) {
 	cache := this.m
 	tail := this.tail.pre
 
-	if v, ok := cache[key]; ok {
-		v.value = value
-		this.MoveToHead(v)
+	if node,ok := this.m[key];ok {
+		node.value = value
+		this.MoveToHead(node)
 	} else {
 		if this.cap == len(cache) {
-			delete(cache, tail.key)
 			this.RemoveNode(tail)
+			delete(cache, tail.key)
 		}
 
-		node := &LinkNode{key, value, nil, nil}
+		newNode := &LinkNode{tail,tail,key,value}
 
-		this.AddNode(node)
-		cache[key] = node
+		this.AddNode(newNode)
+		
+		cache[key] = newNode
 	}
 }
 
@@ -64,14 +63,14 @@ func (this *LRUCache) AddNode(node *LinkNode) {
 	this.head.next = node
 }
 
+func (this *LRUCache) RemoveNode(node *LinkNode) {
+	node.next.pre = node.pre
+	node.pre.next = node.next
+}
+
 func (this *LRUCache) MoveToHead(node *LinkNode) {
 	this.RemoveNode(node)
 	this.AddNode(node)
-}
-
-func (this *LRUCache) RemoveNode(node *LinkNode) {
-	node.pre.next = node.next
-	node.next.pre = node.pre
 }
 
 /**
