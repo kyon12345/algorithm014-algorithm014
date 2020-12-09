@@ -20,14 +20,14 @@ func Constructor() Trie {
 func (this *Trie) Insert(word string) {
 	node := this
 
-	for _, r := range word {
-		r -= 'a'
+	for _, v := range word {
+		v -= 'a'
 
-		if node.next[r] == nil {
-			node.next[r] = &Trie{}
+		if node.next[v] == nil {
+			node.next[v] = &Trie{}
 		}
 
-		node = node.next[r]
+		node = node.next[v]
 	}
 
 	node.isEnd = true
@@ -37,10 +37,14 @@ func (this *Trie) Insert(word string) {
 func (this *Trie) Search(word string) bool {
 	node := this
 
-	for _, r := range word {
-		if node = node.next[r -'a']; node == nil {
+	for _, v := range word {
+		v -= 'a'
+
+		if node.next[v] == nil {
 			return false
-		}	
+		}
+
+		node = node.next[v]
 	}
 
 	return node.isEnd
@@ -51,9 +55,13 @@ func (this *Trie) StartsWith(prefix string) bool {
 	node := this
 
 	for _, v := range prefix {
-		if node = node.next[v - 'a'];node == nil {
+		v -= 'a'
+
+		if node.next[v] == nil {
 			return false
 		}
+
+		node = node.next[v]
 	}
 
 	return true

@@ -9,30 +9,31 @@ import "strings"
 
 // @lc code=start
 //stack
+//2[a2[bc]]
 func decodeString(s string) string {
-	stackNums := make([]int,0)
-	stackStr := make([]string,0)
+	strStack := make([]string,0)
+	numStack := make([]int, 0)
 
-	var res string
 	var num int
+	var res string
 
-	for i := 0; i < len(s); i++ {
-		switch  {
-		case s[i] <= '9' && s[i] >= '0':
-			num = num * 10 + int(s[i]) - '0' 
-		case s[i] == '[':
-			stackNums = append(stackNums, num)
-			stackStr = append(stackStr, res)
+	for _, v := range s {
+		switch {
+		case v <= '9' && v >= '0':
+			num = num * 10 + int(v) - '0'
+		case v == '[':
+			numStack = append(numStack, num)
+			strStack = append(strStack, res)
 			num = 0
 			res = ""
-		case s[i] == ']':
-			tmp := stackStr[len(stackStr) - 1]
-			stackStr = stackStr[:len(stackStr) - 1]
-			count := stackNums[len(stackNums) - 1]
-			stackNums = stackNums[:len(stackNums) - 1]
-			res = tmp + strings.Repeat(res, count)
+		case v == ']':
+			tmp := strStack[len(strStack) - 1]
+			strStack = strStack[:len(strStack) - 1]
+			count := numStack[len(numStack) - 1]
+			numStack = numStack[:len(numStack) - 1]
+			res = tmp + strings.Repeat(res, count) 
 		default:
-			res += string(s[i])
+			res += string(v)
 		}
 	}
 
