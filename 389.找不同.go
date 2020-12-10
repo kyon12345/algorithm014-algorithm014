@@ -10,7 +10,7 @@ func findTheDifference(s string, t string) byte {
 	//排序 + 一次遍历
 	//a^b^a = b
 	//所有字符都进行异或剩下的就是多余的
-	ans := t[len(s)]
+	ans := t[len(t) - 1]
 	for i := 0; i < len(s); i++ {
 		ans ^= s[i]
 		ans ^= t[i]

@@ -7,50 +7,54 @@ package main
 
 // @lc code=start
 type WordDictionary struct {
-	root *TireNode
+	node *TireNode
 }
 
 type TireNode struct {
-	next [26]*TireNode
-	item string
+	children [26]*TireNode
+	isEnd bool
 }
+
 
 /** Initialize your data structure here. */
 func Constructor() WordDictionary {
-	root := &TireNode{}
-	return WordDictionary{root}
+	node := &TireNode{}
+
+	return WordDictionary{node : node}
 }
+
 
 /** Adds a word into the data structure. */
-func (this *WordDictionary) AddWord(word string) {
-	node := this.root
+func (this *WordDictionary) AddWord(word string)  {
+	node := this.node
 
-	for _, c := range word {
-		if node.next[c-'a'] == nil {
-			node.next[c-'a'] = &TireNode{}
+	for _, v := range word {
+		if node.children[v - 'a'] == nil {
+			node.children[v - 'a'] = &TireNode{}
 		}
-		node = node.next[c-'a']
+		node = node.children[v - 'a']
 	}
 
-	node.item = word
+	node.isEnd = true
 }
+
 
 /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
 func (this *WordDictionary) Search(word string) bool {
-	return match(word, 0, this.root)
+	return match(word,0,this.node)
 }
 
-func match (word string, k int, node *TireNode) bool {
-	if k == len(word) {
-		return !(node.item == "")
+func match(word string,index int,node *TireNode) bool {
+	if len(word) == index {
+		return node.isEnd
 	}
 
-	if word[k] != '.' {
-		return node.next[word[k] - 'a'] != nil && match(word, k + 1, node.next[word[k] - 'a']);
+	if word[index] != '.' {
+		return node.children[word[index] - 'a'] != nil && match(word, index + 1, node.children[word[index] - 'a'])
 	} else {
 		for i := 0; i < 26; i++ {
-			if node.next[i]	!= nil {
-				if match(word, k + 1, node.next[i]) {
+			if node.children[i] != nil {
+				if match(word, index + 1, node.children[i]) {
 					return true
 				}
 			}
