@@ -11,15 +11,14 @@ import "math"
 func minWindow(s string, t string) string {
 	m := [128]int{}
 
-	//init dic
 	for _, c := range t {
 		m[c] ++
 	}
 
-	start,end := 0,0
-	minStart,minlen := 0,math.MaxInt32
-	counter := len(t)
-
+	counter,end := len(t),0
+	start,minLen := 0,math.MaxInt32
+	minStart := 0
+	
 	for end < len(s) {
 		if m[s[end]] > 0 {
 			counter --
@@ -28,10 +27,9 @@ func minWindow(s string, t string) string {
 		m[s[end]] --
 		end ++
 
-		//if valid 
 		for counter == 0 {
-			if end - start < minlen {
-				minlen = end - start
+			if minLen > end - start {
+				minLen = end - start
 				minStart = start
 			}
 
@@ -45,8 +43,8 @@ func minWindow(s string, t string) string {
 		}
 	}
 
-	if minlen != math.MaxInt32 {
-		return s[minStart:minStart + minlen]
+	if minLen != math.MaxInt32 {
+		return s[minStart:minStart + minLen]
 	}
 
 	return ""

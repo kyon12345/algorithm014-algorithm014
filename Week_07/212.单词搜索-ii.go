@@ -16,33 +16,30 @@ func (this *TireNode) Insert(word string) {
 	node := this
 
 	for _, c := range word {
-		if node.next[c-'a'] == nil {
-			node.next[c-'a'] = &TireNode{}
+		if node.next[c - 'a'] == nil {
+			node.next[c - 'a'] = &TireNode{}
 		}
 
-		node = node.next[c-'a']
+		node = node.next[c - 'a']
 	}
 
-	node.word = word
+	node.word = word 
 }
 
 func findWords(board [][]byte, words []string) []string {
+	root := &TireNode{}
 
-	if len(board) == 0 {
-		return nil
+	//init tire
+	for _, c := range words {
+		root.Insert(c)
 	}
 
-	tire := &TireNode{}
+	res := make([]string,0)
 
-	for _, w := range words {
-		tire.Insert(w)
-	}
-
-	res := make([]string, 0)
-
+	//begin dfs
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[0]); j++ {
-			dfs(i, j, board, tire, &res)
+			dfs(i,j,board,root,&res)
 		}
 	}
 
@@ -50,7 +47,7 @@ func findWords(board [][]byte, words []string) []string {
 }
 
 func dfs(i,j int,board [][]byte,node *TireNode,res *[]string) {
-	if i < 0 || i == len(board) || j < 0 || j == len(board[0]) {
+	if i < 0 || j < 0 || i == len(board) || j == len(board[0]) {
 		return
 	}
 
@@ -61,19 +58,17 @@ func dfs(i,j int,board [][]byte,node *TireNode,res *[]string) {
 	}
 
 	node = node.next[c - 'a']
-	board[i][j]	= '#'
-	
+	board[i][j] = '#'
+
 	if node.word != "" {
 		*res = append(*res, node.word)
 		node.word = ""
 	}
 
-	
-
-	dfs(i + 1,j,board,node,res)
-	dfs(i - 1,j,board,node,res)
-	dfs(i,j + 1,board,node,res)
-	dfs(i,j - 1,board,node,res)
+	dfs(i + 1, j, board, node, res)
+	dfs(i, j + 1, board, node, res)
+	dfs(i - 1, j, board, node, res)
+	dfs(i, j - 1, board, node, res)
 
 	board[i][j] = c
 }

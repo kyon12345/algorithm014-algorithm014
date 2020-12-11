@@ -30,6 +30,7 @@ func hasCycle(head *ListNode) bool {
 		if fast == nil || fast.Next == nil {
 			return false
 		}
+
 		slow = slow.Next
 		fast = fast.Next.Next
 	}

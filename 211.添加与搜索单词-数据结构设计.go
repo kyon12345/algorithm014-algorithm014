@@ -43,16 +43,18 @@ func (this *WordDictionary) AddWord(word string) {
 
 /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
 func (this *WordDictionary) Search(word string) bool {
-	return match(word, 0, this.root)
+	return match(word,0,this.root)
 }
 
-func match(word string, index int, node *TireNode) bool {
-	if index == len(word) {
+func match (word string,index int,node *TireNode) bool {
+	if len(word) == index {
 		return node.isEnd
 	}
 
-	if word[index] != '.' {
-		return node.children[word[index]-'a'] != nil && match(word, index+1, node.children[word[index]-'a'])
+	c := word[index]
+
+	if c != '.' {
+		return node.children[c - 'a'] != nil && match(word, index + 1, node.children[c - 'a'])
 	} else {
 		for i := 0; i < 26; i++ {
 			if node.children[i] != nil {
