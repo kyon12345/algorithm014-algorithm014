@@ -19,41 +19,22 @@
  * }
  */
 func hasCycle(head *ListNode) bool {
-	//哈希表 O(n) O(n)
-	// m := make(map[*ListNode]int,0)
+	//双指针
+	if head == nil || head.Next == nil {
+		return false
+	}
 
-	// if head == nil || head.Next == nil {
-	// 	return false
-	// }
+	slow,fast := head,head.Next
 
-	// for head != nil {
-	// 	if _,exists := m[head];exists {
-	// 		return true
-	// 	}
-	// 	m[head] = 1
-	// 	head = head.Next
-	// }
+	for slow != fast {
+		if fast == nil || fast.Next == nil {
+			return false
+		}
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
 
-	// return false
-
-	//双指针 O(n) O(1)
-	// if head == nil || head.Next == nil {
-	// 	return false
-	// }
-
-	// slow := head
-	// fast := head.Next
-
-	// for slow != fast {
-	// 	if fast == nil || fast.Next == nil {
-	// 		return false
-	// 	}
-
-	// 	slow = slow.Next
-	// 	fast = fast.Next.Next
-	// }
-
-	// return true
+	return true
 }
 // @lc code=end
 

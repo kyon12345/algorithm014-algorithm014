@@ -11,6 +11,7 @@ func findTheDifference(s string, t string) byte {
 	//a^b^a = b
 	//所有字符都进行异或剩下的就是多余的
 	ans := t[len(t) - 1]
+
 	for i := 0; i < len(s); i++ {
 		ans ^= s[i]
 		ans ^= t[i]

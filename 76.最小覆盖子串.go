@@ -9,44 +9,44 @@ import "math"
 
 // @lc code=start
 func minWindow(s string, t string) string {
-	m := map[byte]int{}
+	m := [128]int{}
 
-	for i := 0; i < len(t); i++ {
-		m[t[i]]++
+	//init dic
+	for _, c := range t {
+		m[c] ++
 	}
 
-	start, end := 0, 0
+	start,end := 0,0
+	minStart,minlen := 0,math.MaxInt32
 	counter := len(t)
-	minStart, minlen := 0, math.MaxInt32
-	size := len(s)
 
-	for end < size {
+	for end < len(s) {
 		if m[s[end]] > 0 {
-			counter--
+			counter --
 		}
 
-		//Decrease m[s[end]],if does not exist in t,m [s[end]] will be negative
-		m[s[end]]--
-		end++
+		m[s[end]] --
+		end ++
 
-		//when we find valid window,we start to find smaller window
+		//if valid 
 		for counter == 0 {
-			if end-start < minlen {
-				minStart = start
+			if end - start < minlen {
 				minlen = end - start
+				minStart = start
 			}
 
-			m[s[start]]++
-			//when char exists in t,increase counter
+			m[s[start]] ++
+
 			if m[s[start]] > 0 {
-				counter++
+				counter ++
 			}
-			start++
+
+			start ++
 		}
 	}
 
 	if minlen != math.MaxInt32 {
-		return s[minStart : minStart+minlen]
+		return s[minStart:minStart + minlen]
 	}
 
 	return ""

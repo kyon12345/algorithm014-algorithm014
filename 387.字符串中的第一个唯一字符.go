@@ -6,17 +6,17 @@
 package main
 // @lc code=start
 func firstUniqChar(s string) int {
-	var arr [26]int
+	d := [26]int{}
 
 	for i,k := range s {
-		arr[k - 'a'] = i
+		d[k - 'a'] = i
 	}
 
 	for i,k := range s {
-		if arr[k - 'a'] == i {
+		if d[k - 'a'] == i {
 			return i
 		} else {
-			arr[k - 'a'] = -1
+			d[k - 'a'] = -1
 		}
 	}
 

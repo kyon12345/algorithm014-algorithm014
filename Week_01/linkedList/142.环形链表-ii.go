@@ -29,6 +29,7 @@ func detectCycle(head *ListNode) *ListNode {
 	// return nil
 
 	//快慢指针 O(n) O(1)
+	//a = c + (n - 1)(b + c)
 	slow := head
 	fast := head
 
@@ -48,7 +49,6 @@ func detectCycle(head *ListNode) *ListNode {
 			break
 		}
 	}
-
 
 	slow = head
 

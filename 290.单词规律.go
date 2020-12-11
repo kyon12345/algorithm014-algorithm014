@@ -10,24 +10,24 @@ import "strings"
 // @lc code=start
 func wordPattern(pattern string, s string) bool {
 	//哈希表
-	str_arr := strings.Fields(s)
+	hash := make(map[string]byte)
+	hash2 := make(map[byte]string)
 
-	if len(pattern) != len(str_arr) {
+	arrS := strings.Fields(s)
+
+	if len(arrS) != len(pattern) {
 		return false
 	}
 
-	hash := make(map[byte]string)
-	hash2 := make(map[string]byte)
-
 	for i := 0; i < len(pattern); i++ {
-		v,ok := hash[pattern[i]]
-		v2,ok2 := hash2[str_arr[i]]
+		v,ok := hash[arrS[i]]
+		v2,ok2 := hash2[pattern[i]]
 
-		if ok && v != str_arr[i] || ok2 && v2 != pattern[i] {
+		if ok && v != pattern[i] || ok2 && v2 != arrS[i] {
 			return false
 		} else {
-			hash[pattern[i]] = str_arr[i]	
-			hash2[str_arr[i]] = pattern[i]
+			hash[arrS[i]] = pattern[i]
+			hash2[pattern[i]] = arrS[i]
 		}
 	}
 
