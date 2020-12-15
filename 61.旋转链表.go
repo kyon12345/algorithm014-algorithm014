@@ -14,9 +14,10 @@ package main
  * }
  */
 func rotateRight(head *ListNode, k int) *ListNode {
-	if head == nil {
+	if head == nil || head.Next == nil {
 		return head
 	}
+
 
 	n := head
 	length := 1
@@ -25,8 +26,7 @@ func rotateRight(head *ListNode, k int) *ListNode {
 		length ++
 	}
 
-	k = k % length
-
+	k %= length
 	if k == 0 {
 		return head
 	}

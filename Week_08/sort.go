@@ -66,7 +66,7 @@ func quickSort(a []int) []int {
 	if len(a) < 2 {
 		return a
 	}
-	//declare
+	//declared
 	right,left := len(a) - 1,0
 	pivot := rand.Int() % len(a)
 

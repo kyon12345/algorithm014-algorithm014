@@ -15,22 +15,22 @@ func minWindow(s string, t string) string {
 		m[c] ++
 	}
 
-	counter,end := len(t),0
-	start,minLen := 0,math.MaxInt32
-	minStart := 0
-	
+	minStart,minLen := 0,math.MaxInt32
+	start,end,counter := 0,0,len(t)
+
 	for end < len(s) {
-		if m[s[end]] > 0 {
+		c := s[end]
+		if m[c] > 0 {
 			counter --
 		}
 
-		m[s[end]] --
+		m[c] --
 		end ++
 
 		for counter == 0 {
-			if minLen > end - start {
-				minLen = end - start
+			if end - start < minLen {
 				minStart = start
+				minLen = end - start
 			}
 
 			m[s[start]] ++

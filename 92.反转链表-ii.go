@@ -5,6 +5,8 @@
  */
 package main
 
+import "math"
+
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -19,19 +21,19 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 	dummy.Next = head
 
 	pre := dummy
+
 	for i := 0; i < m - 1; i++ {
 		pre = pre.Next
 	}
 
-	begin := pre.Next
-	then := begin.Next
+	start := pre.Next
+	then := start.Next
 
-	//inserting between pre and begin
-	for i := 0; i < n-m; i++ {
+	for i := 0; i < n - m; i++ {
+		start.Next = then.Next
+		then.Next = pre.Next
 		pre.Next = then
-		begin.Next = then.Next
-		then = then.Next
-		then.Next = begin
+		then = start.Next
 	}
 
 	return dummy.Next

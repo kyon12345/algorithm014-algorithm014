@@ -11,27 +11,27 @@ import "strings"
 //stack
 //2[a2[bc]]
 func decodeString(s string) string {
-	strStack := make([]string,0)
-	numStack := make([]int,0)
+	strStack := make([]string, 0)
+	numStack := make([]int, 0)
 
 	num := 0
 	res := ""
 
 	for _, c := range s {
 		switch {
-		case c <= '9' && c >= '0' :
-			num = num * 10 + int(c) - '0'
+		case c <= '9' && c >= 0:
+			num = 10*num + int(c) - '0'
 		case c == '[':
 			numStack = append(numStack, num)
 			strStack = append(strStack, res)
 			num = 0
 			res = ""
 		case c == ']':
-			tmpN := numStack[len(numStack) - 1]
+			tmpNum := numStack[len(numStack) - 1]
+			tmpStr := strStack[len(strStack) - 1]
 			numStack = numStack[:len(numStack) - 1]
-			tmpS := strStack[len(strStack) - 1]
 			strStack = strStack[:len(strStack) - 1]
-			res = tmpS + strings.Repeat(res, tmpN)
+			res = tmpStr + strings.Repeat(res,tmpNum)
 		default:
 			res += string(c)
 		}

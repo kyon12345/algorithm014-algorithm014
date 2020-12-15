@@ -30,31 +30,27 @@ type ListNode struct {
 // }
 
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
-	prevHead := &ListNode{}
-
-	prev := prevHead
+	preHead := &ListNode{}
+	pre := preHead
 
 	for l1 != nil && l2 != nil {
 		if l1.Val < l2.Val {
-			prev.Next = l1
+			pre.Next = l1
 			l1 = l1.Next
 		} else {
-			prev.Next = l2
+			pre.Next = l2
 			l2 = l2.Next
 		}
-		
-		prev = prev.Next
+		pre = pre.Next
 	}
 
 	if l1 != nil {
-		prev.Next = l1
+		pre.Next = l1
+	} else if l2 != nil {
+		pre.Next = l2
 	}
 
-	if l2 != nil {
-		prev.Next = l2
-	}
-
-	return prevHead.Next
+	return preHead.Next
 }
 
 // @lc code=end
