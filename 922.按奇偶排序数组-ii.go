@@ -7,14 +7,14 @@ package main
 
 // @lc code=start
 func sortArrayByParityII(A []int) []int {
-	i, j, n := 0, 1, len(A)
+	i,j,n := 0,1,len(A)
 
 	for i < n && j < n {
-		for i < n && A[i]&1 == 0 {
+		for i < n && A[i] & 1 == 0 {
 			i += 2
 		}
-
-		for j < n && A[j]&1 == 1 {
+		
+		for j < n && A[j] & 1 == 1 {
 			j += 2
 		}
 

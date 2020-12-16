@@ -13,7 +13,7 @@ import "math"
  *
  */
 func reverseBetween(head *ListNode, m int, n int) *ListNode {
-	if head == nil {
+	if head == nil || head.Next == nil {
 		return head
 	}
 
@@ -21,8 +21,7 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 	dummy.Next = head
 
 	pre := dummy
-
-	for i := 0; i < m - 1; i++ {
+	for i := 1; i < m; i++ {
 		pre = pre.Next
 	}
 

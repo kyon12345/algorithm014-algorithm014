@@ -13,30 +13,20 @@ func searchMatrix(matrix [][]int, target int) bool {
 		return false
 	}
 
-	length,width := len(matrix),len(matrix[0])
+	n := len(matrix)
+	m := len(matrix[0])
 
-	if target < matrix[0][0] || target > matrix[length - 1][width - 1] {
-		return false
-	}
+	l,r := 0,m * n - 1
 
-	l,r := 0,length * width
-
-	for l <= r {
-		mid := (l + r) /2
-
-		row := mid/width
-		col := mid % width
-
-		if matrix[row][col] == target {
-			return true
-		} else if matrix[row][col] > target {
-			r = mid - 1
-		} else {
+	for l != r {
+		mid := (l + r) >> 1
+		if matrix[mid / m][mid % m] < target {
 			l = mid + 1
+		} else {
+			r = mid
 		}
 	}
-
-	return false
+	return matrix[r / m][r % m] == target
 }
 // @lc code=end
 

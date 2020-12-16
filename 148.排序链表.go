@@ -4,6 +4,7 @@
  * [148] 排序链表
  */
 package main
+
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -24,7 +25,7 @@ func sortList(head *ListNode) *ListNode {
 	n := 0
 	for head != nil {
 		head = head.Next
-		n ++
+		n++
 	}
 
 	for step := 1; step < n; step <<= 1 {
@@ -33,16 +34,16 @@ func sortList(head *ListNode) *ListNode {
 
 		for cur != nil {
 			left := cur
-			right := split(left,step)
-			cur = split(right,step)
-			prev = merge(right,left,prev)
+			right := split(cur, step)
+			cur = split(right, step)
+			prev = merge(prev, right, left)
 		}
 	}
 
 	return dummy.Next
 }
 
-func split(head *ListNode,step int) *ListNode {
+func split(head *ListNode, step int) *ListNode {
 	if head == nil {
 		return nil
 	}
@@ -56,7 +57,7 @@ func split(head *ListNode,step int) *ListNode {
 	return right
 }
 
-func merge(left,right,prev *ListNode) *ListNode	 {
+func merge(prev,right,left *ListNode) *ListNode {
 	cur := prev
 
 	for left != nil && right != nil {
@@ -73,7 +74,9 @@ func merge(left,right,prev *ListNode) *ListNode	 {
 
 	if left != nil {
 		cur.Next = left
-	} else if right != nil {
+	}
+
+	if right != nil {
 		cur.Next = right
 	}
 

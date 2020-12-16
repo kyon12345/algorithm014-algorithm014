@@ -15,33 +15,33 @@
  */
 func swapPairs(head *ListNode) *ListNode {
 	//递归 O(n) O(n)
-	// if head == nil || head.Next == nil {
-	// 	return head
-	// }
-
-	// n := head.Next
-	// head.Next  =swapPairs(head.Next.Next)
-
-	// n.Next = head
-
-	// return n
-
-	//迭代 O(N) O(1)
-	dummy := &ListNode{}
-	dummy.Next = head
-
-	cur := dummy
-	for cur.Next != nil && cur.Next.Next != nil {
-		first := cur.Next
-		second := cur.Next.Next
-
-		first.Next = second.Next
-		second.Next = first
-		cur.Next = second
-		cur = first
+	if head == nil || head.Next == nil {
+		return head
 	}
 
-	return dummy.Next
+	n := head.Next
+
+	head.Next = swapPairs(head.Next.Next)
+
+	n.Next = head
+
+	return n
+
+	//迭代 O(N) O(1)
+	// dummy := &ListNode{}
+	// dummy.Next = head
+
+	// cur := dummy
+	// for cur.Next != nil && cur.Next.Next != nil {
+	// 	first := cur.Next
+	// 	second := cur.Next.Next
+	// 	first.Next = second.Next
+	// 	second.Next = first
+	// 	cur.Next = second
+	// 	cur = first
+	// }
+
+	// return dummy.Next
 }
 // @lc code=end
 
