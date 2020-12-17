@@ -58,48 +58,7 @@ package main
 
 //union find
 func solve(board [][]byte) {
-	if len(board) == 0 {
-		return
-	}
-
-	var (
-		rows = len(board)
-		cols = len(board[0])
-		dummyNodes = rows * cols
-		node func(row,col int) int
-	)
-
-	node = func(row, col int) int {
-		return row * cols + col
-	}
-
-	u := New(dummyNodes + 1)
-
-	for i := 0; i < rows; i++ {
-		for j := 0; j < cols; j++ {
-			if board[i][j] == 'O' {
-				if i == 0 || i == rows - 1 || j == 0 || j == cols - 1 {
-					u.Union(node(i,j), dummyNodes)
-				}
-
-				if i > 0 && board[i - 1][j] == 'O' {
-					u.Union(node(i,j),node(i - 1,j))
-				}
-
-				if j > 0 && board[i][j - 1] == 'O' {
-					u.Union(node(i,j), node(i,j - 1))
-				}
-			}
-		}
-	}
-
-	for i := 0; i < rows; i++ {
-		for j := 0; j < cols; j++ {
-			if !u.Is_Connected(node(i,j), dummyNodes) && board[i][j]	 == 'O' {
-				board[i][j]	= 'X'
-			}
-		}
-	}
+	
 }
 
 type UF struct {

@@ -13,8 +13,8 @@ func sortArrayByParityII(A []int) []int {
 		for i < n && A[i] & 1 == 0 {
 			i += 2
 		}
-		
-		for j < n && A[j] & 1 == 1 {
+
+		for j < n && A[j] & 1 != 0 {
 			j += 2
 		}
 

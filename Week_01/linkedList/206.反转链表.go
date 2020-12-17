@@ -44,7 +44,7 @@ func reverseList(head *ListNode) *ListNode {
 	for head != nil {
 		tmp := head.Next
 		head.Next = next
-		next = head
+		next = headb
 		head = tmp
 	}
 

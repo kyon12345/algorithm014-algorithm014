@@ -8,7 +8,9 @@ package main
 func sortArrayByParity(A []int) []int {
 	for i,j := 0,0;j < len(A);j ++ {
 		if A[j] & 1 == 0 {
-			swap(A, i, j)
+			tmp := A[i]
+			A[i] = A[j]
+			A[j] = tmp
 			i ++
 		}
 	}

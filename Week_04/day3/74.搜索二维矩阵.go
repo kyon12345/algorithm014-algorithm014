@@ -18,15 +18,17 @@ func searchMatrix(matrix [][]int, target int) bool {
 
 	l,r := 0,m * n - 1
 
-	for l != r {
-		mid := (l + r) >> 1
-		if matrix[mid / m][mid % m] < target {
+	for l < r {
+		mid := l + (r - l) >> 1
+
+		if matrix[mid/m][mid%m] < target {
 			l = mid + 1
 		} else {
 			r = mid
 		}
 	}
-	return matrix[r / m][r % m] == target
+
+	return matrix[l/m][l%m] == target
 }
 // @lc code=end
 

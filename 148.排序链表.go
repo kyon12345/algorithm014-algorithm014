@@ -36,7 +36,7 @@ func sortList(head *ListNode) *ListNode {
 			left := cur
 			right := split(cur, step)
 			cur = split(right, step)
-			prev = merge(prev, right, left)
+			prev = merge(prev, left, right)
 		}
 	}
 
@@ -57,7 +57,7 @@ func split(head *ListNode, step int) *ListNode {
 	return right
 }
 
-func merge(prev,right,left *ListNode) *ListNode {
+func merge(prev, left, right *ListNode) *ListNode {
 	cur := prev
 
 	for left != nil && right != nil {
@@ -68,7 +68,6 @@ func merge(prev,right,left *ListNode) *ListNode {
 			cur.Next = right
 			right = right.Next
 		}
-
 		cur = cur.Next
 	}
 

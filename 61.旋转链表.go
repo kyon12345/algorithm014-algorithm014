@@ -19,11 +19,11 @@ func rotateRight(head *ListNode, k int) *ListNode {
 	}
 
 	n := head
-	length := 1 
+	length := 1
 	for n.Next != nil {
 		n = n.Next
 		length ++
-	}	
+	}
 
 	k %= length
 	if k == 0 {
@@ -38,7 +38,6 @@ func rotateRight(head *ListNode, k int) *ListNode {
 
 	head = n.Next
 	n.Next = nil
-
 	return head
 }
 
