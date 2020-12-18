@@ -20,13 +20,14 @@ func maxDepth(root *TreeNode) int {
 		return 0
 	}
 
-	return maxVal(maxDepth(root.Left),maxDepth(root.Right)) + 1
+	return max(maxDepth(root.Left),maxDepth(root.Right)) + 1
 }
 
-func maxVal(a,b int) int {
+func max(a,b int) int {
 	if a > b {
 		return a
 	}
+
 	return b
 }
 

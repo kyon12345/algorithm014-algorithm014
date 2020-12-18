@@ -4,6 +4,7 @@
  * [547] 朋友圈
  */
 package main
+
 // @lc code=start
 //dfs
 //本质是搜索连通块个数的问题
@@ -37,12 +38,12 @@ package main
 func findCircleNum(M [][]int) int {
 	if len(M) == 0 {
 		return 0
-	}	
+	}
 
-	u := New(len(M))
+	u := NewUF(len(M))
 
 	for i := 0; i < len(M); i++ {
-		for j := 0; j < len(M); j++ {
+		for j := 0; j < len(M[0]); j++ {
 			if M[i][j] == 1 {
 				u.Union(i, j)
 			}
@@ -53,18 +54,18 @@ func findCircleNum(M [][]int) int {
 }
 
 type UnionFind struct {
-	count int
+	count    int
 	parent []int
 }
 
-func New(n int) *UnionFind {
-	par := make([]int,n)
+func NewUF(n int) UnionFind {
+	par := make([]int, n)
 
 	for i := 0; i < n; i++ {
 		par[i] = i
 	}
 
-	return &UnionFind{count: n,parent: par}
+	return UnionFind{n, par}
 }
 
 func (this *UnionFind) Find(i int) int {
@@ -83,13 +84,12 @@ func (this *UnionFind) Find(i int) int {
 }
 
 func (this *UnionFind) Union(i,j int) {
-	pi := this.Find(i)
-	pj := this.Find(j)
+	pi,pj := this.Find(i),this.Find(j)
 
-	if pi != pj	{
+	if pi != pj {
 		this.parent[pi] = pj
 		this.count --
 	}
-}
-// @lc code=end
+} 
 
+// @lc code=end

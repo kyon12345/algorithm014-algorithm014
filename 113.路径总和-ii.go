@@ -18,6 +18,7 @@ func pathSum(root *TreeNode, sum int) [][]int {
 	if root == nil {
 		return nil
 	}
+
 	res := make([][]int, 0)
 
 	dfs(root, sum, &res, []int{})
@@ -26,15 +27,12 @@ func pathSum(root *TreeNode, sum int) [][]int {
 }
 
 func dfs(root *TreeNode, sum int, res *[][]int, prev []int) {
-	if root.Left == nil && root.Right == nil {
-		if root.Val == sum {
-			*res = append(*res, append(prev, root.Val))
-		}
+	if root.Left == nil && root.Right == nil && root.Val == sum {
+		*res = append(*res, append(prev,root.Val))
 		return
 	}
 
 	if root.Left != nil {
-		//no longer point to the origin prev,but a copied one
 		dfs(root.Left, sum-root.Val, res, append(append([]int{}, prev...), root.Val))
 	}
 

@@ -1,23 +1,28 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
+type People struct {
+	Name string
+	Age int
+}
+
+func (this People) Speak() {
+	fmt.Println(this.Name)
+}
+
+func NewPeople() People {
+	return People{"yon",10}
 }
 
 func main() {
-	head := &ListNode{0, nil}
-	head.Next = &ListNode{1, nil}
-	head.Next.Next = &ListNode{2, nil}
+	//p := &People{"yon",24}
+	p := NewPeople()
 
-	n := head
-	length := 0
-	for n != nil {
-		n = n.Next
-		length++
-	}
+	fmt.Println(reflect.TypeOf(&p))
 
-	fmt.Println(length)
+	p.Speak()
 }
