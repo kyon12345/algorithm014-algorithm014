@@ -6,6 +6,7 @@
 package main
 
 import (
+	"image/jpeg"
 	"math/bits"
 	"runtime/trace"
 	"strings"
@@ -78,7 +79,7 @@ import (
 // 		position := availablePositions & - availablePositions
 // 		availablePositions = availablePositions & (availablePositions - 1)
 // 		column := bits.OnesCount(uint(position - 1))
-		
+
 // 		queens[row] = column
 // 		solve(queens, n, row + 1, columns | position, (diagonals1 | position) >> 1, (diagonals2 | position) << 1 )
 // 		queens[row] = -1
@@ -101,12 +102,7 @@ var result [][]string
 func solveNQueens(n int) [][]string {
 	result = [][]string{}
 
-	if n <= 0 {
-		return result
-	}
-
 	board := make([][]byte,n)
-
 	for i := 0; i < n; i++ {
 		board[i] = make([]byte, n)
 		for j := 0; j < n; j++ {
@@ -119,11 +115,11 @@ func solveNQueens(n int) [][]string {
 	return result
 }
 
-func helper(board [][]byte,row int,colBit,leftBit,rightBit int) {
+func helper(board [][]byte,row,colBit,rightBit,leftBit int) {
 	n := len(board)
 
-	for row >= n {
-		dts := make([]string,n)
+	if row >= n {
+		dts := make([]string, n)
 
 		for i,w := range board {
 			dts[i] = string(w)
@@ -131,14 +127,15 @@ func helper(board [][]byte,row int,colBit,leftBit,rightBit int) {
 
 		result = append(result, dts)
 
-		return		
+		return
 	}
 
 	for i := 0; i < n; i++ {
-		pick := 1 << (n - i - 1)
-		if pick & colBit == 0 && pick & leftBit == 0 && pick & rightBit == 0 {
+		pick := 1 << (n - i - 1) 
+
+		if pick & colBit == 0 && pick & rightBit == 0 && pick & leftBit == 0 {
 			board[row][i] = 'Q'
-			helper(board, row + 1, colBit | pick, (leftBit | pick) << 1, (rightBit | pick) >> 1)
+			helper(board, row + 1, colBit | pick,(rightBit | pick) >> 1,(leftBit | pick) << 1)
 			board[row][i] = '.'
 		}
 	}

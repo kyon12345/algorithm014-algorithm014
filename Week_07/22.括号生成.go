@@ -3,12 +3,12 @@
  *
  * [22] 括号生成
  */
-
+package main
 // @lc code=start
 func generateParenthesis(n int) []string {
-	res := make([]string,0)
+	res := []string{}
 
-	dfs(0,0,n,"",&res)
+	dfs(0, 0, n,"",&res)
 
 	return res
 }
@@ -16,7 +16,6 @@ func generateParenthesis(n int) []string {
 func dfs(l,r,n int,s string,res *[]string) {
 	if l == n && r == n {
 		*res = append(*res,s)
-		return
 	}
 
 	if l < n {
