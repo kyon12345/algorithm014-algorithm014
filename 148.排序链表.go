@@ -30,13 +30,13 @@ func sortList(head *ListNode) *ListNode {
 
 	for step := 1; step < n; step <<= 1 {
 		prev := dummy
-		cur := dummy.Next
+		cur := prev.Next
 
 		for cur != nil {
 			left := cur
 			right := split(cur, step)
 			cur = split(right, step)
-			prev = merge(prev, left, right)
+			prev = merge(prev, right, left)
 		}
 	}
 
@@ -57,10 +57,10 @@ func split(head *ListNode, step int) *ListNode {
 	return right
 }
 
-func merge(prev, left, right *ListNode) *ListNode {
+func merge(prev, right, left *ListNode) *ListNode {
 	cur := prev
 
-	for left != nil && right != nil {
+	for right != nil && left != nil {
 		if left.Val < right.Val {
 			cur.Next = left
 			left = left.Next
@@ -73,9 +73,7 @@ func merge(prev, left, right *ListNode) *ListNode {
 
 	if left != nil {
 		cur.Next = left
-	}
-
-	if right != nil {
+	} else if right != nil {
 		cur.Next = right
 	}
 

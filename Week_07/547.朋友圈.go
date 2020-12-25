@@ -5,6 +5,8 @@
  */
 package main
 
+import "text/template/parse"
+
 // @lc code=start
 //dfs
 //本质是搜索连通块个数的问题
@@ -54,42 +56,33 @@ func findCircleNum(M [][]int) int {
 }
 
 type UnionFind struct {
-	count    int
+	cap    int
 	parent []int
 }
 
-func NewUF(n int) UnionFind {
-	par := make([]int, n)
+func NewUF(cap int) *UnionFind {
+	par := make([]int, cap)
 
-	for i := 0; i < n; i++ {
+	for i := 0; i < cap; i++ {
 		par[i] = i
 	}
 
-	return UnionFind{n, par}
+	return &UnionFind{cap, par}
 }
 
-func (this *UnionFind) Find(i int) int {
-	root := i
+func (this *UnionFind) Find(index int) int {
+	root := index
 
 	for this.parent[root] != root {
 		root = this.parent[root]
 	}
 
-	//compression
-	for this.parent[i] != i {
-		i,this.parent[i] = this.parent[i],root
+	//copression
+	for this.parent[index] != index {
+		index,this.parent[index] = this.parent[index],root
 	}
 
 	return root
 }
-
-func (this *UnionFind) Union(i,j int) {
-	pi,pj := this.Find(i),this.Find(j)
-
-	if pi != pj {
-		this.parent[pi] = pj
-		this.count --
-	}
-} 
 
 // @lc code=end

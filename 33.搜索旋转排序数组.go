@@ -8,10 +8,10 @@ package main
 // @lc code=start
 func search(nums []int, target int) int {
 	n := len(nums)
-	lo,hi := 0,n - 1
+	lo, hi := 0, n-1
 
 	for lo < hi {
-		mid := (lo + hi) >> 1
+		mid := lo + (hi-lo)>>1
 		if nums[mid] > nums[hi] {
 			lo = mid + 1
 		} else {
@@ -20,11 +20,10 @@ func search(nums []int, target int) int {
 	}
 
 	rot := lo
-	lo,hi = 0,n - 1
+	lo, hi = 0, n-1
 	for lo <= hi {
-		mid := (lo + hi) >> 1
-		realmid := (rot + mid) % n
-
+		mid := lo + (hi-lo)>>1
+		realmid := (mid + rot) % n
 		if nums[realmid] == target {
 			return realmid
 		} else if nums[realmid] < target {

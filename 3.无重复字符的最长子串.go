@@ -4,23 +4,26 @@
  * [3] 无重复字符的最长子串
  */
 package main
+
+import "math"
+
 // @lc code=start
 func lengthOfLongestSubstring(s string) int {
 	//sliding window
-	dic := [256]int{}
+	m := [256]int{}
 
-	for i := 0; i < len(dic); i++ {
-		dic[i] = -1
+	for i, _ := range m {
+		m[i]--
 	}
 
 	start,maxlen := -1,0
 
 	for i := 0; i < len(s); i++ {
-		if dic[s[i]] > start {
-			start = dic[s[i]]
+		if m[s[i]] > start {
+			start = m[s[i]]
 		}
 
-		dic[s[i]] = i
+		m[s[i]] = i
 
 		if i - start > maxlen {
 			maxlen = i - start
@@ -29,5 +32,5 @@ func lengthOfLongestSubstring(s string) int {
 
 	return maxlen
 }
-// @lc code=end
 
+// @lc code=end

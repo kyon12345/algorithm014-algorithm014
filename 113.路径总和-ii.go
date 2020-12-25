@@ -15,29 +15,29 @@ package main
  * }
  */
 func pathSum(root *TreeNode, sum int) [][]int {
+	res := [][]int{}
+
 	if root == nil {
-		return nil
+		return res
 	}
 
-	res := make([][]int, 0)
-
-	dfs(root, sum, &res, []int{})
+	dfsSum(root, &res, []int{}, sum)
 
 	return res
 }
 
-func dfs(root *TreeNode, sum int, res *[][]int, prev []int) {
+func dfsSum(root *TreeNode, res *[][]int, prev []int, sum int) {
 	if root.Left == nil && root.Right == nil && root.Val == sum {
-		*res = append(*res, append(prev,root.Val))
-		return
+		prev = append(prev, root.Val)
+		*res = append(*res, prev)
 	}
 
 	if root.Left != nil {
-		dfs(root.Left, sum-root.Val, res, append(append([]int{}, prev...), root.Val))
+		dfsSum(root.Left, res, append(append([]int{}, prev...), root.Val), sum-root.Val)
 	}
 
 	if root.Right != nil {
-		dfs(root.Right, sum-root.Val, res, append(append([]int{}, prev...), root.Val))
+		dfsSum(root.Right, res, append(append([]int{}, prev...), root.Val), sum-root.Val)
 	}
 }
 

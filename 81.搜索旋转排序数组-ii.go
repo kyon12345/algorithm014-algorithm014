@@ -8,21 +8,19 @@ package main
 // @lc code=start
 //O(logn) worst O(n)
 func search(nums []int, target int) bool {
-	lo,hi := 0,len(nums) - 1
-	
+	lo, hi := 0, len(nums)-1
 
-	//(mid,hi],[lo,mid)
 	for lo <= hi {
-		mid := lo + (hi - lo) >> 1
+		mid := lo + (hi-lo)>>1
 
-		if target == nums[mid] {
+		if nums[mid] == target {
 			return true
 		}
 
-		if nums[lo] == nums[mid] && nums[hi] == nums[mid] {
-			lo ++ 
-			hi --
-		} else if nums[lo] <= nums[mid] {
+		if nums[mid] == nums[hi] && nums[mid] == nums[lo] {
+			hi--
+			lo++
+		} else if nums[mid] > nums[hi] {
 			if nums[lo] <= target && target < nums[mid] {
 				hi = mid - 1
 			} else {
@@ -38,7 +36,6 @@ func search(nums []int, target int) bool {
 	}
 
 	return false
-
 }
 
 // @lc code=end

@@ -4,6 +4,7 @@
  * [142] 环形链表 II
  */
 package main
+
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -11,6 +12,7 @@ package main
  *     Val int
  *     Next *ListNode
  * }
+ */
  */
 func detectCycle(head *ListNode) *ListNode {
 	//哈希表 O(n) O(n)
@@ -31,7 +33,7 @@ func detectCycle(head *ListNode) *ListNode {
 	//快慢指针 O(n) O(1)
 	//a = c + (n - 1)(b + c)
 	slow,fast := head,head
-
+	
 	for {
 		if fast == nil || fast.Next == nil {
 			return nil
@@ -40,7 +42,7 @@ func detectCycle(head *ListNode) *ListNode {
 		slow = slow.Next
 		fast = fast.Next.Next
 
-		if fast == slow {
+		if slow == fast {
 			break
 		}
 	}

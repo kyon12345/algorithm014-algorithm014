@@ -17,16 +17,19 @@ import "math"
  * } */
 func distributeCoins(root *TreeNode) int {
 	res := 0
+
 	if root.Left != nil {
 		res += distributeCoins(root.Left)
 		root.Val += root.Left.Val - 1
 		res += abs(root.Left.Val - 1)
 	}
+
 	if root.Right != nil {
 		res += distributeCoins(root.Right)
 		root.Val += root.Right.Val - 1
 		res += abs(root.Right.Val - 1)
 	}
+
 	return res
 }
 
@@ -34,6 +37,7 @@ func abs(a int) int {
 	if a < 0 {
 		return -a
 	}
+
 	return a
 }
 

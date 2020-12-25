@@ -4,53 +4,58 @@
  * [980] 不同路径 III
  */
 package main
+
 // @lc code=start
-var res,empty int
+var res, empty int
+
 func uniquePathsIII(grid [][]int) int {
 	res = 0
 	empty = 1
 
-	var sx,sy int
-	
-	m,n := len(grid),len(grid[0])
+	var sx, sy int
 
-	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++ {
-			if grid[i][j] == 0 {
-				empty ++		
-			} else if grid[i][j] == 1 {
-				sx = i
-				sy = j
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[0]); j++ {
+			if grid[i][j] == 1 {
+				sx, sy = i, j
+			} else if grid[i][j] == 0 {
+				empty++
 			}
 		}
 	}
 
-	dfsRoute(grid,sx,sy)
+	dfsPath(grid, sx, sy)
 
 	return res
 }
 
-func dfsRoute(grid [][]int,x,y int) {
-	if x < 0 || x >= len(grid) || y < 0 || y >= len(grid[0]) || grid[x][y] < 0 {
+func dfsPath(grid [][]int, i, j int) {
+	if i < 0 || j < 0 || i >= len(grid) || j >= len(grid[0]) {
 		return
 	}
 
-	if grid[x][y] == 2 {
+	c := grid[i][j]
+
+	if c < 0 {
+		return
+	}
+
+	if c == 2 {
 		if empty == 0 {
-			res ++
+			res++
 		}
 		return
 	}
 
-	grid[x][y] = -2
-	empty --
+	grid[i][j] = -2
+	empty--
 
-	dfsRoute(grid,x + 1,y)
-	dfsRoute(grid,x - 1,y)
-	dfsRoute(grid,x,y - 1)
-	dfsRoute(grid,x,y + 1)
+	dfsPath(grid, i+1, j)
+	dfsPath(grid, i-1, j)
+	dfsPath(grid, i, j+1)
+	dfsPath(grid, i, j-1)
 
-	grid[x][y] = 0
+	grid[i][j] = c
 	empty ++
 }
 

@@ -39,16 +39,16 @@ func reverseList(head *ListNode) *ListNode {
 	// return list
 
 	//迭代
-	var next *ListNode
+	var dummy *ListNode
 
 	for head != nil {
 		tmp := head.Next
-		head.Next = next
-		next = headb
+		head.Next = dummy
+		dummy = head
 		head = tmp
 	}
 
-	return next
+	return dummy
 }
 // @lc code=end
 

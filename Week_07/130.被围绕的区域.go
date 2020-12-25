@@ -162,10 +162,10 @@ func solve(board [][]byte) {
 		}
 	}
 
-	for j := 1; j+1 < col; j++ {
-		check(board, 0, j, row, col)
+	for i := 1; i < col-1; i++ {
+		check(board, 0, i, row, col)
 		if row > 1 {
-			check(board, row-1, j, row, col)
+			check(board, row-1, i, row, col)
 		}
 	}
 
@@ -189,16 +189,20 @@ func solve(board [][]byte) {
 func check(board [][]byte, i, j, row, col int) {
 	if board[i][j] == 'O' {
 		board[i][j] = '1'
+
 		if i > 1 {
 			check(board, i-1, j, row, col)
 		}
+
+		if i < row-1 {
+			check(board, i+1, j, row, col)
+		}
+
 		if j > 1 {
 			check(board, i, j-1, row, col)
 		}
-		if i+1 < row {
-			check(board, i+1, j, row, col)
-		}
-		if j+1 < col {
+
+		if j < col-1 {
 			check(board, i, j+1, row, col)
 		}
 	}

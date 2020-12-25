@@ -14,12 +14,12 @@ func sortArrayByParityII(A []int) []int {
 			i += 2
 		}
 
-		for j < n && A[j] & 1 != 0 {
+		for j < n && A[j] & 1 == 1 {
 			j += 2
 		}
 
 		if i < n && j < n {
-			swap(A, i, j)
+			swap(A,i,j)
 		}
 	}
 

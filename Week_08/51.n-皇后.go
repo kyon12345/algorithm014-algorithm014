@@ -5,13 +5,6 @@
  */
 package main
 
-import (
-	"image/jpeg"
-	"math/bits"
-	"runtime/trace"
-	"strings"
-)
-
 // @lc code=start
 // var ans [][]string
 
@@ -102,7 +95,12 @@ var result [][]string
 func solveNQueens(n int) [][]string {
 	result = [][]string{}
 
+	if n <= 0 {
+		return result
+	}
+
 	board := make([][]byte,n)
+
 	for i := 0; i < n; i++ {
 		board[i] = make([]byte, n)
 		for j := 0; j < n; j++ {
@@ -110,18 +108,17 @@ func solveNQueens(n int) [][]string {
 		}
 	}
 
-	helper(board,0,0,0,0)
+	dfs(board, 0, 0, 0, 0)
 
 	return result
 }
 
-func helper(board [][]byte,row,colBit,rightBit,leftBit int) {
+func dfs(board [][]byte, row, col, left, right int) {
 	n := len(board)
 
-	if row >= n {
+	if row == n {
 		dts := make([]string, n)
-
-		for i,w := range board {
+		for i, w := range board {
 			dts[i] = string(w)
 		}
 
@@ -131,16 +128,14 @@ func helper(board [][]byte,row,colBit,rightBit,leftBit int) {
 	}
 
 	for i := 0; i < n; i++ {
-		pick := 1 << (n - i - 1) 
+		pick := 1 << (n - i - 1)
 
-		if pick & colBit == 0 && pick & rightBit == 0 && pick & leftBit == 0 {
+		if pick&col == 0 && pick&left == 0 && pick&right == 0 {
 			board[row][i] = 'Q'
-			helper(board, row + 1, colBit | pick,(rightBit | pick) >> 1,(leftBit | pick) << 1)
+			dfs(board, row+1, col|pick, (left|pick)<<1, (right|pick)>>1)
 			board[row][i] = '.'
 		}
 	}
 }
 
-
 // @lc code=end
-

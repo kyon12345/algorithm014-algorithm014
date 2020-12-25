@@ -14,8 +14,7 @@ func decodeString(s string) string {
 	numStack := make([]int, 0)
 	strStack := make([]string, 0)
 
-	num := 0
-	res := ""
+	num, res := 0, ""
 
 	for _, c := range s {
 		switch {

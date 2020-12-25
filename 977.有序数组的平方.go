@@ -10,21 +10,28 @@ import "math"
 // @lc code=start
 func sortedSquares(nums []int) []int {
 	n := len(nums)
-	
-	res := make([]int,n)
 
-	lo,hi := 0,n - 1
+	res := make([]int, n)
+
+	l,r := 0,n - 1
 	for p := n - 1; p >= 0; p-- {
-		if math.Abs(float64(nums[lo])) < math.Abs(float64(nums[hi])) {
-			res[p] = nums[hi] * nums[hi]
-			hi --
+		if abs(nums[l]) < abs(nums[r]) {
+			res[p] = nums[r] * nums[r]
+			r --
 		} else {
-			res[p] = nums[lo] * nums[lo]
-			lo ++
+			res[p] = nums[l] * nums[l]
+			l ++
 		}
 	}
 
 	return res
+}
+
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
 }
 
 // @lc code=end

@@ -4,6 +4,7 @@
  * [74] 搜索二维矩阵
  */
 package main
+
 // @lc code=start
 func searchMatrix(matrix [][]int, target int) bool {
 	//二维矩阵 row = index/width col = index%width
@@ -13,21 +14,20 @@ func searchMatrix(matrix [][]int, target int) bool {
 		return false
 	}
 
-	height,width := len(matrix),len(matrix[0])
-
-	lo,hi := 0, height * width - 1
+	m, n := len(matrix), len(matrix[0])
+	lo, hi := 0, m*n-1
 
 	for lo < hi {
-		mid := lo + (hi - lo) >> 1
+		mid := lo + (hi-lo)>>1
 
-		if matrix[mid/width][mid%width] < target {
+		if matrix[mid/n][mid%n] < target {
 			lo = mid + 1
 		} else {
 			hi = mid
 		}
 	}
 
-	return matrix[lo/width][lo%width] == target
+	return matrix[lo/n][lo%n] == target
 }
-// @lc code=end
 
+// @lc code=end

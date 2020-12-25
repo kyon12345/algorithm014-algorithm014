@@ -12,7 +12,7 @@ func sortArrayByParity(A []int) []int {
 			A[i] = A[j]
 			A[j] = tmp
 			i ++
-		}
+ 		}
 	}
 
 	return A

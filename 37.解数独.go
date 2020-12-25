@@ -6,17 +6,17 @@
 package main
 
 // @lc code=start
-// func solveSudoku(board [][]byte) {
+func solveSudoku(board [][]byte) {
 	var line, column [9][9]bool
 	var block [3][3][9]bool
 	var spaces [][2]int
 
-	for i, row := range board {
-		for j, b := range row {
-			if b == '.' {
+	for i := 0; i < len(board); i++ {
+		for j := 0; j < len(board[0]); j++ {
+			if board[i][j] == '.' {
 				spaces = append(spaces, [2]int{i, j})
 			} else {
-				digit := b - '1'
+				digit := board[i][j] - '1'
 				line[i][digit] = true
 				column[j][digit] = true
 				block[i/3][j/3][digit] = true
@@ -25,6 +25,7 @@ package main
 	}
 
 	var dfs func(int) bool
+
 	dfs = func(pos int) bool {
 		if pos == len(spaces) {
 			return true
@@ -37,7 +38,7 @@ package main
 				line[i][digit] = true
 				column[j][digit] = true
 				block[i/3][j/3][digit] = true
-				board[i][j]	= digit + '1'
+				board[i][j] = digit + '1'
 				if dfs(pos + 1) {
 					return true
 				}
@@ -46,9 +47,11 @@ package main
 				block[i/3][j/3][digit] = false
 			}
 		}
+
 		return false
 	}
 
 	dfs(0)
-// }
+}
+
 // @lc code=end

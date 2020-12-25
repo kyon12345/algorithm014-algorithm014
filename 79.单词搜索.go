@@ -6,42 +6,42 @@
 package main
 
 // @lc code=start
-var res bool
-
 func exist(board [][]byte, word string) bool {
-	res = false
-	if len(board) == 0 || len(board[0]) == 0 {
-		return false
-	}
-
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[0]); j++ {
-			dfsWordSearch(board, i, j, "", word)
+			if board[i][j] == word[0] && isFound(board, i, j, word, 0) {
+				return true
+			}
 		}
 	}
 
-	return res
+	return false
 }
 
-func dfsWordSearch(board [][]byte, i, j int, s, word string) {
-	if i < 0 || i == len(board) || j < 0 || j == len(board[0]) || board[i][j] == '#' {
-		return
+func isFound(board [][]byte, i, j int, word string, index int) bool {
+	if index == len(word) {
+		return true
+	}
+
+	if i < 0 || i == len(board) || j < 0 || j == len(board[0]) {
+		return false
+	}
+
+	if word[index] != board[i][j] {
+		return false
 	}
 
 	c := board[i][j]
 	board[i][j] = '#'
-	
-	if word == s {
-		res = true
-		return
+	if isFound(board, i+1, j, word, index+1) ||
+		isFound(board, i-1, j, word, index+1) ||
+		isFound(board, i, j-1, word, index+1) ||
+		isFound(board, i, j+1, word, index+1) {
+		return true
 	}
 
-	dfsWordSearch(board, i+1, j, s+string(c), word)
-	dfsWordSearch(board, i-1, j, s+string(c), word)
-	dfsWordSearch(board, i, j-1, s+string(c), word)
-	dfsWordSearch(board, i, j+1, s+string(c), word)
-
 	board[i][j] = c
+	return false
 }
 
 // @lc code=end

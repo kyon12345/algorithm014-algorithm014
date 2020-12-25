@@ -30,15 +30,16 @@ func swapPairs(head *ListNode) *ListNode {
 	//迭代 O(N) O(1)
 	dummy := &ListNode{}
 	dummy.Next = head
-	
-	cur := dummy
-	for cur.Next != nil && cur.Next.Next != nil {
-		first := cur.Next
-		second := cur.Next.Next
+	pre := dummy
+
+	for pre.Next != nil && pre.Next.Next != nil {
+		first := pre.Next
+		second := pre.Next.Next
+		
 		first.Next = second.Next
 		second.Next = first
-		cur.Next = second
-		cur = first
+		pre.Next = second
+		pre = first
 	}
 
 	return dummy.Next
