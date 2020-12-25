@@ -24,22 +24,22 @@ func exist(board [][]byte, word string) bool {
 }
 
 func dfsWordSearch(board [][]byte, i, j int, s, word string) {
-	c := board[i][j]
-
-	if i < 0 || i >= len(board) || j < 0 || j >= len(board[0]) || board[i][j] == '#' {
+	if i < 0 || i == len(board) || j < 0 || j == len(board[0]) || board[i][j] == '#' {
 		return
 	}
 
-	if s == word {
-		res = true
-	}
-
+	c := board[i][j]
 	board[i][j] = '#'
+	
+	if word == s {
+		res = true
+		return
+	}
 
 	dfsWordSearch(board, i+1, j, s+string(c), word)
 	dfsWordSearch(board, i-1, j, s+string(c), word)
-	dfsWordSearch(board, i, j+1, s+string(c), word)
 	dfsWordSearch(board, i, j-1, s+string(c), word)
+	dfsWordSearch(board, i, j+1, s+string(c), word)
 
 	board[i][j] = c
 }
