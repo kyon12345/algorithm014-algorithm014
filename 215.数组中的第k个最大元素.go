@@ -1,3 +1,8 @@
+/*
+ * @lc app=leetcode.cn id=215 lang=golang
+ *
+ * [215] 数组中的第K个最大元素
+ */
 package main
 
 import "fmt"
@@ -44,6 +49,4 @@ func kSelect(nums []int, left int, right int, k int) int {
 	return nums[p]
 }
 
-func main() {
-	findKthLargest([]int{3,2,1,5,6,4},3)
-}
+// @lc code=end

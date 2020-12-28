@@ -13,14 +13,13 @@ package main
  *     Next *ListNode
  * }
  */
- */
 func mergeKLists(lists []*ListNode) *ListNode {
-	return merge(lists, 0, len(lists)-1)
+	return mergeK(lists, 0, len(lists)-1)
 }
 
-func merge(lists []*ListNode, l, r int) *ListNode {
+func mergeK(lists []*ListNode, l, r int) *ListNode {
 	if l == r {
-		return lists[1]
+		return lists[l]
 	}
 
 	if l > r {
@@ -28,26 +27,22 @@ func merge(lists []*ListNode, l, r int) *ListNode {
 	}
 
 	mid := (l + r) >> 1
-	return mergeTwoLists(merge(lists, l, mid), merge(lists, l, mid))
+
+	return MergeTwo(mergeK(lists, l, mid), mergeK(lists, mid+1, r))
 }
 
-func mergeTwoLists(left, right *ListNode) *ListNode {
-	if left == nil {
-		return right
-	}
-
-	if right == nil {
-		return left
-	}
-
-	if left.Val < right.Val {
-		left.Next = merge(left.Next, right)
-		return left
+func MergeTwo(l1, l2 *ListNode) *ListNode {
+	if l1 == nil {
+		return l2
+	} else if l2 == nil {
+		return l1
+	} else if l1.Val < l2.Val {
+		l1.Next = MergeTwo(l1.Next, l2)
+		return l1
 	} else {
-		right.Next = merge(right.Next, left)
-		return right
+		l2.Next = MergeTwo(l2.Next, l1)
+		return l2
 	}
-
 }
 
 // @lc code=end
