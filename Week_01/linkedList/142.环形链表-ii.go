@@ -13,12 +13,11 @@ package main
  *     Next *ListNode
  * }
  */
- */
 func detectCycle(head *ListNode) *ListNode {
 	//哈希表 O(n) O(n)
 	// visitedNode := make(map[*ListNode]int)
 
-	// node := head 
+	// node := head
 
 	// for node != nil {
 	// 	if _,exists := visitedNode[node];exists {
@@ -32,15 +31,15 @@ func detectCycle(head *ListNode) *ListNode {
 
 	//快慢指针 O(n) O(1)
 	//a = c + (n - 1)(b + c)
-	slow,fast := head,head
-	
+	slow, fast := head, head
+
 	for {
 		if fast == nil || fast.Next == nil {
 			return nil
 		}
 
-		slow = slow.Next
 		fast = fast.Next.Next
+		slow = slow.Next
 
 		if slow == fast {
 			break
@@ -56,5 +55,5 @@ func detectCycle(head *ListNode) *ListNode {
 
 	return slow
 }
-// @lc code=end
 
+// @lc code=end

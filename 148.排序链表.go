@@ -15,11 +15,8 @@ package main
  */
 //merge-sort buttom-up O(nlogn) o(1)
 func sortList(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-
 	dummy := &ListNode{}
+
 	dummy.Next = head
 
 	n := 0
@@ -29,14 +26,14 @@ func sortList(head *ListNode) *ListNode {
 	}
 
 	for step := 1; step < n; step <<= 1 {
-		prev := dummy
-		cur := prev.Next
+		pre := dummy
+		cur := pre.Next
 
 		for cur != nil {
 			left := cur
 			right := split(cur, step)
 			cur = split(right, step)
-			prev = merge(prev, right, left)
+			pre = merge(pre, right, left)
 		}
 	}
 
@@ -54,34 +51,35 @@ func split(head *ListNode, step int) *ListNode {
 
 	right := head.Next
 	head.Next = nil
+
 	return right
 }
 
 func merge(prev, right, left *ListNode) *ListNode {
-	cur := prev
+	node := prev
 
 	for right != nil && left != nil {
-		if left.Val < right.Val {
-			cur.Next = left
-			left = left.Next
-		} else {
-			cur.Next = right
+		if right.Val < left.Val {
+			node.Next = right
 			right = right.Next
+		} else {
+			node.Next = left
+			left = left.Next
 		}
-		cur = cur.Next
+		node = node.Next
 	}
 
 	if left != nil {
-		cur.Next = left
+		node.Next = left
 	} else if right != nil {
-		cur.Next = right
+		node.Next = right
 	}
 
-	for cur.Next != nil {
-		cur = cur.Next
+	for node.Next != nil {
+		node = node.Next
 	}
 
-	return cur
+	return node
 }
 
 // @lc code=end

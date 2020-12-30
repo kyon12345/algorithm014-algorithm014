@@ -7,57 +7,61 @@ package main
 
 // @lc code=start
 
+//使用words初始化tire
+//循环每一个格子,向四个方向进行深度优先搜素
+//如果node的word里面有值,哪么返回值,结束这一层搜索,回溯状态,继续搜索
+
 type TireNode struct {
 	next [26]*TireNode
 	word string
 }
 
 func (this *TireNode) Insert(word string) {
-	node := this
+	root := this
 
-	for _, c := range word {
-		if node.next[c - 'a'] == nil {
-			node.next[c - 'a'] = &TireNode{}
+	for _, w := range word {
+		if root.next[w-'a'] == nil {
+			root.next[w-'a'] = &TireNode{}
 		}
-
-		node = node.next[c - 'a']
+		root = root.next[w-'a']
 	}
 
-	node.word = word 
+	root.word = word
 }
 
 func findWords(board [][]byte, words []string) []string {
-	root := &TireNode{}
+	res := make([]string, 0)
 
-	//init tire
-	for _, c := range words {
-		root.Insert(c)
+	if len(board) == 0 {
+		return res
 	}
 
-	res := make([]string,0)
+	root := &TireNode{}
+	for _, w := range words {
+		root.Insert(w)
+	}
 
-	//begin dfs
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[0]); j++ {
-			dfs(i,j,board,root,&res)
+			dfsFind(board, i, j, root, &res)
 		}
 	}
 
 	return res
 }
 
-func dfs(i,j int,board [][]byte,node *TireNode,res *[]string) {
+func dfsFind(board [][]byte, i, j int, node *TireNode, res *[]string) {
 	if i < 0 || j < 0 || i == len(board) || j == len(board[0]) {
 		return
 	}
 
 	c := board[i][j]
 
-	if c == '#' || node.next[c - 'a'] == nil {
+	if c == '#' || node.next[c-'a'] == nil {
 		return
 	}
 
-	node = node.next[c - 'a']
+	node = node.next[c-'a']
 	board[i][j] = '#'
 
 	if node.word != "" {
@@ -65,10 +69,10 @@ func dfs(i,j int,board [][]byte,node *TireNode,res *[]string) {
 		node.word = ""
 	}
 
-	dfs(i + 1, j, board, node, res)
-	dfs(i, j + 1, board, node, res)
-	dfs(i - 1, j, board, node, res)
-	dfs(i, j - 1, board, node, res)
+	dfsFind(board, i+1, j, node, res)
+	dfsFind(board, i-1, j, node, res)
+	dfsFind(board, i, j-1, node, res)
+	dfsFind(board, i, j+1, node, res)
 
 	board[i][j] = c
 }

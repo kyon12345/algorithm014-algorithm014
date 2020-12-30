@@ -10,28 +10,28 @@ import "strconv"
 // @lc code=start
 func diffWaysToCompute(input string) []int {
 	if isDigit(input) {
-		tmp, _ := strconv.Atoi(input)
-		return []int{tmp}
+		res, _ := strconv.Atoi(input)
+
+		return []int{res}
 	}
 
-	var res []int
+	res := []int{}
 
-	for index, c := range input {
-		tmpC := string(c)
-		if tmpC == "+" || tmpC == "-" || tmpC == "*" {
-			left := diffWaysToCompute(input[:index])
-			right := diffWaysToCompute(input[index+1:])
+	for index, w := range input {
+		if w == '+' || w == '-' || w == '*' {
+			left, right := diffWaysToCompute(input[:index]), diffWaysToCompute(input[index+1:])
 
-			for _, leftNum := range left {
-				for _, rightNum := range right {
-					var addNum int
-					if tmpC == "+" {
-						addNum = leftNum + rightNum
-					} else if tmpC == "-" {
-						addNum = leftNum - rightNum
+			var addNum int
+			for _, l := range left {
+				for _, r := range right {
+					if w == '+' {
+						addNum = l + r
+					} else if w == '-' {
+						addNum = l - r
 					} else {
-						addNum = leftNum * rightNum
+						addNum = l * r
 					}
+
 					res = append(res, addNum)
 				}
 			}
@@ -43,6 +43,7 @@ func diffWaysToCompute(input string) []int {
 
 func isDigit(input string) bool {
 	_, err := strconv.Atoi(input)
+
 	if err != nil {
 		return false
 	}

@@ -7,17 +7,17 @@ package main
 
 // @lc code=start
 func firstUniqChar(s string) int {
-	d := [26]int{}
+	m := [26]int{}
 
-	for i, k := range s {
-		d[k-'a'] = i
+	for i, w := range s {
+		m[w-'a'] = i
 	}
 
-	for i, k := range s {
-		if d[k-'a'] == i {
+	for i, w := range s {
+		if m[w-'a'] == i {
 			return i
 		} else {
-			d[k-'a'] = -1
+			m[w-'a'] = -1
 		}
 	}
 

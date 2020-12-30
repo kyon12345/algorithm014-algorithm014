@@ -12,40 +12,41 @@ func minWindow(s string, t string) string {
 	m := [128]int{}
 
 	for _, c := range t {
-		m[c] ++
+		m[c]++
 	}
 
-	minStart,minlen := 0,math.MaxInt32
-	end,counter,start := 0,len(t),0
+	start, end := 0, 0
+	minlen, minstart := math.MaxInt32, 0
+	counter := len(t)
 
 	for end < len(s) {
 		c := s[end]
 
 		if m[c] > 0 {
-			counter --
+			counter--
 		}
 
-		m[c] --
-		end ++
+		m[c]--
+
+		end++
 
 		for counter == 0 {
-			if end - start < minlen {
-				minStart = start
+			if end-start < minlen {
 				minlen = end - start
+				minstart = start
 			}
 
-			m[s[start]] ++
-
+			m[s[start]]++
 			if m[s[start]] > 0 {
-				counter ++
+				counter++
 			}
 
-			start ++
+			start++
 		}
 	}
 
 	if minlen != math.MaxInt32 {
-		return s[minStart:minStart + minlen]
+		return s[minstart : minstart+minlen]
 	} else {
 		return ""
 	}

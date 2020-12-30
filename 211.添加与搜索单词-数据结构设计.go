@@ -30,9 +30,7 @@ func (this *TireNode) Insert(word string) {
 
 /** Initialize your data structure here. */
 func Constructor() WordDictionary {
-	root := TireNode{}
-
-	return WordDictionary{&root}
+	return WordDictionary{&TireNode{}}
 }
 
 /** Adds a word into the data structure. */
@@ -42,22 +40,22 @@ func (this *WordDictionary) AddWord(word string) {
 
 /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
 func (this *WordDictionary) Search(word string) bool {
-	return match(this.root,0,word)
+	return match(this.root, 0, word)
 }
 
-func match(root *TireNode,index int,word string) bool {
-	if len(word) == index {
+func match(root *TireNode, index int, word string) bool {
+	if index == len(word) {
 		return root.isEnd
 	}
 
 	c := word[index]
 
 	if c != '.' {
-		return root.next[c - 'a'] != nil && match(root.next[c - 'a'], index + 1, word)
+		return root.next[c-'a'] != nil && match(root.next[c-'a'], index+1, word)
 	} else {
 		for i := 0; i < 26; i++ {
 			if root.next[i] != nil {
-				if match(root.next[i], index + 1, word) {
+				if match(root.next[i], index+1, word) {
 					return true
 				}
 			}

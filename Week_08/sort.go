@@ -50,7 +50,7 @@ func shellsort(list []int) {
 		for i := inc; i < len(list); i++ {
 			j, tmp := i, list[i]
 			for ; j >= inc && list[j-inc] > list[j]; j -= inc {
-				list[j] = list[j - inc]
+				list[j] = list[j-inc]
 			}
 			list[j] = tmp
 		}
@@ -67,24 +67,24 @@ func quickSort(a []int) []int {
 		return a
 	}
 	//declared
-	right,left := len(a) - 1,0
+	right, left := len(a)-1, 0
 	pivot := rand.Int() % len(a)
 
-	a[right],a[pivot] = a[pivot],a[right]
+	a[right], a[pivot] = a[pivot], a[right]
 
 	//loop,move less to left
-	for i,_ := range a {
+	for i, _ := range a {
 		if a[i] < a[right] {
-			a[left],a[i] = a[i],a[left]
-			left ++
-		} 
+			a[left], a[i] = a[i], a[left]
+			left++
+		}
 	}
 
-	a[left],a[right] = a[right],a[left]
+	a[left], a[right] = a[right], a[left]
 
 	//drill down
 	quickSort(a[:left])
-	quickSort(a[left + 1:])
+	quickSort(a[left+1:])
 
 	return a
 }
@@ -99,27 +99,27 @@ func MergeSort(slice []int) []int {
 	}
 
 	mid := len(slice) / 2
-	return Merge(MergeSort(slice[:mid]),MergeSort(slice[mid:]))
+	return Merge(MergeSort(slice[:mid]), MergeSort(slice[mid:]))
 }
 
 //合并两个有序数组
-func Merge(left,right []int) []int {
-	size,i,j := len(left) + len(right),0,0
-	slice := make([]int,size,size)
+func Merge(left, right []int) []int {
+	size, i, j := len(left)+len(right), 0, 0
+	slice := make([]int, size, size)
 
 	for k := 0; k < size; k++ {
-		if i > len(left) - 1 && j <= len(right) - 1 {
+		if i > len(left)-1 && j <= len(right)-1 {
 			slice[k] = right[j]
-			j ++
-		} else if j > len(right) - 1 && i <= len(left) - 1 {
+			j++
+		} else if j > len(right)-1 && i <= len(left)-1 {
 			slice[k] = left[i]
-			i ++
+			i++
 		} else if left[i] < right[j] {
 			slice[k] = left[i]
-			i ++
+			i++
 		} else {
 			slice[k] = right[j]
-			j ++
+			j++
 		}
 	}
 
@@ -136,25 +136,25 @@ func (heap *Heap) HeapSort(array []int) {
 	heap.BuildHeap(array)
 
 	for length := len(array); length > 1; length-- {
-		heap.RemoveTop(array,length)
+		heap.RemoveTop(array, length)
 	}
 }
 
 func (heap *Heap) BuildHeap(array []int) {
-	for i := len(array) / 2; i >= 0 ; i-- {
-		heap.Heapify(array,i,len(array))
+	for i := len(array) / 2; i >= 0; i-- {
+		heap.Heapify(array, i, len(array))
 	}
 }
 
-func (heap *Heap) RemoveTop(array []int,length int) {
+func (heap *Heap) RemoveTop(array []int, length int) {
 	var lastIndex = length - 1
-	array[0],array[lastIndex] = array[lastIndex],array[0]
+	array[0], array[lastIndex] = array[lastIndex], array[0]
 	heap.Heapify(array, 0, lastIndex)
 }
 
-func (heap *Heap) Heapify(array []int,root,length int) {
+func (heap *Heap) Heapify(array []int, root, length int) {
 	var max = root
-	var l,r = heap.Left(array, root),heap.Right(array,root)
+	var l, r = heap.Left(array, root), heap.Right(array, root)
 
 	if l < length && array[l] > array[max] {
 		max = l
@@ -165,15 +165,15 @@ func (heap *Heap) Heapify(array []int,root,length int) {
 	}
 
 	if max != root {
-		array[root],array[max] = array[max],array[root]
+		array[root], array[max] = array[max], array[root]
 		heap.Heapify(array, max, length)
 	}
 }
 
-func (*Heap) Left(array []int,root int) int {
+func (*Heap) Left(array []int, root int) int {
 	return (root * 2) + 1
 }
 
-func (*Heap) Right(array []int,root int) int {
+func (*Heap) Right(array []int, root int) int {
 	return (root * 2) + 2
 }

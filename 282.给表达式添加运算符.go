@@ -9,8 +9,7 @@ import "strconv"
 
 // @lc code=start
 func addOperators(num string, target int) []string {
-	rst := []string{}
-
+	rst := make([]string, 0)
 	if len(num) == 0 {
 		return rst
 	}
@@ -28,14 +27,15 @@ func helperAdd(rst *[]string, path, num string, target, pos, eval, multed int) {
 		return
 	}
 
-	//1,2,3,6
-	//("","123",6,0,0,0)
-	
+	//105 -> 5 10 - 5 1*0 -5 "05" is not valid
 	for i := pos; i < len(num); i++ {
 		if i != pos && num[pos] == '0' {
 			break
 		}
+
 		cur, _ := strconv.Atoi(num[pos : i+1])
+
+		//for the first number,do no operation
 		if pos == 0 {
 			helperAdd(rst, path+toString(cur), num, target, i+1, cur, cur)
 		} else {
