@@ -21,8 +21,8 @@ import (
 // 		if index == target {
 // 			return nums[index]
 // 			//1 2 3 4 5
-			//  i t
-			//向右边搜索,因为比这个数大的太多了
+// //  i t
+// // 向右边搜索,因为比这个数大的太多了
 // 		} else if index < target {
 // 			left = index + 1
 // 		} else {
@@ -68,4 +68,5 @@ import (
 // 	nums[left], nums[j] = nums[j], nums[left]
 // 	return j
 // }
+
 // @lc code=end

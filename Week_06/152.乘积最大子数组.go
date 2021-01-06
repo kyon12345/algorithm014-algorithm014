@@ -57,7 +57,7 @@ func maxProduct(nums []int) int {
 		}
 
 		if max > tmp {
-			tmp = max
+			tmp = max	
 		}
 	}
 

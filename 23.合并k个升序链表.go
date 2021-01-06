@@ -17,30 +17,32 @@ func mergeKLists(lists []*ListNode) *ListNode {
 	return mergeK(lists, 0, len(lists)-1)
 }
 
-func mergeK(lists []*ListNode, l, r int) *ListNode {
-	if l == r {
-		return lists[l]
+func mergeK(lists []*ListNode, lo, hi int) *ListNode {
+	if lo == hi {
+		return lists[lo]
 	}
 
-	if l > r {
+	if lo > hi {
 		return nil
 	}
 
-	mid := (l + r) >> 1
+	mid := (lo + hi) >> 1
 
-	return MergeTwo(mergeK(lists, l, mid), mergeK(lists, mid+1, r))
+	return mergeTwo(mergeK(lists, lo, mid), mergeK(lists, mid+1, hi))
 }
 
-func MergeTwo(l1, l2 *ListNode) *ListNode {
+func mergeTwo(l1, l2 *ListNode) *ListNode {
 	if l1 == nil {
 		return l2
 	} else if l2 == nil {
 		return l1
-	} else if l1.Val < l2.Val {
-		l1.Next = MergeTwo(l1.Next, l2)
+	}
+
+	if l1.Val < l2.Val {
+		l1.Next = mergeTwo(l1.Next, l2)
 		return l1
 	} else {
-		l2.Next = MergeTwo(l2.Next, l1)
+		l2.Next = mergeTwo(l2.Next, l1)
 		return l2
 	}
 }
