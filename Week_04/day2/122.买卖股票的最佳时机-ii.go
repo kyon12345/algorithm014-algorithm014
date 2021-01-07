@@ -22,7 +22,7 @@ package main
 
 // 	return res
 // }
-//动态规划
+// //动态规划
 // func maxProfit(prices []int) int {
 // 	n := len(prices)
 // 	if n < 2 {
@@ -44,25 +44,9 @@ package main
 
 //滚动数组
 func maxProfit(prices []int) int {
-	n := len(prices)
-
-	if n < 2 {
-		return 0
+	if len(prices) < 2 {
+		
 	}
-
-	cash, hold := 0, -prices[0]
-
-	preCash, preHold := cash, hold
-
-	for i := 1; i < n; i++ {
-		cash = max(preCash,preHold + prices[i])
-		hold = max(preHold,preCash - prices[i])
-
-		preCash = cash
-		preHold = hold
-	}
-
-	return cash
 }
 
 func max(a, b int) int {
