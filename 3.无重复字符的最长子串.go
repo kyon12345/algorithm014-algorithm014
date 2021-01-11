@@ -5,8 +5,6 @@
  */
 package main
 
-import "math"
-
 // @lc code=start
 func lengthOfLongestSubstring(s string) int {
 	//sliding window
@@ -16,8 +14,7 @@ func lengthOfLongestSubstring(s string) int {
 		m[i]--
 	}
 
-	start, maxLen := -1, 0
-
+	start, res := -1, 0
 	for i := 0; i < len(s); i++ {
 		if m[s[i]] > start {
 			start = m[s[i]]
@@ -25,12 +22,12 @@ func lengthOfLongestSubstring(s string) int {
 
 		m[s[i]] = i
 
-		if i-start > maxLen {
-			maxLen = i - start
+		if i-start > res {
+			res = i - start
 		}
 	}
 
-	return maxLen
+	return res
 }
 
 // @lc code=end

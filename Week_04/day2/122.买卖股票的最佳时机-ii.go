@@ -45,8 +45,22 @@ package main
 //滚动数组
 func maxProfit(prices []int) int {
 	if len(prices) < 2 {
-		
+		return 0
 	}
+
+	cash,hold := 0,-prices[0]
+
+	precash,prehold := 0,-prices[0]	
+
+	for i := 1; i < len(prices); i++ {
+		cash = max(precash,prehold + prices[i])
+		hold = max(prehold,precash - prices[i])
+
+		precash = cash
+		prehold = hold
+	}
+
+	return cash
 }
 
 func max(a, b int) int {

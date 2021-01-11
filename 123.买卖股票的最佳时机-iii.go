@@ -42,7 +42,6 @@ func maxProfit(prices []int) int {
 	}
 
 	dp := [5]int{}
-
 	dp[0] = 0
 	dp[1] = -prices[0]
 	dp[3] = -prices[0]

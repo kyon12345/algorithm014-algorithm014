@@ -19,38 +19,40 @@ type TireNode struct {
 func (this *TireNode) Insert(word string) {
 	root := this
 
-	for _, w := range word {
-		if root.next[w-'a'] == nil {
-			root.next[w-'a'] = &TireNode{}
+	for _, c := range word {
+		if root.next[c-'a'] == nil {
+			root.next[c-'a'] = &TireNode{}
 		}
-		root = root.next[w-'a']
+		root = root.next[c-'a']
 	}
 
 	root.word = word
 }
 
 func findWords(board [][]byte, words []string) []string {
-	res := make([]string, 0)
-
-	if len(board) == 0 {
-		return res
+	if len(board) == 0 || len(board[0]) == 0 {
+		return nil
 	}
 
+	res := []string{}
+
+	//init tire
 	root := &TireNode{}
 	for _, w := range words {
 		root.Insert(w)
 	}
 
+	//dfs
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[0]); j++ {
-			dfsFind(board, i, j, root, &res)
+			dfsFind(board, i, j, &res, root)
 		}
 	}
 
 	return res
 }
 
-func dfsFind(board [][]byte, i, j int, node *TireNode, res *[]string) {
+func dfsFind(board [][]byte, i, j int, res *[]string, node *TireNode) {
 	if i < 0 || j < 0 || i == len(board) || j == len(board[0]) {
 		return
 	}
@@ -69,10 +71,11 @@ func dfsFind(board [][]byte, i, j int, node *TireNode, res *[]string) {
 		node.word = ""
 	}
 
-	dfsFind(board, i+1, j, node, res)
-	dfsFind(board, i-1, j, node, res)
-	dfsFind(board, i, j-1, node, res)
-	dfsFind(board, i, j+1, node, res)
+
+	dfsFind(board, i+1, j, res, node)
+	dfsFind(board, i-1, j, res, node)
+	dfsFind(board, i, j+1, res, node)
+	dfsFind(board, i, j-1, res, node)
 
 	board[i][j] = c
 }

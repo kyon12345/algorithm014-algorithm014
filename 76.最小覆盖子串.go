@@ -16,7 +16,7 @@ func minWindow(s string, t string) string {
 	}
 
 	start, end := 0, 0
-	minlen, minstart := math.MaxInt32, 0
+	minStart, minlen := 0, math.MaxInt32
 	counter := len(t)
 
 	for end < len(s) {
@@ -33,10 +33,11 @@ func minWindow(s string, t string) string {
 		for counter == 0 {
 			if end-start < minlen {
 				minlen = end - start
-				minstart = start
+				minStart = start
 			}
 
 			m[s[start]]++
+
 			if m[s[start]] > 0 {
 				counter++
 			}
@@ -46,10 +47,10 @@ func minWindow(s string, t string) string {
 	}
 
 	if minlen != math.MaxInt32 {
-		return s[minstart : minstart+minlen]
-	} else {
-		return ""
+		return s[minStart : minStart+minlen]
 	}
+
+	return ""
 }
 
 // @lc code=end

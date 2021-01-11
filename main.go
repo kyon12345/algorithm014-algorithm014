@@ -44,6 +44,30 @@ func kSelect(nums []int, left int, right int, k int) int {
 	return nums[p]
 }
 
+func lengthOfLongestSubstring(s string) int {
+	//sliding window
+	m := [256]int{}
+
+	for i, _ := range m {
+		m[i]-- 
+	}
+
+	start, res := -1, 0
+	for i := 0; i < len(s); i++ {
+		if m[s[i]] > start {
+			start = i
+		}
+
+		m[s[i]] = i
+
+		if i-start > res {
+			res = i - start
+		}
+	}
+
+	return res
+}
+
 func main() {
-	findKthLargest([]int{3,2,1,5,6,4},3)
+	lengthOfLongestSubstring(" ")
 }

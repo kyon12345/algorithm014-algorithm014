@@ -9,15 +9,15 @@ package main
 func firstUniqChar(s string) int {
 	m := [26]int{}
 
-	for i, w := range s {
-		m[w-'a'] = i
+	for i, c := range s {
+		m[c-'a'] = i
 	}
 
-	for i, w := range s {
-		if m[w-'a'] == i {
+	for i, c := range s {
+		if i == m[c-'a'] {
 			return i
 		} else {
-			m[w-'a'] = -1
+			m[c-'a'] = -1
 		}
 	}
 
