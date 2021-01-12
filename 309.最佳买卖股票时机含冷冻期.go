@@ -34,14 +34,15 @@ import "math"
 // }
 
 func maxProfit(prices []int) int {
-	sell, prev_sell, buy, prev_buy := 0, 0, math.MinInt32, 0
+	sell,pre_sell,buy,pre_buy := 0,0,math.MinInt32,0
 
 	for _, p := range prices {
-		prev_buy = buy
-		buy = max(prev_sell-p, prev_buy)
-		prev_sell = sell
-		sell = max(prev_buy+p, prev_sell)
+		pre_buy = buy
+		buy = max(pre_sell - p,pre_buy)
+		pre_sell = sell
+		sell = max(pre_sell,pre_buy + p)
 	}
+
 	return sell
 }
 

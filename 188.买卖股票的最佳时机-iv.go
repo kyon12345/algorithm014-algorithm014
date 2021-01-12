@@ -31,8 +31,8 @@ func maxProfit(k int, prices []int) int {
 	for i := 1; i <= k; i++ {
 		tmpMax := -prices[0]
 		for j := 1; j < n; j++ {
-			t[i][j] = max(t[i][j-1], tmpMax+prices[j])
-			tmpMax = max(tmpMax, t[i-1][j-1]-prices[j])
+			t[i][j] = max(t[i][j - 1],tmpMax + prices[j])
+			tmpMax = max(tmpMax,t[i - 1][j - 1] - prices[j])
 		}
 	}
 	
