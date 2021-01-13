@@ -18,8 +18,8 @@ func maxProfit(prices []int, fee int) int {
 		cash = max(precash, prehold+prices[i]-fee)
 		hold = max(prehold, precash-prices[i])
 
-		prehold = hold
 		precash = cash
+		prehold = hold
 	}
 
 	return cash

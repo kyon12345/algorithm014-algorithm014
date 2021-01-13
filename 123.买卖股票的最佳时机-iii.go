@@ -37,14 +37,15 @@ package main
 
 //优化空间复杂度
 func maxProfit(prices []int) int {
+	//不操作 买入 卖出 买入 卖出
+	// 0	-prices[0]	0	-prices[0] 0
+	//dp[i][j] = max(dp[i - 1][j], dp[i -1][j - 1] + prices[i])
 	if len(prices) < 2 {
 		return 0
 	}
 
 	dp := [5]int{}
-	dp[0] = 0
-	dp[1] = -prices[0]
-	dp[3] = -prices[0]
+	dp[1], dp[3] = -prices[0], -prices[0]
 
 	for i := 1; i < len(prices); i++ {
 		dp[1] = max(dp[1], dp[0]-prices[i])

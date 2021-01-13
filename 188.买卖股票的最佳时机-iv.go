@@ -8,35 +8,37 @@ package main
 // @lc code=start
 //如果K > n/2 那么相当于k为正无穷的情况
 func maxProfit(k int, prices []int) int {
-	if len(prices) < 2 {
-		return 0
-	}
-
+	//dp[i][j] means maximum profit from at most i transactions using prices[0...j]
+	//1.doing noting or buying dp[i][j] = dp[i][j - 1]
+	//2.sell,must bought a stock on day t = 0 -> j - 1
+	//example,choose to buy in the day t:
+	//dp[i][j] = max(prices[j] - prices[t] + dp[i -1][t - 1])  t : 0 -> j - 1
+	//base case dp[0][0] = 0
 	n := len(prices)
 
+	if n < 2 {
+		return 0
+	}
+	//k -> +infinity
 	if k >= n>>1 {
 		return maxProfitkInfinity(prices)
 	}
 
-	t := make([][]int,k + 1)
+	dp := make([][]int, k+1)
 
-	for i := 0; i < k + 1; i++ {
-		t[i] = make([]int, n)
+	for i := range dp {
+		dp[i] = make([]int, n)
 	}
 
-	//dp[i][j] means maximum profit from at most i transactions using prices[0...j]
-	//1.doing noting or buying dp[i][j] = dp[i][j - 1]
-	//2.sell,must bought a stock on day t = 0 -> j - 1
-	//dp[i][j] = max(prices[j] - prices[t] + dp[i -1][t - 1])  t : 0 -> j - 1
-	for i := 1; i <= k; i++ {
-		tmpMax := -prices[0]
+	for i := 1; i < k+1; i++ {
+		TmpMax := -prices[0]
 		for j := 1; j < n; j++ {
-			t[i][j] = max(t[i][j - 1],tmpMax + prices[j])
-			tmpMax = max(tmpMax,t[i - 1][j - 1] - prices[j])
+			dp[i][j] = max(dp[i][j-1], TmpMax+prices[j])
+			TmpMax = max(TmpMax, dp[i-1][j-1]-prices[j])
 		}
 	}
-	
-	return t[k][n-1]
+
+	return dp[k][n-1]
 }
 
 func maxProfitkInfinity(prices []int) int {

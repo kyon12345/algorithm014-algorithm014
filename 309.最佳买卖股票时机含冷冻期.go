@@ -34,16 +34,23 @@ import "math"
 // }
 
 func maxProfit(prices []int) int {
-	sell,pre_sell,buy,pre_buy := 0,0,math.MinInt32,0
-
-	for _, p := range prices {
-		pre_buy = buy
-		buy = max(pre_sell - p,pre_buy)
-		pre_sell = sell
-		sell = max(pre_sell,pre_buy + p)
+	//0.持有股票
+	//1.不持有股票(能购买)
+	//2.不持有股票(冷冻期)
+	if len(prices) < 2 {
+		return 0
 	}
 
-	return sell
+	dp := [3]int{}
+
+	dp[0] = -prices[0]
+	for i := 1; i < len(prices); i++ {
+		dp[0] = max(dp[0],dp[1] - prices[i])
+		dp[1] = max(dp[1],dp[2])
+		dp[2] = dp[0] + prices[i]
+	}
+
+	return max(dp[1],dp[2])
 }
 
 func max(a, b int) int {

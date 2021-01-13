@@ -28,30 +28,27 @@ func largestRectangleArea(heights []int) int {
 	//构建单调递增栈
 	stack := []int{-1}
 
-	if len(heights) < 1 {
-		return 0
-	}
-
 	maxA := 0
 	for i := 0; i < len(heights); i++ {
-		for len(stack) != 1 && heights[stack[len(stack) - 1]] > heights[i] {
+		for len(stack) != 1 && heights[i] <+
+		 heights[stack[len(stack) - 1]] {
 			top := stack[len(stack) - 1]
 			stack = stack[:len(stack) - 1]
-			maxA = maxVal(maxA, heights[top] * (i - stack[len(stack) -1] - 1))
+			maxA = max(maxA,heights[top] * (i - stack[len(stack) - 1] - 1))
 		}
-		stack = append(stack, i)	
+		stack = append(stack, i)
 	}
 
 	for len(stack) != 1 {
 		top := stack[len(stack) - 1]
 		stack = stack[:len(stack) - 1]
-		maxA = maxVal(maxA, heights[top] * (len(heights) - stack[len(stack) - 1] - 1))
+		maxA = max(maxA,heights[top] * (len(heights) - stack[len(stack) - 1] - 1))
 	}
 
 	return maxA
 }
 
-func maxVal(a, b int) int {
+func max(a, b int) int {
 	if a >= b {
 		return a
 	}
