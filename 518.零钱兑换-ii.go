@@ -12,9 +12,8 @@ func change(amount int, coins []int) int {
 	dp := make([]int,amount + 1)
 
 	dp[0] = 1
-
 	for _, c := range coins {
-		for i := c; i <= amount; i++ {
+		for i := c; i < amount + 1; i++ {
 			dp[i] += dp[i - c]
 		}
 	}

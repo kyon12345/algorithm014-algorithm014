@@ -4,6 +4,7 @@
  * [152] 乘积最大子数组
  */
 package main
+
 // @lc code=start
 // func maxProduct(nums []int) int {
 // 	//fmax(i) = max{fmax(i - 1) * ai,fmin(i - 1) * ai,ai}
@@ -39,29 +40,29 @@ package main
 func maxProduct(nums []int) int {
 	//需要记录每次相乘最大的正数和最小的负数
 	//如果出现负数最大的变最小,最小的变最大
-	tmp,min,max := nums[0],nums[0],nums[0]
+	tmp, min, max := nums[0], nums[0], nums[0]
 
 	for i := 1; i < len(nums); i++ {
 		if nums[i] < 0 {
-			min,max = max,min
+			min, max = max, min
 		}
 
 		max *= nums[i]
-		if nums[i] > max {
+		if max < nums[i] {
 			max = nums[i]
 		}
 
 		min *= nums[i]
-		if nums[i] < min {
+		if min > nums[i] {
 			min = nums[i]
 		}
 
 		if max > tmp {
-			tmp = max	
+			tmp = max
 		}
 	}
 
 	return tmp
 }
-// @lc code=end
 
+// @lc code=end
