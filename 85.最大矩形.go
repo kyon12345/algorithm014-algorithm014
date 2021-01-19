@@ -109,12 +109,12 @@ func maximalRectangle(matrix [][]byte) int {
 
 	m, n := len(matrix), len(matrix[0])
 
-	right, left, height := make([]int, n), make([]int, n), make([]int, n)
+	height, left, right := make([]int, n), make([]int, n), make([]int, n)
 
 	for i := 0; i < n; i++ {
 		right[i] = n
-		left[i] = 0
 		height[i] = 0
+		left[i] = 0
 	}
 
 	maxA := 0

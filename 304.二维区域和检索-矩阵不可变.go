@@ -12,7 +12,6 @@ type NumMatrix struct {
 
 func Constructor(matrix [][]int) NumMatrix {
 	row, col := len(matrix), 0
-
 	if row > 0 {
 		col = len(matrix[0])
 	}
@@ -33,7 +32,7 @@ func Constructor(matrix [][]int) NumMatrix {
 
 func (this *NumMatrix) SumRegion(row1 int, col1 int, row2 int, col2 int) int {
 	sums := this.sums
-	return sums[row2+1][col2+1] - sums[row2+1][col1] - sums[row1][col2+1] + sums[row1][col1]	
+	return sums[row2+1][col2+1] - sums[row2+1][col1] - sums[row1][col2+1] + sums[row1][col1]
 }
 
 /**
