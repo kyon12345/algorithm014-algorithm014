@@ -6,6 +6,8 @@
 package main
 
 // @lc code=start
+//[1,2,3,4,5]
+//[0,1,3,6,10,15]
 type NumArray struct {
 	sum []int
 }
@@ -16,7 +18,7 @@ func Constructor(nums []int) NumArray {
 		sum[i+1] = sum[i] + nums[i]
 	}
 
-	return NumArray{sum: sum}
+	return NumArray{sum}
 }
 
 func (this *NumArray) SumRange(i int, j int) int {

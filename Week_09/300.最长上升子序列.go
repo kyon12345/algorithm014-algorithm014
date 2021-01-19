@@ -76,11 +76,11 @@ import (
 // }
 
 func lengthOfLIS(nums []int) int {
-	tails := make([]int, len(nums))
+	tails := make([]int,len(nums))
 
 	size := 0
 	for _, n := range nums {
-		i, j := 0, size
+		i,j := 0,size
 		for i != j {
 			m := (i + j) >> 1
 			if tails[m] < n {
@@ -91,7 +91,7 @@ func lengthOfLIS(nums []int) int {
 		}
 		tails[j] = n
 		if i == size {
-			size++
+			size ++
 		}
 	}
 

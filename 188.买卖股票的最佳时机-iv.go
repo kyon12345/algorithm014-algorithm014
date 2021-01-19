@@ -19,22 +19,21 @@ func maxProfit(k int, prices []int) int {
 	if n < 2 {
 		return 0
 	}
-	//k -> +infinity
+
 	if k >= n>>1 {
 		return maxProfitkInfinity(prices)
 	}
 
 	dp := make([][]int, k+1)
-
 	for i := range dp {
 		dp[i] = make([]int, n)
 	}
 
 	for i := 1; i < k+1; i++ {
-		TmpMax := -prices[0]
+		tmpMax := -prices[0]
 		for j := 1; j < n; j++ {
-			dp[i][j] = max(dp[i][j-1], TmpMax+prices[j])
-			TmpMax = max(TmpMax, dp[i-1][j-1]-prices[j])
+			dp[i][j] = max(dp[i][j-1], tmpMax+prices[j])
+			tmpMax = max(tmpMax, dp[i-1][j-1]-prices[j])
 		}
 	}
 

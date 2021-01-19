@@ -45,16 +45,15 @@ func maxProfit(prices []int) int {
 	}
 
 	dp := [5]int{}
-	dp[1], dp[3] = -prices[0], -prices[0]
-
+	dp[1],dp[3] = -prices[0],-prices[0]
 	for i := 1; i < len(prices); i++ {
-		dp[1] = max(dp[1], dp[0]-prices[i])
-		dp[2] = max(dp[2], dp[1]+prices[i])
-		dp[3] = max(dp[3], dp[2]-prices[i])
-		dp[4] = max(dp[4], dp[3]+prices[i])
+		dp[1] = max(dp[1],dp[0] - prices[i])
+		dp[2] = max(dp[2],dp[1] + prices[i])
+		dp[3] = max(dp[3],dp[2] - prices[i])
+		dp[4] = max(dp[4],dp[3] + prices[i])
 	}
 
-	return max(dp[2], dp[4])
+	return max(dp[2],dp[4])
 }
 
 func max(a, b int) int {

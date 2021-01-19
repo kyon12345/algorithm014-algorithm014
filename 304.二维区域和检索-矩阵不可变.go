@@ -7,13 +7,12 @@ package main
 
 // @lc code=start
 type NumMatrix struct {
-	row, col int
-	sums     [][]int
+	sums [][]int
 }
 
 func Constructor(matrix [][]int) NumMatrix {
-	row := len(matrix)
-	col := 0
+	row, col := len(matrix), 0
+
 	if row > 0 {
 		col = len(matrix[0])
 	}
@@ -23,19 +22,18 @@ func Constructor(matrix [][]int) NumMatrix {
 		sums[i] = make([]int, col+1)
 	}
 
-	for i := 1; i <= row; i++ {
-		for j := 1; j <= col; j++ {
-			sums[i][j] = matrix[i-1][j-1] +
-				sums[i-1][j] + sums[i][j-1] - sums[i-1][j-1]
+	for i := 1; i < row+1; i++ {
+		for j := 1; j < col+1; j++ {
+			sums[i][j] = sums[i-1][j] + sums[i][j-1] - sums[i-1][j-1] + matrix[i-1][j-1]
 		}
 	}
 
-	return NumMatrix{row, col, sums}
+	return NumMatrix{sums}
 }
 
 func (this *NumMatrix) SumRegion(row1 int, col1 int, row2 int, col2 int) int {
 	sums := this.sums
-	return sums[row2+1][col2+1] - sums[row2+1][col1] - sums[row1][col2+1] + sums[row1][col1]
+	return sums[row2+1][col2+1] - sums[row2+1][col1] - sums[row1][col2+1] + sums[row1][col1]	
 }
 
 /**
