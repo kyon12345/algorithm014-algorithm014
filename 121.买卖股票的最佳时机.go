@@ -31,16 +31,16 @@ func maxProfit(prices []int) int {
 		return 0
 	}
 
-	hold,cash := -prices[0],0
+	hold, cash := -prices[0], 0
 	for i := 1; i < len(prices); i++ {
-		hold = max(hold,-prices[i])
-		cash = max(cash, hold + prices[i])
+		hold = max(hold, -prices[i])
+		cash = max(cash, hold+prices[i])
 	}
 
 	return cash
 }
 
-func max(a,b int) int {
+func max(a, b int) int {
 	if a > b {
 		return a
 	}

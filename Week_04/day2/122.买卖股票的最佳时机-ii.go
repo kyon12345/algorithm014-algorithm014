@@ -48,19 +48,14 @@ func maxProfit(prices []int) int {
 		return 0
 	}
 
-	cash, hold := 0, -prices[0]
-
-	precash, prehold := cash, hold
-
+	res := 0
 	for i := 1; i < len(prices); i++ {
-		cash = max(precash,prehold + prices[i])
-		hold = max(prehold,precash - prices[i])
-
-		precash = cash
-		prehold = hold
+		if prices[i] > prices[i-1] {
+			res += prices[i] - prices[i-1]
+		}
 	}
 
-	return cash
+	return res
 }
 
 func max(a, b int) int {

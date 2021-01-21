@@ -25,6 +25,7 @@ func maxProfit(k int, prices []int) int {
 	}
 
 	dp := make([][]int, k+1)
+
 	for i := range dp {
 		dp[i] = make([]int, n)
 	}

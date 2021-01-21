@@ -12,11 +12,13 @@ type NumMatrix struct {
 
 func Constructor(matrix [][]int) NumMatrix {
 	row, col := len(matrix), 0
+
 	if row > 0 {
 		col = len(matrix[0])
 	}
 
 	sums := make([][]int, row+1)
+
 	for i := range sums {
 		sums[i] = make([]int, col+1)
 	}

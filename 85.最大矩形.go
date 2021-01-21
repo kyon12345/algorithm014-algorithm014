@@ -107,22 +107,19 @@ func maximalRectangle(matrix [][]byte) int {
 		return 0
 	}
 
-	m, n := len(matrix), len(matrix[0])
+	row, col := len(matrix), len(matrix[0])
 
-	height, left, right := make([]int, n), make([]int, n), make([]int, n)
+	height, right, left := make([]int, col), make([]int, col), make([]int, col)
 
-	for i := 0; i < n; i++ {
-		right[i] = n
-		height[i] = 0
-		left[i] = 0
+	for i := 0; i < col; i++ {
+		right[i] = col
 	}
 
 	maxA := 0
+	for i := 0; i < row; i++ {
+		cur_l, cur_r := 0, col
 
-	for i := 0; i < m; i++ {
-		cur_l, cur_r := 0, n
-
-		for j := 0; j < n; j++ {
+		for j := 0; j < col; j++ {
 			if matrix[i][j] == '1' {
 				height[j]++
 			} else {
@@ -130,25 +127,25 @@ func maximalRectangle(matrix [][]byte) int {
 			}
 		}
 
-		for j := n - 1; j >= 0; j-- {
+		for j := 0; j < col; j++ {
 			if matrix[i][j] == '1' {
-				right[j] = min(right[j], cur_r)
-			} else {
-				right[j] = n
-				cur_r = j
-			}
-		}
-
-		for j := 0; j < n; j++ {
-			if matrix[i][j] == '1' {
-				left[j] = max(left[j], cur_l)
+				left[j] = max(cur_l, left[j])
 			} else {
 				left[j] = 0
 				cur_l = j + 1
 			}
 		}
 
-		for j := 0; j < n; j++ {
+		for j := col - 1; j >= 0; j-- {
+			if matrix[i][j] == '1' {
+				right[j] = min(right[j], cur_r)
+			} else {
+				right[j] = col
+				cur_r = j
+			}
+		}
+
+		for j := 0; j < col; j++ {
 			maxA = max(maxA, height[j]*(right[j]-left[j]))
 		}
 	}
