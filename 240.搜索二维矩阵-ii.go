@@ -8,28 +8,25 @@ package main
 //从左下或者右上开始搜索
 // @lc code=start
 func searchMatrix(matrix [][]int, target int) bool {
-	m := len(matrix)
-
-	if m == 0 {
-		return false
+	if len(matrix) < 1 {
+		return 0
 	}
 
-	n := len(matrix[0])
+	rows,cols := len(matrix),len(matrix[0]
 
-	//left-bottom
-	row, col := m-1, 0
+	row,col := rows,0
 
-	for row >= 0 && col < n {
+	for	 row >= 0 && col < cols {
 		if target == matrix[row][col] {
 			return true
 		} else if target < matrix[row][col] {
-			row--
+			row --
 		} else {
-			col++
+			col ++
 		}
 	}
 
 	return false
-}
+}	
 
 // @lc code=end

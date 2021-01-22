@@ -14,7 +14,7 @@ func maxSubArray(nums []int) int {
 			nums[i] = nums[i] + nums[i-1]
 		}
 
-		if max < nums[i] {
+		if nums[i] > max {
 			max = nums[i]
 		}
 	}

@@ -7,29 +7,27 @@ package main
 
 import (
 	"math/rand"
-	"text/template/parse"
 )
 
 // @lc code=start
-// func findKthLargest(nums []int, k int) int {
-// 	length, left, right := len(nums), 0, len(nums)-1
+func findKthLargest(nums []int, k int) int {
+	n := len(nums)
 
-// 	target := length - k
+	target := n - k
 
-// 	for {
-// 		index := partition(nums, left, right)
-// 		if index == target {
-// 			return nums[index]
-// 			//1 2 3 4 5
-// //  i t
-// // 向右边搜索,因为比这个数大的太多了
-// 		} else if index < target {
-// 			left = index + 1
-// 		} else {
-// 			right = index - 1
-// 		}
-// 	}
-// }
+	lo, hi := 0, n-1
+	for {
+		index := partition(nums, lo, hi)
+
+		if index == target {
+			return nums[index]
+		} else if index < target {
+			lo = index + 1
+		} else {
+			hi = index - 1
+		}
+	}
+}
 
 //因为选取的是固定的指针所以对一些特殊的测试用例会导致复杂度上升为N^2
 // func partition(nums []int, left, right int) int {
@@ -50,23 +48,25 @@ import (
 
 //随机取一个哨兵节点
 //O(N)
-// func partition(nums []int, left, right int) int {
-// 	if right > left {
-// 		randomIndex := left + 1 + rand.Intn(right-left)
-// 		nums[randomIndex], nums[left] = nums[left], nums[randomIndex]
-// 	}
+func partition(nums []int, left, right int) int {
+	if left < right {
+		ranIndex := left + rand.Intn(right-left) + 1
+		nums[ranIndex], nums[left] = nums[left], nums[ranIndex]
+	}
 
-// 	pivot := nums[left]
-// 	j := left
-// 	for i := left + 1; i <= right; i++ {
-// 		if nums[i] < pivot {
-// 			j++
-// 			nums[j], nums[i] = nums[i], nums[j]
-// 		}
-// 	}
+	pivot := nums[left]
+	j := left
 
-// 	nums[left], nums[j] = nums[j], nums[left]
-// 	return j
-// }
+	for i := left + 1; i <= right; i++ {
+		if nums[i] < pivot {
+			j++
+			nums[i], nums[j] = nums[j], nums[i]
+		}
+	}
+
+	nums[j], nums[left] = nums[left], nums[j]
+
+	return j
+}
 
 // @lc code=end
